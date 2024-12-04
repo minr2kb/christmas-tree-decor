@@ -106,7 +106,7 @@ const useSendPage = () => {
     }
   }, [treeId]);
 
-  useKeyPress({ a: devSendHandler }, import.meta.env.DEV);
+  useKeyPress({ a: devSendHandler }, { enable: import.meta.env.DEV, metaKey: true });
 
   const statusText = useMemo(() => {
     if (isSending) return '장식을 보내는 중이에요';

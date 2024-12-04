@@ -5,7 +5,7 @@ import { toaster } from '@/components/ui/toaster';
 import { LuArrowRight } from 'react-icons/lu';
 import { createTree } from '@/api/tree';
 
-const Create = () => {
+const CreatePage = () => {
   const [treeName, setTreeName] = useState('');
   const [description, setDescription] = useState('');
   const [isCreating, setIsCreating] = useState(false);
@@ -55,4 +55,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default CreatePage;

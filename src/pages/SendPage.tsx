@@ -16,8 +16,8 @@ import {
 } from '@/components/ui/dialog';
 import { PiMonitorArrowUp } from 'react-icons/pi';
 import useSendPage from '@/hooks/useSendPage';
-import ErrorPage from './Error';
-import Loading from './Loading';
+import ErrorPage from './ErrorPage';
+import LoadingPage from './LoadingPage';
 
 const DropAndFlyAnimation = keyframes`
   0% { transform: translateY(0%); opacity: 1; }
@@ -26,7 +26,7 @@ const DropAndFlyAnimation = keyframes`
   100% { transform: translateY(-1000%); opacity: 0; }
 `;
 
-const Send = () => {
+const SendPage = () => {
   const {
     settings,
     handleOpen,
@@ -44,7 +44,7 @@ const Send = () => {
   } = useSendPage();
 
   if (isLoading) {
-    return <Loading />;
+    return <LoadingPage />;
   }
 
   if (!isValidTreeId) {
@@ -89,9 +89,9 @@ const Send = () => {
                 mx: 'auto',
                 objectFit: 'contain',
                 objectPosition: 'center',
-                animation: `${DropAndFlyAnimation} ${SEND_ANIMATION_DURATION}s ease-in-out infinite`,
+                animation: `${DropAndFlyAnimation} ${SEND_ANIMATION_DURATION}s ease-in-out forwards`,
                 filter: 'drop-shadow(0 0 5px #fff)',
-                zIndex: 10,
+                zIndex: 'popover',
               }}
             />
           </Box>
@@ -103,7 +103,7 @@ const Send = () => {
         )}
       </Box>
 
-      <Flex direction="column" gap={4} width="100%">
+      <Flex direction="column" gap={4} width="100%" mt={8}>
         <Input
           placeholder="이름을 입력해주세요"
           value={name}
@@ -147,4 +147,4 @@ const Send = () => {
   );
 };
 
-export default Send;
+export default SendPage;

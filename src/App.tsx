@@ -1,32 +1,32 @@
 import { Suspense } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Provider as ChakraProvider } from '@/components/ui/provider';
-import Tree from '@/pages/Tree';
-import Send from '@/pages/Send';
-import Home from '@/pages/Home';
+import TreePage from '@/pages/TreePage';
+import SendPage from '@/pages/SendPage';
+import HomePage from '@/pages/HomePage';
+import LoadingPage from '@/pages/LoadingPage';
+import ErrorPage from '@/pages/ErrorPage';
+import CreatePage from '@/pages/CreatePage';
 import Fonts from '@/theme/Fonts';
 import { Toaster } from '@/components/ui/toaster';
-import Loading from '@/pages/Loading';
-
-import ErrorPage from '@/pages/Error';
+import { Provider as ChakraProvider } from '@/components/ui/provider';
 import { ErrorBoundary } from 'react-error-boundary';
-import Create from '@/pages/Create';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: <HomePage />,
   },
   {
     path: '/create',
-    element: <Create />,
+    element: <CreatePage />,
   },
   {
     path: '/tree/:treeId',
-    element: <Tree />,
+    element: <TreePage />,
   },
   {
     path: '/send/:treeId',
-    element: <Send />,
+    element: <SendPage />,
   },
 
   {
@@ -38,7 +38,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <ErrorBoundary fallbackRender={({ error }) => <ErrorPage error={error} />}>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<LoadingPage />}>
         <ChakraProvider defaultTheme="dark">
           <Toaster />
           <Fonts />

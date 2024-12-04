@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Container, Text } from '@chakra-ui/react';
 import { LuArrowRight } from 'react-icons/lu';
 
-const Home = () => {
+const HomePage = () => {
   const navigate = useNavigate();
   const onStart = () => {
     navigate('/create');
@@ -32,4 +32,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

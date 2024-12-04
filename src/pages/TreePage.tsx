@@ -5,11 +5,11 @@ import ChristmasTree from '@/components/ChristmasTree';
 import Controls from '@/components/Controls';
 import Ornament from '@/components/Ornament';
 import useTreePage from '@/hooks/useTreePage';
-import ErrorPage from './Error';
-import Loading from './Loading';
+import ErrorPage from './ErrorPage';
+import Loading from './LoadingPage';
 import BackdropTitle from '@/components/BackdropTitle';
 
-const Tree = () => {
+const TreePage = () => {
   const {
     toggleFullScreen,
     ornaments,
@@ -56,9 +56,9 @@ const Tree = () => {
 
       <Controls toggleFullScreen={toggleFullScreen} treeId={treeId} />
       <BackdropTitle />
-      {showSnow && <Snowfall speed={[0.5, 0.7]} wind={[-0.1, 0.1]} radius={[1, 2]} />}
+      {showSnow && <Snowfall speed={[0.5, 0.7]} wind={[-0.1, 0.1]} snowflakeCount={200} />}
     </Container>
   );
 };
 
-export default Tree;
+export default TreePage;

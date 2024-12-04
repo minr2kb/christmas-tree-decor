@@ -1,10 +1,10 @@
 import { Container, Heading, Text } from '@chakra-ui/react';
 
-type Props = {
+type ErrorPageProps = {
   error: Error;
 };
 
-const ErrorPage = ({ error }: Props) => {
+const ErrorPage = ({ error }: ErrorPageProps) => {
   return (
     <Container
       display="flex"
