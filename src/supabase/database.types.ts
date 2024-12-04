@@ -13,7 +13,6 @@ export type Database = {
         Row: {
           created_at: string
           id: string
-          initial_position: Json
           name: string
           position: Json
           rotation: number
@@ -24,7 +23,6 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: string
-          initial_position: Json
           name: string
           position: Json
           rotation: number
@@ -35,7 +33,6 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
-          initial_position?: Json
           name?: string
           position?: Json
           rotation?: number

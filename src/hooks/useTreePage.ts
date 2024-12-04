@@ -16,7 +16,7 @@ import useInterval from './useInterval';
 import { toaster } from '@/components/ui/toaster';
 import useCheckTreeId from './useCheckTreeId';
 import { loadOrnaments, subscribeToOrnaments } from '@/api/ornaments';
-import { parseOrnament } from '@/utils/ornament';
+import { getInitialPosition, parseOrnament } from '@/utils/ornament';
 import { debounce } from '@/utils/debounce';
 
 const useTreePage = () => {
@@ -71,7 +71,9 @@ const useTreePage = () => {
 
     initializeOrnaments();
     const channel = subscribeToOrnaments(treeId, (newOrnament) => {
-      setAnimationQueue((prev) => [...prev, parseOrnament(newOrnament)]);
+      const parsedOrnament = parseOrnament(newOrnament);
+
+      setAnimationQueue((prev) => [...prev, parsedOrnament]);
     });
 
     return () => {
@@ -84,7 +86,8 @@ const useTreePage = () => {
       setAnimationQueue((queue) => {
         if (queue.length === 0) return queue;
         const [next, ...rest] = queue;
-        setOrnaments((prev) => [...prev, { ...next, animated: true }]);
+        const initialPosition = getInitialPosition();
+        setOrnaments((prev) => [...prev, { ...next, initialPosition }]);
         return rest;
       });
     },

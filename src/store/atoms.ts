@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import { OrnamentWithInitialPositionType } from '@/types/ornament';
+import { OrnamentType, OrnamentWithInitialPositionType } from '@/types/ornament';
 import { TreeType } from '@/types/tree';
 
 /**
@@ -9,7 +9,7 @@ export const ornamentsAtom = atom<OrnamentWithInitialPositionType[]>([]);
 /**
  * 애니메이션 큐 - 애니메이션 큐에 들어온 순서대로 ornaments에 interval을 두고 push
  */
-export const animationQueueAtom = atom<OrnamentWithInitialPositionType[]>([]);
+export const animationQueueAtom = atom<OrnamentType[]>([]);
 
 /**
  * 삼각형(트리 영역) 표시 여부

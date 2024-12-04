@@ -97,9 +97,10 @@ const useSendPage = () => {
     try {
       const randomType = Math.floor(Math.random() * ORNAMENT_TYPE_COUNT) + 1;
       await addOrnamentToTree('테스트_db', randomType, treeId);
+      toaster.success({ title: '테스트 장식을 추가했습니다' });
     } catch (error) {
       toaster.error({
-        title: '장식을 추가하는 중에 문제가 발생했어요',
+        title: '테스트 장식을 추가하는 중에 문제가 발생했어요',
         description: error instanceof Error ? error.message : '알 수 없는 오류',
       });
     }

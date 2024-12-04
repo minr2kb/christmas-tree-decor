@@ -1,6 +1,6 @@
 import { GRID_SIZE, MIN_SCALE, MAX_SCALE, MAX_ROTATION, MIN_ROTATION } from '@/constants/consts';
 import { Database } from '@/supabase/database.types';
-import { OrnamentType, OrnamentWithInitialPositionType, PositionType } from '@/types/ornament';
+import { OrnamentType, PositionType } from '@/types/ornament';
 
 export const fixInGrid = (value: number) => {
   return Math.round(value / GRID_SIZE) * GRID_SIZE;
@@ -50,12 +50,9 @@ export const getInitialPosition = (): PositionType => {
   return { x: initialX, y: initialY };
 };
 
-export const parseOrnament = (
-  ornament: Database['public']['Tables']['ornaments']['Row'],
-): OrnamentWithInitialPositionType => {
+export const parseOrnament = (ornament: Database['public']['Tables']['ornaments']['Row']): OrnamentType => {
   return {
     ...ornament,
-    initialPosition: ornament.initial_position as PositionType,
     position: ornament.position as PositionType,
     createdAt: new Date(ornament.created_at),
   };

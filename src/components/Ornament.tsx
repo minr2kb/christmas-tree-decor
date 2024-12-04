@@ -17,22 +17,29 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
   const [showName, setShowName] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
-  const { id, name, type, position, initialPosition, scale, rotation, animated } = ornament;
+  const { id, name, type, position, initialPosition, scale, rotation } = ornament;
 
-  const calculateRealPositions = useCallback(() => {
-    const pixelX = window.innerWidth / 2 + (position.x - 0.5) * treeWidth;
-    const pixelY = window.innerHeight * 0.05 + position.y * treeHeight;
-    const initialX = window.innerWidth * initialPosition.x;
-    const initialY = window.innerHeight * initialPosition.y;
+  const calculateInitialPosition = useCallback(() => {
+    if (!initialPosition) return { x: null, y: null };
+    return {
+      x: window.innerWidth * initialPosition.x,
+      y: window.innerHeight * initialPosition.y,
+    };
+  }, [initialPosition]);
 
-    return { pixelX, pixelY, initialX, initialY };
-  }, [position.x, position.y, initialPosition.x, initialPosition.y, treeWidth, treeHeight]);
+  const calculateRealPosition = useCallback(() => {
+    const x = window.innerWidth / 2 + (position.x - 0.5) * treeWidth;
+    const y = window.innerHeight * 0.05 + position.y * treeHeight;
+    return { x, y };
+  }, [position.x, position.y, treeWidth, treeHeight]);
 
-  const [realPositions, setRealPositions] = useState(calculateRealPositions);
+  const [realPosition, setRealPosition] = useState(calculateRealPosition);
+  const [realInitPosition, setRealInitPosition] = useState(calculateInitialPosition);
 
   useEffect(() => {
     const handleResize = debounce(() => {
-      setRealPositions(calculateRealPositions());
+      setRealPosition(calculateRealPosition());
+      setRealInitPosition(calculateInitialPosition());
     }, 100);
 
     window.addEventListener('resize', handleResize);
@@ -40,7 +47,7 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
       window.removeEventListener('resize', handleResize);
       handleResize.cancel();
     };
-  }, [calculateRealPositions]);
+  }, [calculateRealPosition, calculateInitialPosition]);
 
   const handleImageLoad = useCallback(() => {
     setShowName(true);
@@ -59,22 +66,22 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
   }, [isLoaded]);
 
   const imageStyle = useMemo(() => {
-    if (animated && !isLoaded) {
+    if (initialPosition && !isLoaded) {
       return {
         position: 'absolute',
-        left: `${realPositions.initialX}px`,
-        top: `${realPositions.initialY}px`,
+        left: `${realInitPosition.x}px`,
+        top: `${realInitPosition.y}px`,
         width: `${ORNAMENT_SIZE}vh`,
         transform: `scale(0.1)`,
         transition: 'all 1s ease',
       };
     }
 
-    if (animated && !isAnimationComplete) {
+    if (initialPosition && !isAnimationComplete) {
       return {
         position: 'absolute',
-        left: `${realPositions.initialX}px`,
-        top: `${realPositions.initialY}px`,
+        left: `${realInitPosition.x}px`,
+        top: `${realInitPosition.y}px`,
         width: `${ORNAMENT_SIZE}vh`,
         transform: `translate(-50%, -50%) rotate(${rotation}deg) scale(${TEMP_SCALE})`,
         filter: 'drop-shadow(0 0 3px #fff)',
@@ -84,13 +91,13 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
 
     return {
       position: 'absolute',
-      left: `${realPositions.pixelX}px`,
-      top: `${realPositions.pixelY}px`,
+      left: `${realPosition.x}px`,
+      top: `${realPosition.y}px`,
       width: `${ORNAMENT_SIZE}vh`,
       transform: `translate(-50%, -50%) rotate(${rotation}deg) scale(${scale})`,
       transition: 'all 1s ease',
     };
-  }, [isLoaded, isAnimationComplete, realPositions, rotation, scale, TEMP_SCALE]);
+  }, [initialPosition, isLoaded, isAnimationComplete, realPosition.x, realPosition.y, rotation, scale]);
 
   return (
     <>
@@ -104,13 +111,13 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
           onLoad={handleImageLoad}
         />
       </Tooltip>
-      {animated && !isAnimationComplete && (
+      {initialPosition && !isAnimationComplete && (
         <Text
           css={{
             position: 'absolute',
-            left: `${realPositions.initialX}px`,
+            left: `${realInitPosition.x}px`,
             transform: `translate(-50%, 150%)`,
-            top: `${realPositions.initialY}px`,
+            top: `${realInitPosition.y}px`,
             color: 'white',
             fontSize: `${ORNAMENT_SIZE * 0.6}rem`,
             textShadow: '0 0 3px blackAlpha.50',

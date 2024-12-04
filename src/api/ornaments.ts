@@ -1,6 +1,6 @@
 import supabase from '@/supabase/client';
 import { Database } from '@/supabase/database.types';
-import { createOrnament, getInitialPosition, parseOrnament } from '@/utils/ornament';
+import { createOrnament, parseOrnament } from '@/utils/ornament';
 
 export const loadOrnaments = async (treeId: string) => {
   const { data, error } = await supabase
@@ -43,13 +43,11 @@ export const subscribeToOrnaments = (
 
 export const addOrnamentToTree = async (name: string, selectedType: number, treeId: string) => {
   const { createdAt, ...ornament } = createOrnament(name, selectedType);
-  const initialPosition = getInitialPosition();
 
   const { error } = await supabase.from('ornaments').insert([
     {
       ...ornament,
       tree_id: treeId,
-      initial_position: initialPosition,
       created_at: createdAt.toISOString(),
     },
   ]);

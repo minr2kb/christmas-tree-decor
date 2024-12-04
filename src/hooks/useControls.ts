@@ -11,7 +11,7 @@ import {
   showTitleAtom,
   showTriangleAtom,
 } from '@/store/atoms';
-import { createOrnament, getInitialPosition } from '@/utils/ornament';
+import { createOrnament } from '@/utils/ornament';
 import { deleteTree } from '@/api/tree';
 import { toaster } from '@/components/ui/toaster';
 
@@ -40,8 +40,7 @@ export function useControls(treeId?: string) {
   const addTestOrnament = useCallback(() => {
     const randomType = Math.floor(Math.random() * ORNAMENT_TYPE_COUNT) + 1;
     const ornament = createOrnament('테스트_Client', randomType);
-    const initialPosition = getInitialPosition();
-    setAnimationQueue((prev) => [...prev, { ...ornament, id: uuidv4(), initialPosition }]);
+    setAnimationQueue((prev) => [...prev, { id: uuidv4(), ...ornament }]);
   }, []);
 
   const addTest50 = useCallback(() => {

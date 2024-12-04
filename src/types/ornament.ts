@@ -1,4 +1,4 @@
-export interface OrnamentType {
+export type OrnamentType = {
   id: string;
   name: string;
   type: number;
@@ -6,10 +6,9 @@ export interface OrnamentType {
   scale: number;
   position: PositionType;
   createdAt: Date;
-  animated?: boolean;
-}
+};
 
-export type OrnamentWithInitialPositionType = OrnamentType & { initialPosition: PositionType };
+export type OrnamentWithInitialPositionType = OrnamentType & { initialPosition?: PositionType };
 
 export type PositionType = {
   /**
