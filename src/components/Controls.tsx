@@ -23,18 +23,8 @@ interface ControlsProps {
 }
 
 const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
-  const {
-    showTriangle,
-    showCount,
-    showSnow,
-    showStar,
-    isOpen,
-    setIsOpen,
-    menuHandlers,
-    addTestOrnament,
-    addTest50,
-    removeTree,
-  } = useControls(treeId);
+  const { isDeleteConfirmOpen, setIsDeleteConfirmOpen, menuHandlers, addTestOrnament, addTest50, removeTree } =
+    useControls(treeId);
 
   const { generateQR, copySendLink } = useQRActions(treeId);
 
@@ -44,6 +34,7 @@ const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
       c: menuHandlers.toggleCount,
       s: menuHandlers.toggleSnow,
       x: menuHandlers.toggleStar,
+      z: menuHandlers.toggleTitle,
       f: toggleFullScreen,
       a: addTestOrnament,
       d: addTest50,
@@ -59,20 +50,24 @@ const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
     () => (
       <MenuContent bgColor={'bg.emphasized'}>
         <MenuItem value="toggle-triangle" onClick={menuHandlers.toggleTriangle}>
-          삼각형 {showTriangle ? '숨기기' : '보이기'}
+          삼각형 토글
           <MenuItemCommand>T</MenuItemCommand>
         </MenuItem>
         <MenuItem value="toggle-count" onClick={menuHandlers.toggleCount}>
-          카운트 {showCount ? '숨기기' : '보이기'}
+          카운트 토글
           <MenuItemCommand>C</MenuItemCommand>
         </MenuItem>
         <MenuItem value="toggle-snow" onClick={menuHandlers.toggleSnow}>
-          눈 {showSnow ? '멈추기' : '보이기'}
+          눈 토글
           <MenuItemCommand>S</MenuItemCommand>
         </MenuItem>
         <MenuItem value="toggle-star" onClick={menuHandlers.toggleStar}>
-          별 {showStar ? '숨기기' : '보이기'}
+          별 토글
           <MenuItemCommand>X</MenuItemCommand>
+        </MenuItem>
+        <MenuItem value="toggle-title" onClick={menuHandlers.toggleTitle}>
+          중앙 타이틀 토글
+          <MenuItemCommand>T</MenuItemCommand>
         </MenuItem>
         <MenuItem value="add-1" onClick={addTestOrnament}>
           1개 추가 <MenuItemCommand>A</MenuItemCommand>
@@ -92,12 +87,12 @@ const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
           꾸미기 링크 복사 <MenuItemCommand>L</MenuItemCommand>
         </MenuItem>
         <MenuSeparator />
-        <MenuItem value="delete-tree" onClick={() => setIsOpen(true)} color="fg.error">
+        <MenuItem value="delete-tree" onClick={() => setIsDeleteConfirmOpen(true)} color="fg.error">
           트리 삭제
         </MenuItem>
       </MenuContent>
     ),
-    [showTriangle, showCount, showSnow, menuHandlers],
+    [menuHandlers],
   );
 
   const DialogContents = useMemo(
@@ -149,8 +144,8 @@ const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
         motionPreset="slide-in-bottom"
         size={'xs'}
         lazyMount
-        open={isOpen}
-        onOpenChange={(e) => setIsOpen(e.open)}
+        open={isDeleteConfirmOpen}
+        onOpenChange={(e) => setIsDeleteConfirmOpen(e.open)}
       >
         {DialogContents}
       </DialogRoot>
@@ -179,7 +174,7 @@ function useQRActions(treeId?: string) {
       copySendLink: () => {
         if (!treeId) return;
         navigator.clipboard.writeText(`${window.location.origin}/send/${treeId}`);
-        toaster.success({ title: '복사되었습니다' });
+        toaster.success({ title: '클립보드에 복사되었습니다' });
       },
     }),
     [treeId],

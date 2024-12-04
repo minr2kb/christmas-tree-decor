@@ -23,11 +23,14 @@ export const showSnowAtom = atom(true);
  * 별 표시 여부
  */
 export const showStarAtom = atom(false);
-
 /**
  * 카운트 표시 여부
  */
 export const showCountAtom = atom(false);
+/**
+ * 중앙 타이틀 표시 여부
+ */
+export const showTitleAtom = atom(false);
 
 /**
  * 트리 아이디

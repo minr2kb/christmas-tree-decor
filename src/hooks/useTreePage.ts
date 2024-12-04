@@ -7,6 +7,7 @@ import {
   showTriangleAtom,
   showSnowAtom,
   showStarAtom,
+  showTitleAtom,
 } from '@/store/atoms';
 import useFullScreen from './useFullScreen';
 import { TREE_HEIGHT_RATIO, INTERVAL_TIME } from '@/constants/consts';
@@ -27,6 +28,7 @@ const useTreePage = () => {
   const showCount = useAtomValue(showCountAtom);
   const showSnow = useAtomValue(showSnowAtom);
   const showStar = useAtomValue(showStarAtom);
+  const showTitle = useAtomValue(showTitleAtom);
 
   const [dimensions, setDimensions] = useState({
     treeHeight: window.innerHeight * TREE_HEIGHT_RATIO,
@@ -86,7 +88,7 @@ const useTreePage = () => {
         return rest;
       });
     },
-    animationQueue.length > 0 ? INTERVAL_TIME : null,
+    animationQueue.length > 0 && !showTitle ? INTERVAL_TIME : null,
   );
 
   return {

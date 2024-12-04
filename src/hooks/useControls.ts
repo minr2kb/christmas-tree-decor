@@ -1,21 +1,29 @@
-import { useAtom, useSetAtom } from 'jotai';
+import { useSetAtom } from 'jotai';
 import { useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { ORNAMENT_TYPE_COUNT } from '@/constants/consts';
-import { animationQueueAtom, showCountAtom, showSnowAtom, showStarAtom, showTriangleAtom } from '@/store/atoms';
+import {
+  animationQueueAtom,
+  showCountAtom,
+  showSnowAtom,
+  showStarAtom,
+  showTitleAtom,
+  showTriangleAtom,
+} from '@/store/atoms';
 import { createOrnament, getInitialPosition } from '@/utils/ornament';
 import { deleteTree } from '@/api/tree';
 import { toaster } from '@/components/ui/toaster';
 
 export function useControls(treeId?: string) {
   const setAnimationQueue = useSetAtom(animationQueueAtom);
-  const [showTriangle, setShowTriangle] = useAtom(showTriangleAtom);
-  const [showCount, setShowCount] = useAtom(showCountAtom);
-  const [showSnow, setShowSnow] = useAtom(showSnowAtom);
-  const [showStar, setShowStar] = useAtom(showStarAtom);
+  const setShowTriangle = useSetAtom(showTriangleAtom);
+  const setShowCount = useSetAtom(showCountAtom);
+  const setShowSnow = useSetAtom(showSnowAtom);
+  const setShowStar = useSetAtom(showStarAtom);
+  const setShowTitle = useSetAtom(showTitleAtom);
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 
   const menuHandlers = useMemo(
     () => ({
@@ -23,7 +31,8 @@ export function useControls(treeId?: string) {
       toggleCount: () => setShowCount((prev) => !prev),
       toggleSnow: () => setShowSnow((prev) => !prev),
       toggleStar: () => setShowStar((prev) => !prev),
-      toggleDialog: () => setIsOpen((prev) => !prev),
+      toggleDeleteConfirmDialog: () => setIsDeleteConfirmOpen((prev) => !prev),
+      toggleTitle: () => setShowTitle((prev) => !prev),
     }),
     [],
   );
@@ -59,12 +68,8 @@ export function useControls(treeId?: string) {
   }, [treeId, navigate]);
 
   return {
-    showTriangle,
-    showCount,
-    showSnow,
-    showStar,
-    isOpen,
-    setIsOpen,
+    isDeleteConfirmOpen,
+    setIsDeleteConfirmOpen,
     menuHandlers,
     addTestOrnament,
     addTest50,

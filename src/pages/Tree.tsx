@@ -1,12 +1,13 @@
 import { Container } from '@chakra-ui/react';
 import Snowfall from 'react-snowfall';
-import { Background } from '@/components/Background';
+import Background from '@/components/Background';
 import ChristmasTree from '@/components/ChristmasTree';
 import Controls from '@/components/Controls';
 import Ornament from '@/components/Ornament';
 import useTreePage from '@/hooks/useTreePage';
 import ErrorPage from './Error';
 import Loading from './Loading';
+import BackdropTitle from '@/components/BackdropTitle';
 
 const Tree = () => {
   const {
@@ -54,7 +55,7 @@ const Tree = () => {
       ))}
 
       <Controls toggleFullScreen={toggleFullScreen} treeId={treeId} />
-
+      <BackdropTitle />
       {showSnow && <Snowfall speed={[0.5, 0.7]} wind={[-0.1, 0.1]} radius={[1, 2]} />}
     </Container>
   );

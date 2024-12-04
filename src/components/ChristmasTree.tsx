@@ -9,7 +9,7 @@ interface ChristmasTreeProps {
   showStar: boolean;
 }
 
-const ChristmasTree = ({ showTriangle, showStar, treeHeight, treeWidth }: ChristmasTreeProps) => {
+const ChristmasTree = memo(({ showTriangle, showStar, treeHeight, treeWidth }: ChristmasTreeProps) => {
   return (
     <>
       <Image
@@ -57,6 +57,6 @@ const ChristmasTree = ({ showTriangle, showStar, treeHeight, treeWidth }: Christ
       )}
     </>
   );
-};
+});
 
-export default memo(ChristmasTree);
+export default ChristmasTree;
