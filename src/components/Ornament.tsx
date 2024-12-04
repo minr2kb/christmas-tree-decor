@@ -3,6 +3,7 @@ import { Image, Text } from '@chakra-ui/react';
 import { ORNAMENT_SIZE, TEMP_SCALE } from '@/constants/consts';
 import { useMemo, useCallback, memo, useState, useEffect } from 'react';
 import { debounce } from '@/utils/debounce';
+import { Tooltip } from '@/components/ui/tooltip';
 
 const ANIMATION_DURATION = 5;
 
@@ -12,7 +13,7 @@ interface OrnamentProps {
   treeHeight: number;
 }
 
-const Ornament = ({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
+const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
   const [showName, setShowName] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
@@ -93,15 +94,17 @@ const Ornament = ({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
 
   return (
     <>
-      <Image
-        key={id}
-        data-id={id}
-        src={`/assets/ornaments/orn2-${type}.png`}
-        alt="ornament"
-        css={imageStyle}
-        onLoad={handleImageLoad}
-      />
-      {showName && animated && (
+      <Tooltip content={name} openDelay={0} closeDelay={0} positioning={{ placement: 'bottom' }} showArrow>
+        <Image
+          key={id}
+          data-id={id}
+          src={`/assets/ornaments/orn2-${type}.png`}
+          alt="ornament"
+          css={imageStyle}
+          onLoad={handleImageLoad}
+        />
+      </Tooltip>
+      {animated && !isAnimationComplete && (
         <Text
           css={{
             position: 'absolute',
@@ -110,8 +113,10 @@ const Ornament = ({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
             top: `${realPositions.initialY}px`,
             color: 'white',
             fontSize: `${ORNAMENT_SIZE * 0.6}rem`,
-            textShadow: '0 0 3px black',
-            fontWeight: 'semibold',
+            textShadow: '0 0 3px blackAlpha.50',
+            fontFamily: 'HSSanTokki20',
+            opacity: showName ? 1 : 0,
+            transition: 'opacity 1s ease',
           }}
         >
           {name}
@@ -119,6 +124,6 @@ const Ornament = ({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
       )}
     </>
   );
-};
+});
 
-export default memo(Ornament);
+export default Ornament;
