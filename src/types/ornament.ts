@@ -6,6 +6,7 @@ export interface OrnamentType {
   scale: number;
   position: PositionType;
   createdAt: Date;
+  animated?: boolean;
 }
 
 export type OrnamentWithInitialPositionType = OrnamentType & { initialPosition: PositionType };

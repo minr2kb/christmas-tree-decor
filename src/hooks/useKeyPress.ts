@@ -4,7 +4,7 @@ import { useCallback, useEffect } from 'react';
  * 키보드 입력을 처리하는 훅
  * @param keyMap - key를 입력했을 때 실행할 함수를 정의한 객체
  */
-const useKeyPress = (keyMap: Record<string, () => void>) => {
+const useKeyPress = (keyMap: Record<string, () => void>, enable: boolean = true) => {
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
       if (event.metaKey || event.ctrlKey) return;
@@ -15,11 +15,12 @@ const useKeyPress = (keyMap: Record<string, () => void>) => {
   );
 
   useEffect(() => {
+    if (!enable) return;
     window.addEventListener('keydown', handleKeyPress);
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [handleKeyPress]);
+  }, [handleKeyPress, enable]);
 };
 
 export default useKeyPress;

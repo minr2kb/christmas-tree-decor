@@ -28,23 +28,18 @@ export function useControls(treeId?: string) {
     [],
   );
 
-  const addOrnament = useCallback(() => {
+  const addTestOrnament = useCallback(() => {
     const randomType = Math.floor(Math.random() * ORNAMENT_TYPE_COUNT) + 1;
-    const ornament = createOrnament('Test', randomType);
+    const ornament = createOrnament('테스트_Client', randomType);
     const initialPosition = getInitialPosition();
     setAnimationQueue((prev) => [...prev, { ...ornament, id: uuidv4(), initialPosition }]);
   }, []);
 
-  const onAdd50 = useCallback(() => {
-    setAnimationQueue((prev) => {
-      const newOrnaments = Array.from({ length: 50 }, () => {
-        const randomType = Math.floor(Math.random() * ORNAMENT_TYPE_COUNT) + 1;
-        const ornament = createOrnament('Test', randomType);
-        return { ...ornament, id: uuidv4(), initialPosition: getInitialPosition() };
-      });
-      return [...prev, ...newOrnaments];
-    });
-  }, []);
+  const addTest50 = useCallback(() => {
+    for (let i = 0; i < 50; i++) {
+      addTestOrnament();
+    }
+  }, [addTestOrnament]);
 
   const removeTree = useCallback(async () => {
     if (!treeId) return;
@@ -71,8 +66,8 @@ export function useControls(treeId?: string) {
     isOpen,
     setIsOpen,
     menuHandlers,
-    addOrnament,
-    onAdd50,
+    addTestOrnament,
+    addTest50,
     removeTree,
   };
 }

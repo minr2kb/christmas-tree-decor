@@ -16,7 +16,7 @@ const Ornament = ({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
   const [showName, setShowName] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
-  const { id, name, type, position, initialPosition, scale, rotation } = ornament;
+  const { id, name, type, position, initialPosition, scale, rotation, animated } = ornament;
 
   const calculateRealPositions = useCallback(() => {
     const pixelX = window.innerWidth / 2 + (position.x - 0.5) * treeWidth;
@@ -58,7 +58,7 @@ const Ornament = ({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
   }, [isLoaded]);
 
   const imageStyle = useMemo(() => {
-    if (!isLoaded) {
+    if (animated && !isLoaded) {
       return {
         position: 'absolute',
         left: `${realPositions.initialX}px`,
@@ -69,7 +69,7 @@ const Ornament = ({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
       };
     }
 
-    if (!isAnimationComplete) {
+    if (animated && !isAnimationComplete) {
       return {
         position: 'absolute',
         left: `${realPositions.initialX}px`,
@@ -101,7 +101,7 @@ const Ornament = ({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
         css={imageStyle}
         onLoad={handleImageLoad}
       />
-      {showName && (
+      {showName && animated && (
         <Text
           css={{
             position: 'absolute',

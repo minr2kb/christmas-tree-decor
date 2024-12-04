@@ -31,8 +31,8 @@ const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
     isOpen,
     setIsOpen,
     menuHandlers,
-    addOrnament,
-    onAdd50,
+    addTestOrnament,
+    addTest50,
     removeTree,
   } = useControls(treeId);
 
@@ -45,12 +45,12 @@ const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
       s: menuHandlers.toggleSnow,
       x: menuHandlers.toggleStar,
       f: toggleFullScreen,
-      a: addOrnament,
-      d: onAdd50,
+      a: addTestOrnament,
+      d: addTest50,
       q: generateQR,
       l: copySendLink,
     }),
-    [menuHandlers, toggleFullScreen, addOrnament, onAdd50, generateQR, copySendLink],
+    [menuHandlers, toggleFullScreen, addTestOrnament, addTest50, generateQR, copySendLink],
   );
 
   useKeyPress(keyHandlers);
@@ -67,17 +67,17 @@ const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
           <MenuItemCommand>C</MenuItemCommand>
         </MenuItem>
         <MenuItem value="toggle-snow" onClick={menuHandlers.toggleSnow}>
-          눈 {showSnow ? '몀추기' : '보이기'}
+          눈 {showSnow ? '멈추기' : '보이기'}
           <MenuItemCommand>S</MenuItemCommand>
         </MenuItem>
         <MenuItem value="toggle-star" onClick={menuHandlers.toggleStar}>
           별 {showStar ? '숨기기' : '보이기'}
           <MenuItemCommand>X</MenuItemCommand>
         </MenuItem>
-        <MenuItem value="add-1" onClick={addOrnament}>
+        <MenuItem value="add-1" onClick={addTestOrnament}>
           1개 추가 <MenuItemCommand>A</MenuItemCommand>
         </MenuItem>
-        <MenuItem value="add-50" onClick={onAdd50}>
+        <MenuItem value="add-50" onClick={addTest50}>
           50개 추가 <MenuItemCommand>D</MenuItemCommand>
         </MenuItem>
 

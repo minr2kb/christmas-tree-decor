@@ -1,9 +1,10 @@
 import { useCallback, useMemo, useReducer } from 'react';
-import { SEND_ANIMATION_DURATION } from '@/constants/consts';
+import { ORNAMENT_TYPE_COUNT, SEND_ANIMATION_DURATION } from '@/constants/consts';
 import useCheckTreeId from './useCheckTreeId';
 import { addOrnamentToTree } from '@/api/ornaments';
 import { toaster } from '@/components/ui/toaster';
 import { filterBadWords } from '@/utils/badwords';
+import useKeyPress from './useKeyPress';
 
 type State = {
   selectedType: number;
@@ -90,6 +91,21 @@ const useSendPage = () => {
   const handleReset = useCallback(() => {
     dispatch({ type: 'RESET' });
   }, []);
+
+  const devSendHandler = useCallback(async () => {
+    if (!treeId) return;
+    try {
+      const randomType = Math.floor(Math.random() * ORNAMENT_TYPE_COUNT) + 1;
+      await addOrnamentToTree('테스트_db', randomType, treeId);
+    } catch (error) {
+      toaster.error({
+        title: '장식을 추가하는 중에 문제가 발생했어요',
+        description: error instanceof Error ? error.message : '알 수 없는 오류',
+      });
+    }
+  }, [treeId]);
+
+  useKeyPress({ a: devSendHandler }, import.meta.env.DEV);
 
   const statusText = useMemo(() => {
     if (isSending) return '장식을 보내는 중이에요';

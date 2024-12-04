@@ -33,6 +33,19 @@ const useTreePage = () => {
     treeWidth: (window.innerHeight * TREE_HEIGHT_RATIO) / TREE_ASPECT_RATIO,
   });
 
+  const initializeOrnaments = async () => {
+    try {
+      const data = await loadOrnaments(treeId!);
+      setOrnaments(data);
+    } catch (error) {
+      toaster.error({
+        title: '불러오는 중에 문제가 발생했어요',
+        description: error instanceof Error ? error.message : '알 수 없는 오류',
+      });
+      console.error('Error loading ornaments:', error);
+    }
+  };
+
   useEffect(() => {
     const handleResize = debounce(() => {
       setDimensions({
@@ -54,19 +67,6 @@ const useTreePage = () => {
     if (!isValidTreeId) return;
     if (!treeId) return;
 
-    const initializeOrnaments = async () => {
-      try {
-        const data = await loadOrnaments(treeId!);
-        setOrnaments(data);
-      } catch (error) {
-        toaster.error({
-          title: '불러오는 중에 문제가 발생했어요',
-          description: error instanceof Error ? error.message : '알 수 없는 오류',
-        });
-        console.error('Error loading ornaments:', error);
-      }
-    };
-
     initializeOrnaments();
     const channel = subscribeToOrnaments(treeId, (newOrnament) => {
       setAnimationQueue((prev) => [...prev, parseOrnament(newOrnament)]);
@@ -82,7 +82,7 @@ const useTreePage = () => {
       setAnimationQueue((queue) => {
         if (queue.length === 0) return queue;
         const [next, ...rest] = queue;
-        setOrnaments((prev) => [...prev, next]);
+        setOrnaments((prev) => [...prev, { ...next, animated: true }]);
         return rest;
       });
     },
