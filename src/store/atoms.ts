@@ -1,6 +1,7 @@
 import { atom } from 'jotai';
 import { OrnamentType, OrnamentWithInitialPositionType } from '@/types/ornament';
 import { TreeType } from '@/types/tree';
+import { ConfirmDialogType } from '@/types/dialog';
 
 /**
  * 실제 화면에 렌더되는 ornament 목록
@@ -36,3 +37,8 @@ export const showTitleAtom = atom(false);
  * 트리 아이디
  */
 export const treeAtom = atom<TreeType | null>(null);
+
+/**
+ * 컨펌 다이얼로그 활성화용
+ */
+export const confirmDialogAtom = atom<ConfirmDialogType | null>(null);
