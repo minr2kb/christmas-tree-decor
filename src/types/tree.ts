@@ -3,4 +3,5 @@ export type TreeType = {
   name: string;
   description: string | null;
   createdAt: Date;
+  userId: string;
 };

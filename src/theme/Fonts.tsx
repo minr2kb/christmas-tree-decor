@@ -32,6 +32,14 @@ const fontFaces = css`
     font-weight: normal;
     font-style: normal;
   }
+
+  /* 페이퍼로지 */
+  @font-face {
+    font-family: 'Paperlogy';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+  }
 `;
 
 const Fonts = () => (

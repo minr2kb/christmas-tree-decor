@@ -69,7 +69,6 @@ const SendPage = () => {
             {Array.from({ length: ORNAMENT_TYPE_COUNT }).map((_, index) => (
               <Image
                 key={index + 1}
-                as="img"
                 src={`/assets/ornaments/orn2-${index + 1}.png`}
                 alt={`ornament-${index + 1}`}
                 h="20vh"

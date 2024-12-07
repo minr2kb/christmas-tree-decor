@@ -1,5 +1,5 @@
-import { useSetAtom } from 'jotai';
-import { useCallback, useMemo, useState } from 'react';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { ORNAMENT_TYPE_COUNT } from '@/constants/consts';
@@ -10,10 +10,13 @@ import {
   showStarAtom,
   showTitleAtom,
   showTriangleAtom,
+  treeAtom,
 } from '@/store/atoms';
 import { createOrnament } from '@/utils/ornament';
 import { deleteTree } from '@/api/tree';
 import { toaster } from '@/components/ui/toaster';
+import useConfirmDialog from './useConfirmDialog';
+import useSession from './useSession';
 
 export function useControls(treeId?: string) {
   const setAnimationQueue = useSetAtom(animationQueueAtom);
@@ -23,7 +26,11 @@ export function useControls(treeId?: string) {
   const setShowStar = useSetAtom(showStarAtom);
   const setShowTitle = useSetAtom(showTitleAtom);
   const navigate = useNavigate();
-  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
+
+  const { confirm } = useConfirmDialog();
+  const { isAuthenticated, user } = useSession();
+  const tree = useAtomValue(treeAtom);
+  const isOwner = tree?.userId === user?.id;
 
   const menuHandlers = useMemo(
     () => ({
@@ -31,7 +38,7 @@ export function useControls(treeId?: string) {
       toggleCount: () => setShowCount((prev) => !prev),
       toggleSnow: () => setShowSnow((prev) => !prev),
       toggleStar: () => setShowStar((prev) => !prev),
-      toggleDeleteConfirmDialog: () => setIsDeleteConfirmOpen((prev) => !prev),
+      removeTree: () => onClickRemoveTree(),
       toggleTitle: () => setShowTitle((prev) => !prev),
     }),
     [],
@@ -50,6 +57,7 @@ export function useControls(treeId?: string) {
   }, [addTestOrnament]);
 
   const removeTree = useCallback(async () => {
+    if (!isAuthenticated) return;
     if (!treeId) return;
     try {
       await deleteTree(treeId);
@@ -64,14 +72,24 @@ export function useControls(treeId?: string) {
         description: '잠시 후 다시 시도해주세요',
       });
     }
-  }, [treeId, navigate]);
+  }, [isAuthenticated, treeId, navigate]);
+
+  const onClickRemoveTree = useCallback(() => {
+    if (!isAuthenticated) return;
+    confirm({
+      title: '트리를 삭제하시겠어요?',
+      body: '모든 장식도 함께 사라집니다',
+      onConfirm: removeTree,
+      confirmText: '삭제',
+      isDestructive: true,
+    });
+  }, [isAuthenticated, confirm, removeTree]);
 
   return {
-    isDeleteConfirmOpen,
-    setIsDeleteConfirmOpen,
     menuHandlers,
     addTestOrnament,
     addTest50,
-    removeTree,
+    onClickRemoveTree,
+    isOwner,
   };
 }

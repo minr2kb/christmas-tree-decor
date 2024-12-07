@@ -5,5 +5,6 @@ export const parseTree = (tree: Database['public']['Tables']['trees']['Row']): T
   return {
     ...tree,
     createdAt: new Date(tree.created_at),
+    userId: tree.user_id || '',
   };
 };

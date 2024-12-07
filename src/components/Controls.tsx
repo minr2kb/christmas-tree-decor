@@ -1,21 +1,12 @@
-import { Flex, IconButton, Text } from '@chakra-ui/react';
+import { Flex, IconButton } from '@chakra-ui/react';
 import { memo, useMemo } from 'react';
 import { LuMenu } from 'react-icons/lu';
 import { MenuContent, MenuRoot, MenuItem, MenuTrigger, MenuItemCommand, MenuSeparator } from './ui/menu';
 import { toaster } from './ui/toaster';
-import {
-  DialogActionTrigger,
-  DialogBody,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogRoot,
-  DialogTitle,
-} from './ui/dialog';
-import { Button } from './ui/button';
 import useKeyPress from '@/hooks/useKeyPress';
 import QRCode from 'qrcode';
 import { useControls } from '@/hooks/useControls';
+import { useNavigate } from 'react-router-dom';
 
 interface ControlsProps {
   toggleFullScreen: () => void;
@@ -23,9 +14,8 @@ interface ControlsProps {
 }
 
 const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
-  const { isDeleteConfirmOpen, setIsDeleteConfirmOpen, menuHandlers, addTestOrnament, addTest50, removeTree } =
-    useControls(treeId);
-
+  const { menuHandlers, addTestOrnament, addTest50, onClickRemoveTree, isOwner } = useControls(treeId);
+  const navigate = useNavigate();
   const { generateQR, copySendLink } = useQRActions(treeId);
 
   const keyHandlers = useMemo(
@@ -87,36 +77,19 @@ const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
           꾸미기 링크 복사 <MenuItemCommand>L</MenuItemCommand>
         </MenuItem>
         <MenuSeparator />
-        <MenuItem value="delete-tree" onClick={() => setIsDeleteConfirmOpen(true)} color="fg.error">
-          트리 삭제
-        </MenuItem>
+
+        {isOwner ? (
+          <MenuItem value="delete-tree" onClick={onClickRemoveTree} color="fg.error">
+            트리 삭제
+          </MenuItem>
+        ) : (
+          <MenuItem value="login" onClick={() => navigate('/login', { state: { from: window.location.pathname } })}>
+            로그인
+          </MenuItem>
+        )}
       </MenuContent>
     ),
-    [menuHandlers],
-  );
-
-  const DialogContents = useMemo(
-    () => (
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>트리를 삭제하시겠어요?</DialogTitle>
-        </DialogHeader>
-        <DialogBody>
-          <Text fontSize="md">모든 장식도 함께 사라집니다</Text>
-        </DialogBody>
-        <DialogFooter>
-          <DialogActionTrigger asChild>
-            <Button variant="outline">취소</Button>
-          </DialogActionTrigger>
-          <DialogActionTrigger asChild>
-            <Button colorPalette="red" onClick={removeTree}>
-              삭제
-            </Button>
-          </DialogActionTrigger>
-        </DialogFooter>
-      </DialogContent>
-    ),
-    [removeTree],
+    [menuHandlers, isOwner],
   );
 
   return (
@@ -138,17 +111,6 @@ const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
         </MenuTrigger>
         {MenuItems}
       </MenuRoot>
-      <DialogRoot
-        key={'confirm-modal'}
-        placement={'center'}
-        motionPreset="slide-in-bottom"
-        size={'xs'}
-        lazyMount
-        open={isDeleteConfirmOpen}
-        onOpenChange={(e) => setIsDeleteConfirmOpen(e.open)}
-      >
-        {DialogContents}
-      </DialogRoot>
     </Flex>
   );
 });

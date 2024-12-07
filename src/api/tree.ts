@@ -1,9 +1,9 @@
 import supabase from '@/supabase/client';
 
-export const createTree = async (treeName: string, description: string) => {
+export const createTree = async (treeName: string, description: string, userId: string) => {
   const { data, error } = await supabase
     .from('trees')
-    .insert([{ name: treeName, description }])
+    .insert([{ name: treeName, description, user_id: userId }])
     .select()
     .single();
 
