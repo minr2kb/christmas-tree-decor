@@ -19,7 +19,7 @@ import useConfirmDialog from '../useConfirmDialog';
 import useSession from '../useSession';
 import useLoginModal from '../useLoginModal';
 
-const useControls = ({ treeId }: { treeId?: string }) => {
+const useControls = (treeId?: string) => {
   const setAnimationQueue = useSetAtom(animationQueueAtom);
   const setShowTriangle = useSetAtom(showTriangleAtom);
   const setShowCount = useSetAtom(showCountAtom);

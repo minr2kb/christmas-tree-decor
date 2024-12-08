@@ -7,6 +7,7 @@ import { ConfirmDialogType } from '@/types/dialog';
  * 실제 화면에 렌더되는 ornament 목록
  */
 export const ornamentsAtom = atom<OrnamentWithInitialPositionType[]>([]);
+export const ornamentsCountAtom = atom((get) => get(ornamentsAtom).length);
 /**
  * 애니메이션 큐 - 애니메이션 큐에 들어온 순서대로 ornaments에 interval을 두고 push
  */

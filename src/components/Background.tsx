@@ -1,4 +1,4 @@
-import { ornamentsAtom } from '@/store/atoms';
+import { ornamentsCountAtom } from '@/store/atoms';
 import { Image, Text } from '@chakra-ui/react';
 import { useAtomValue } from 'jotai';
 import { memo } from 'react';
@@ -9,7 +9,7 @@ type BackgroundProps = {
 };
 
 const Background = memo(({ showCount = false, showStars = true }: BackgroundProps) => {
-  const ornaments = useAtomValue(ornamentsAtom);
+  const ornamentsCount = useAtomValue(ornamentsCountAtom);
 
   return (
     <>
@@ -37,7 +37,7 @@ const Background = memo(({ showCount = false, showStars = true }: BackgroundProp
           pointerEvents={'none'}
           fontWeight={'black'}
         >
-          {ornaments.length}
+          {ornamentsCount}
         </Text>
       )}
 
