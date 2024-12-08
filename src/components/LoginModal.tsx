@@ -11,7 +11,7 @@ import { Button } from './ui/button';
 import { openLoginDialogAtom } from '@/store/atoms';
 import { useAtom } from 'jotai';
 import { Provider } from '@/types/auth';
-import { signInWithProvider } from '@/api/auth';
+import AuthAPI from '@/api/auth';
 import { FcGoogle } from 'react-icons/fc';
 import { Icon, Stack } from '@chakra-ui/react';
 import { RiKakaoTalkFill } from 'react-icons/ri';
@@ -23,8 +23,7 @@ const LoginModal = () => {
 
   const handleLogin = async (provider: Provider) => {
     try {
-      await signInWithProvider(provider, from);
-      await signInWithProvider(provider, from);
+      await AuthAPI.signInWithProvider(provider, from);
     } catch (error) {
       toaster.error({
         title: '로그인 실패',

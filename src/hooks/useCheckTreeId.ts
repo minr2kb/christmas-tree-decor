@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getTree } from '@/api/tree';
+import TreeAPI from '@/api/tree';
 import { useSetAtom } from 'jotai';
 import { treeAtom } from '@/store/atoms';
 
@@ -15,7 +15,7 @@ const useCheckTreeId = () => {
 
     const checkTree = async () => {
       try {
-        const tree = await getTree(treeId);
+        const tree = await TreeAPI.getTree(treeId);
 
         if (!tree) {
           throw new Error(`Tree not found with ID: ${treeId}`);

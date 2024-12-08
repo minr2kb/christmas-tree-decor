@@ -4,7 +4,7 @@ import { toaster } from '@/components/ui/toaster';
 import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from './ui/menu';
 import { Avatar } from './ui/avatar';
 import { Button } from './ui/button';
-import { signOut } from '@/api/auth';
+import AuthAPI from '@/api/auth';
 import { useNavigate } from 'react-router-dom';
 
 const UserMenu = () => {
@@ -12,7 +12,7 @@ const UserMenu = () => {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
-      await signOut();
+      await AuthAPI.signOut();
       toaster.success({
         title: '로그아웃 성공',
       });

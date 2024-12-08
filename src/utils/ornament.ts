@@ -1,4 +1,4 @@
-import { GRID_SIZE, MIN_SCALE, MAX_SCALE, MAX_ROTATION, MIN_ROTATION } from '@/constants/consts';
+import { GRID_SIZE, MIN_SCALE, MAX_SCALE, MAX_ROTATION, MIN_ROTATION } from '@/constants/ui';
 import { Database } from '@/supabase/database.types';
 import { OrnamentType, PositionType } from '@/types/ornament';
 

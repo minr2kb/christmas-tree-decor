@@ -1,23 +1,14 @@
 import { Box, Container, Flex, Image, Input, Text } from '@chakra-ui/react';
-import { ORNAMENT_TYPE_COUNT, SEND_ANIMATION_DURATION } from '@/constants/consts';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import { ORNAMENT_TYPE_COUNT, SEND_ANIMATION_DURATION } from '@/constants/ui';
 import { keyframes } from '@emotion/react';
 import { Button } from '@/components/ui/button';
-import {
-  DialogActionTrigger,
-  DialogBody,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogRoot,
-  DialogTitle,
-} from '@/components/ui/dialog';
 import { PiMonitorArrowUp } from 'react-icons/pi';
 import useSendPage from '@/hooks/logic/useSendPage';
 import ErrorPage from './ErrorPage';
 import LoadingPage from './LoadingPage';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const DropAndFlyAnimation = keyframes`
   0% { transform: translateY(0%); opacity: 1; }
@@ -28,19 +19,17 @@ const DropAndFlyAnimation = keyframes`
 
 const SendPage = () => {
   const {
-    settings,
-    handleOpen,
-    handleSend,
-    handleReset,
+    sliderSettings,
     statusText,
-    isSending,
-    isSent,
-    selectedType,
+    isSubmitting,
+    isSubmitted,
     name,
-    isOpen,
-    dispatch,
+    selectedType,
+    setName,
     isValidTreeId,
     isLoading,
+    handleSend,
+    handleReset,
   } = useSendPage();
 
   if (isLoading) {
@@ -64,8 +53,8 @@ const SendPage = () => {
     >
       <Text fontSize="xl">{statusText}</Text>
       <Box w="full" position="relative" h="20vh" p={4}>
-        {!isSending && !isSent && (
-          <Slider {...settings}>
+        {!isSubmitting && !isSubmitted && (
+          <Slider {...sliderSettings}>
             {Array.from({ length: ORNAMENT_TYPE_COUNT }).map((_, index) => (
               <Image
                 key={index + 1}
@@ -78,7 +67,7 @@ const SendPage = () => {
             ))}
           </Slider>
         )}
-        {isSending && !isSent && (
+        {isSubmitting && !isSubmitted && (
           <Box height="100%" width="100%">
             <Image
               src={`/assets/ornaments/orn2-${selectedType}.png`}
@@ -95,7 +84,7 @@ const SendPage = () => {
             />
           </Box>
         )}
-        {isSent && (
+        {isSubmitted && (
           <Flex justifyContent="center" alignItems="center" height="100%">
             <PiMonitorArrowUp size={120} style={{ opacity: 0.7 }} />
           </Flex>
@@ -106,42 +95,20 @@ const SendPage = () => {
         <Input
           placeholder="이름을 입력해주세요"
           value={name}
-          onChange={(e) => dispatch({ type: 'SET_NAME', payload: e.target.value })}
+          onChange={(e) => setName(e.target.value)}
           size="lg"
           textAlign="center"
-          disabled={isSending || isSent}
+          disabled={isSubmitting || isSubmitted}
           bgColor="bg"
         />
-        <Button size="lg" disabled={!name.trim() || isSending} onClick={isSent ? handleReset : handleOpen}>
-          {isSent ? '다시하기' : '트리에 달기'}
+        <Button
+          size="lg"
+          disabled={!name.trim() || isSubmitting || isSubmitted}
+          onClick={isSubmitted ? handleReset : handleSend}
+        >
+          {isSubmitted ? '다시하기' : '트리에 달기'}
         </Button>
       </Flex>
-      <DialogRoot
-        key={'confirm-modal'}
-        placement={'center'}
-        motionPreset="slide-in-bottom"
-        size={'xs'}
-        lazyMount
-        open={isOpen}
-        onOpenChange={(e) => dispatch({ type: 'SET_MODAL', payload: e.open })}
-      >
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>트리에 장식을 달까요?</DialogTitle>
-          </DialogHeader>
-          <DialogBody>
-            <Text fontSize="md">스크린에 선택한 장식과 이름이 표시됩니다</Text>
-          </DialogBody>
-          <DialogFooter>
-            <DialogActionTrigger asChild>
-              <Button variant="outline">취소</Button>
-            </DialogActionTrigger>
-            <DialogActionTrigger asChild>
-              <Button onClick={handleSend}>확인</Button>
-            </DialogActionTrigger>
-          </DialogFooter>
-        </DialogContent>
-      </DialogRoot>
     </Container>
   );
 };

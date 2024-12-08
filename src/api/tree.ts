@@ -1,34 +1,47 @@
 import supabase from '@/supabase/client';
 import { parseTree } from '@/utils/tree';
 
-export const createTree = async (treeName: string, description: string, userId: string) => {
-  const { data, error } = await supabase
-    .from('trees')
-    .insert([{ name: treeName, description, user_id: userId }])
-    .select()
-    .single();
+class TreeAPI {
+  static createTree = async (treeName: string, description: string, userId: string) => {
+    const { data, error } = await supabase
+      .from('trees')
+      .insert([{ name: treeName, description, user_id: userId }])
+      .select()
+      .single();
 
-  if (error) throw error;
+    if (error) throw error;
 
-  return data;
-};
+    return parseTree(data);
+  };
 
-export const getTree = async (treeId: string) => {
-  const { data, error } = await supabase.from('trees').select().eq('id', treeId).single();
-  if (error) throw error;
-  return parseTree(data);
-};
+  static getTree = async (treeId: string) => {
+    const { data, error } = await supabase.from('trees').select().eq('id', treeId).single();
+    if (error) throw error;
+    return parseTree(data);
+  };
 
-export const deleteTree = async (treeId: string) => {
-  const { error } = await supabase.from('trees').delete().eq('id', treeId);
-  if (error) throw error;
-  // ornamet 삭제
-  const { error: ornamentError } = await supabase.from('ornaments').delete().eq('tree_id', treeId);
-  if (ornamentError) throw ornamentError;
-};
+  static deleteTree = async (treeId: string) => {
+    const { error } = await supabase.from('trees').delete().eq('id', treeId);
+    if (error) throw error;
+  };
 
-export const getMyTrees = async (userId: string) => {
-  const { data, error } = await supabase.from('trees').select().eq('user_id', userId);
-  if (error) throw error;
-  return data.map(parseTree);
-};
+  static updateTree = async (treeId: string, treeName: string, description: string) => {
+    const { data, error } = await supabase.from('trees').update({ name: treeName, description }).eq('id', treeId);
+    if (error || !data) throw error;
+    return parseTree(data);
+  };
+
+  static getAllTrees = async () => {
+    const { data, error } = await supabase.from('trees').select();
+    if (error) throw error;
+    return data.map(parseTree);
+  };
+
+  static getTreesByUserId = async (userId: string) => {
+    const { data, error } = await supabase.from('trees').select().eq('user_id', userId);
+    if (error) throw error;
+    return data.map(parseTree);
+  };
+}
+
+export default TreeAPI;

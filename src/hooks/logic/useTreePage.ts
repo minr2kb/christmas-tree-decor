@@ -1,43 +1,46 @@
 import { useEffect, useState } from 'react';
-import { TREE_ASPECT_RATIO } from '@/constants/consts';
+import { useAtom, useAtomValue } from 'jotai';
 import {
   ornamentsAtom,
-  animationQueueAtom,
   showCountAtom,
   showTriangleAtom,
   showSnowAtom,
   showStarAtom,
   showTitleAtom,
 } from '@/store/atoms';
-import useFullScreen from '@/hooks/util/useFullScreen';
-import { TREE_HEIGHT_RATIO, INTERVAL_TIME } from '@/constants/consts';
-import { useAtom, useAtomValue } from 'jotai';
-import useInterval from '@/hooks/util/useInterval';
-import { toaster } from '@/components/ui/toaster';
-import useCheckTreeId from '@/hooks/useCheckTreeId';
-import { loadOrnaments, subscribeToOrnaments } from '@/api/ornaments';
-import { getInitialPosition, parseOrnament } from '@/utils/ornament';
+import { TREE_HEIGHT_RATIO, TREE_ASPECT_RATIO } from '@/constants/ui';
+import OrnamentAPI from '@/api/ornaments';
+import { parseOrnament } from '@/utils/ornament';
 import { debounce } from '@/utils/debounce';
+import { toaster } from '@/components/ui/toaster';
+import useFullScreen from '@/hooks/util/useFullScreen';
+import useCheckTreeId from '@/hooks/useCheckTreeId';
+import { useAnimationQueue } from '../useAnimationQueue';
+
+const calculateTreeDimensions = () => ({
+  treeHeight: window.innerHeight * TREE_HEIGHT_RATIO,
+  treeWidth: (window.innerHeight * TREE_HEIGHT_RATIO) / TREE_ASPECT_RATIO,
+});
 
 const useTreePage = () => {
   const { treeId, isValidTreeId, isLoading } = useCheckTreeId();
   const { toggleFullScreen } = useFullScreen();
+  const [dimensions, setDimensions] = useState(calculateTreeDimensions);
+
   const [ornaments, setOrnaments] = useAtom(ornamentsAtom);
-  const [animationQueue, setAnimationQueue] = useAtom(animationQueueAtom);
+  const showTitle = useAtomValue(showTitleAtom);
   const showTriangle = useAtomValue(showTriangleAtom);
   const showCount = useAtomValue(showCountAtom);
   const showSnow = useAtomValue(showSnowAtom);
   const showStar = useAtomValue(showStarAtom);
-  const showTitle = useAtomValue(showTitleAtom);
 
-  const [dimensions, setDimensions] = useState({
-    treeHeight: window.innerHeight * TREE_HEIGHT_RATIO,
-    treeWidth: (window.innerHeight * TREE_HEIGHT_RATIO) / TREE_ASPECT_RATIO,
-  });
+  const { addToQueue } = useAnimationQueue((ornament) => setOrnaments((prev) => [...prev, ornament]), !showTitle);
 
   const initializeOrnaments = async () => {
+    if (!treeId) return;
+
     try {
-      const data = await loadOrnaments(treeId!);
+      const data = await OrnamentAPI.getOrnamentsByTreeId(treeId);
       setOrnaments(data);
     } catch (error) {
       toaster.error({
@@ -50,10 +53,7 @@ const useTreePage = () => {
 
   useEffect(() => {
     const handleResize = debounce(() => {
-      setDimensions({
-        treeHeight: window.innerHeight * TREE_HEIGHT_RATIO,
-        treeWidth: (window.innerHeight * TREE_HEIGHT_RATIO) / TREE_ASPECT_RATIO,
-      });
+      setDimensions(calculateTreeDimensions());
     }, 100);
 
     window.addEventListener('resize', handleResize);
@@ -63,17 +63,13 @@ const useTreePage = () => {
     };
   }, []);
 
-  const { treeHeight, treeWidth } = dimensions;
-
   useEffect(() => {
-    if (!isValidTreeId) return;
-    if (!treeId) return;
+    if (!isValidTreeId || !treeId) return;
 
     initializeOrnaments();
-    const channel = subscribeToOrnaments(treeId, (newOrnament) => {
+    const channel = OrnamentAPI.subscribeToOrnaments(treeId, (newOrnament) => {
       const parsedOrnament = parseOrnament(newOrnament);
-
-      setAnimationQueue((prev) => [...prev, parsedOrnament]);
+      addToQueue(parsedOrnament);
     });
 
     return () => {
@@ -81,28 +77,14 @@ const useTreePage = () => {
     };
   }, [isValidTreeId, treeId]);
 
-  useInterval(
-    () => {
-      setAnimationQueue((queue) => {
-        if (queue.length === 0) return queue;
-        const [next, ...rest] = queue;
-        const initialPosition = getInitialPosition();
-        setOrnaments((prev) => [...prev, { ...next, initialPosition }]);
-        return rest;
-      });
-    },
-    animationQueue.length > 0 && !showTitle ? INTERVAL_TIME : null,
-  );
-
   return {
+    ...dimensions,
     toggleFullScreen,
     ornaments,
     showTriangle,
     showCount,
     showSnow,
     showStar,
-    treeHeight,
-    treeWidth,
     isValidTreeId,
     isLoading,
     treeId,

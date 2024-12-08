@@ -1,6 +1,6 @@
 import { OrnamentWithInitialPositionType } from '@/types/ornament';
 import { Image, Text } from '@chakra-ui/react';
-import { ORNAMENT_SIZE, TEMP_SCALE } from '@/constants/consts';
+import { ORNAMENT_SIZE, TEMP_SCALE } from '@/constants/ui';
 import { useMemo, useCallback, memo, useState, useEffect } from 'react';
 import { debounce } from '@/utils/debounce';
 import { Tooltip } from '@/components/ui/tooltip';

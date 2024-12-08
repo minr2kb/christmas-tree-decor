@@ -1,5 +1,5 @@
 import { Box, Image } from '@chakra-ui/react';
-import { TREE_HEIGHT_RATIO } from '@/constants/consts';
+import { TREE_HEIGHT_RATIO } from '@/constants/ui';
 import { memo } from 'react';
 
 interface ChristmasTreeProps {

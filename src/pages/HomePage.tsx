@@ -1,16 +1,17 @@
-import { signOut } from '@/api/auth';
+import AuthAPI from '@/api/auth';
 import { toaster } from '@/components/ui/toaster';
 import { Tooltip } from '@/components/ui/tooltip';
 import UserMenu from '@/components/UserMenu';
 import useConfirmDialog from '@/hooks/useConfirmDialog';
 import useLoginModal from '@/hooks/useLoginModal';
 import useSession from '@/hooks/useSession';
-import { Button, Container, Heading, Icon, Separator, Text, VStack } from '@chakra-ui/react';
+import { Container, Heading, Icon, Separator, Text, VStack } from '@chakra-ui/react';
 import { IoMdAdd } from 'react-icons/io';
 import { LuLogIn } from 'react-icons/lu';
 import { MdFormatListBulleted } from 'react-icons/md';
 import { RiQrScan2Line } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ const HomePage = () => {
 
   const handleLogout = async () => {
     try {
-      await signOut();
+      await AuthAPI.signOut();
       toaster.success({
         title: '로그아웃 성공',
       });

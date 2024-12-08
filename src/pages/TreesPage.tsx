@@ -1,12 +1,11 @@
 import { Heading, Text, VStack, Container, Spinner, Center } from '@chakra-ui/react';
 import UserMenu from '@/components/UserMenu';
 import { useEffect, useState } from 'react';
-import { getMyTrees } from '@/api/tree';
+import TreeAPI from '@/api/tree';
 import useSession from '@/hooks/useSession';
 import { TreeType } from '@/types/tree';
 import TreeCard from '@/components/TreeCard';
 import useConfirmDialog from '@/hooks/useConfirmDialog';
-import { deleteTree } from '@/api/tree';
 import { toaster } from '@/components/ui/toaster';
 import BackButton from '@/components/BackButton';
 
@@ -20,16 +19,8 @@ const TreesPage = () => {
     const loadTrees = async () => {
       if (!user) return;
       try {
-        const data = await getMyTrees(user.id);
-        setTrees(
-          data.map((tree) => ({
-            id: tree.id,
-            name: tree.name,
-            description: tree.description,
-            createdAt: tree.createdAt,
-            userId: tree.userId,
-          })),
-        );
+        const data = await TreeAPI.getTreesByUserId(user.id);
+        setTrees(data);
       } catch (error) {
         console.error(error);
         toaster.error({
@@ -50,7 +41,7 @@ const TreesPage = () => {
       body: '모든 장식도 함께 사라집니다',
       onConfirm: async () => {
         try {
-          await deleteTree(treeId);
+          await TreeAPI.deleteTree(treeId);
           setTrees((prev) => prev.filter((tree) => tree.id !== treeId));
           toaster.success({
             title: '트리를 삭제했습니다',

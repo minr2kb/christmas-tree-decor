@@ -2,7 +2,7 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { ORNAMENT_TYPE_COUNT } from '@/constants/consts';
+import { ORNAMENT_TYPE_COUNT } from '@/constants/ui';
 import {
   animationQueueAtom,
   showCountAtom,
@@ -13,13 +13,13 @@ import {
   treeAtom,
 } from '@/store/atoms';
 import { createOrnament } from '@/utils/ornament';
-import { deleteTree } from '@/api/tree';
+import TreeAPI from '@/api/tree';
 import { toaster } from '@/components/ui/toaster';
 import useConfirmDialog from '../useConfirmDialog';
 import useSession from '../useSession';
 import useLoginModal from '../useLoginModal';
 
-function useControls(treeId?: string) {
+const useControls = ({ treeId }: { treeId?: string }) => {
   const setAnimationQueue = useSetAtom(animationQueueAtom);
   const setShowTriangle = useSetAtom(showTriangleAtom);
   const setShowCount = useSetAtom(showCountAtom);
@@ -62,7 +62,7 @@ function useControls(treeId?: string) {
     if (!isAuthenticated) return;
     if (!treeId) return;
     try {
-      await deleteTree(treeId);
+      await TreeAPI.deleteTree(treeId);
       toaster.success({
         title: '트리를 성공적으로 삭제했습니다',
       });
@@ -95,6 +95,6 @@ function useControls(treeId?: string) {
     isOwner,
     handleOpenLoginDialog,
   };
-}
+};
 
 export default useControls;
