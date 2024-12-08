@@ -3,6 +3,7 @@ import { TreeType } from '@/types/tree';
 import { LuTrash2, LuSettings } from 'react-icons/lu';
 import { useNavigate } from 'react-router-dom';
 import { formatDate } from '@/utils/date';
+import { ROUTES } from '@/constants/routes';
 
 interface TreeCardProps {
   tree: TreeType;
@@ -13,7 +14,7 @@ const TreeCard = ({ tree, onDelete }: TreeCardProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/tree/${tree.id}`);
+    navigate(ROUTES.tree(tree.id));
   };
 
   return (
@@ -40,7 +41,7 @@ const TreeCard = ({ tree, onDelete }: TreeCardProps) => {
               variant="ghost"
               onClick={(e) => {
                 e.stopPropagation();
-                navigate(`/tree/${tree.id}`);
+                navigate(ROUTES.tree(tree.id));
               }}
             >
               <LuSettings />

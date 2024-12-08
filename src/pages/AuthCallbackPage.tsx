@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import supabase from '@/supabase/client';
 import LoadingPage from './LoadingPage';
 import { toaster } from '@/components/ui/toaster';
+import { ROUTES } from '@/constants/routes';
 
 const AuthCallbackPage = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const AuthCallbackPage = () => {
         toaster.success({
           title: '로그인 성공',
         });
-        navigate(from || '/');
+        navigate(from || ROUTES.home);
       }
     });
   }, [navigate]);

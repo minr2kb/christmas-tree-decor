@@ -1,6 +1,7 @@
 import { Suspense, useEffect } from 'react';
 import TreePage from '@/pages/TreePage';
 import SendPage from '@/pages/SendPage';
+import MyTreesPage from '@/pages/MyTreesPage';
 import HomePage from '@/pages/HomePage';
 import ScanPage from '@/pages/ScanPage';
 import LoadingPage from '@/pages/LoadingPage';
@@ -17,39 +18,39 @@ import { sessionAtom } from '@/store/auth';
 import { useSetAtom } from 'jotai';
 import ConfirmDialog from '@/components/ConfirmDialog';
 import LoginModal from '@/components/LoginModal';
-import TreesPage from './pages/TreesPage';
+import { ROUTES } from './constants/routes';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: ROUTES.home,
     element: <HomePage />,
   },
   {
-    path: '/create',
+    path: ROUTES.create,
     element: <CreatePage />,
   },
   {
-    path: '/scan',
+    path: ROUTES.scan,
     element: <ScanPage />,
   },
   {
-    path: '/trees',
-    element: <TreesPage />,
+    path: ROUTES.myTrees,
+    element: <MyTreesPage />,
   },
   {
-    path: '/auth/callback',
+    path: ROUTES.authCallback,
     element: <AuthCallbackPage />,
   },
   {
-    path: '/tree/:treeId',
+    path: ROUTES.tree(),
     element: <TreePage />,
   },
   {
-    path: '/send/:treeId',
+    path: ROUTES.send(),
     element: <SendPage />,
   },
   {
-    path: '*',
+    path: ROUTES.other,
     element: <ErrorPage error={new Error('Page Not Found')} />,
   },
 ]);

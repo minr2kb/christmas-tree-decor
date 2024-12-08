@@ -18,6 +18,7 @@ import { toaster } from '@/components/ui/toaster';
 import useConfirmDialog from '../useConfirmDialog';
 import useSession from '../useSession';
 import useLoginModal from '../useLoginModal';
+import { ROUTES } from '@/constants/routes';
 
 const useControls = (treeId?: string) => {
   const setAnimationQueue = useSetAtom(animationQueueAtom);
@@ -66,7 +67,7 @@ const useControls = (treeId?: string) => {
       toaster.success({
         title: '트리를 성공적으로 삭제했습니다',
       });
-      navigate('/');
+      navigate(ROUTES.home);
     } catch (error) {
       console.error(error);
       toaster.error({

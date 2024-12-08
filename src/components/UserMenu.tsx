@@ -6,6 +6,7 @@ import { Avatar } from './ui/avatar';
 import { Button } from './ui/button';
 import AuthAPI from '@/api/auth';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
 
 const UserMenu = () => {
   const { user, isAuthenticated } = useSession();
@@ -25,7 +26,7 @@ const UserMenu = () => {
   };
 
   const handleTrees = () => {
-    navigate('/trees');
+    navigate(ROUTES.myTrees);
   };
 
   if (!isAuthenticated) {

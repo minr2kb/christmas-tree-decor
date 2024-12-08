@@ -9,7 +9,7 @@ import useConfirmDialog from '@/hooks/useConfirmDialog';
 import { toaster } from '@/components/ui/toaster';
 import BackButton from '@/components/BackButton';
 
-const TreesPage = () => {
+const MyTreesPage = () => {
   const { user } = useSession();
   const [trees, setTrees] = useState<TreeType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -95,4 +95,4 @@ const TreesPage = () => {
   );
 };
 
-export default TreesPage;
+export default MyTreesPage;

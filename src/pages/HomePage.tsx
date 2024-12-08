@@ -12,6 +12,7 @@ import { MdFormatListBulleted } from 'react-icons/md';
 import { RiQrScan2Line } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { ROUTES } from '@/constants/routes';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -29,11 +30,11 @@ const HomePage = () => {
       });
       return;
     }
-    navigate('/create');
+    navigate(ROUTES.create);
   };
 
   const handleScanTree = () => {
-    navigate('/scan');
+    navigate(ROUTES.scan);
   };
 
   const handleLogin = () => {
@@ -41,7 +42,7 @@ const HomePage = () => {
   };
 
   const handleTrees = () => {
-    navigate('/trees');
+    navigate(ROUTES.myTrees);
   };
 
   const handleLogout = async () => {
