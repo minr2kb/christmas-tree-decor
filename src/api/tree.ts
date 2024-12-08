@@ -25,7 +25,7 @@ class TreeAPI {
     if (error) throw error;
   };
 
-  static updateTree = async (treeId: string, treeName: string, description: string) => {
+  static updateTree = async (treeId: string, treeName: string, description: string | null) => {
     const { data, error } = await supabase.from('trees').update({ name: treeName, description }).eq('id', treeId);
     if (error || !data) throw error;
     return parseTree(data);

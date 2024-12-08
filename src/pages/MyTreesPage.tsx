@@ -8,6 +8,7 @@ import TreeCard from '@/components/TreeCard';
 import useConfirmDialog from '@/hooks/useConfirmDialog';
 import { toaster } from '@/components/ui/toaster';
 import BackButton from '@/components/BackButton';
+import OrnamentAPI from '@/api/ornaments';
 
 const MyTreesPage = () => {
   const { user } = useSession();
@@ -42,6 +43,7 @@ const MyTreesPage = () => {
       onConfirm: async () => {
         try {
           await TreeAPI.deleteTree(treeId);
+          await OrnamentAPI.deleteOrnamentsByTreeId(treeId);
           setTrees((prev) => prev.filter((tree) => tree.id !== treeId));
           toaster.success({
             title: '트리를 삭제했습니다',
@@ -57,6 +59,22 @@ const MyTreesPage = () => {
       confirmText: '삭제',
       isDestructive: true,
     });
+  };
+
+  const handleEdit = async (treeId: string, name: string, description: string | null) => {
+    try {
+      await TreeAPI.updateTree(treeId, name, description);
+      setTrees((prev) => prev.map((tree) => (tree.id === treeId ? { ...tree, name, description } : tree)));
+      toaster.success({
+        title: '트리를 수정했습니다',
+      });
+    } catch (error) {
+      console.error(error);
+      toaster.error({
+        title: '트리 수정에 실패했습니다',
+        description: '잠시 후 다시 시도해주세요',
+      });
+    }
   };
 
   return (
@@ -86,7 +104,7 @@ const MyTreesPage = () => {
             <Text color="gray.500">아직 만든 트리가 없어요</Text>
           </Center>
         ) : (
-          trees.map((tree) => <TreeCard key={tree.id} tree={tree} onDelete={handleDelete} />)
+          trees.map((tree) => <TreeCard key={tree.id} tree={tree} onDelete={handleDelete} onEdit={handleEdit} />)
         )}
       </VStack>
       <UserMenu />
