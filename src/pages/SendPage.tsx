@@ -15,7 +15,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { PiMonitorArrowUp } from 'react-icons/pi';
-import useSendPage from '@/hooks/useSendPage';
+import useSendPage from '@/hooks/logic/useSendPage';
 import ErrorPage from './ErrorPage';
 import LoadingPage from './LoadingPage';
 

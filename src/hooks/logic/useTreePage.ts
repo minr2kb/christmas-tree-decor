@@ -14,7 +14,7 @@ import { TREE_HEIGHT_RATIO, INTERVAL_TIME } from '@/constants/consts';
 import { useAtom, useAtomValue } from 'jotai';
 import useInterval from '@/hooks/util/useInterval';
 import { toaster } from '@/components/ui/toaster';
-import useCheckTreeId from '@/hooks/util/useCheckTreeId';
+import useCheckTreeId from '@/hooks/useCheckTreeId';
 import { loadOrnaments, subscribeToOrnaments } from '@/api/ornaments';
 import { getInitialPosition, parseOrnament } from '@/utils/ornament';
 import { debounce } from '@/utils/debounce';

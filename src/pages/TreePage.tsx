@@ -4,7 +4,7 @@ import Background from '@/components/Background';
 import ChristmasTree from '@/components/ChristmasTree';
 import Controls from '@/components/Controls';
 import Ornament from '@/components/Ornament';
-import useTreePage from '@/hooks/useTreePage';
+import useTreePage from '@/hooks/logic/useTreePage';
 import ErrorPage from './ErrorPage';
 import Loading from './LoadingPage';
 import BackdropTitle from '@/components/BackdropTitle';
