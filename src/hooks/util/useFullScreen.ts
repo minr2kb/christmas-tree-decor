@@ -1,4 +1,4 @@
-import useKeyPress from './useKeyPress';
+import useKeyPress from '@/hooks/util/useKeyPress';
 
 const useFullScreen = () => {
   const toggleFullScreen = () => {

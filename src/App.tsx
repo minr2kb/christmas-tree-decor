@@ -17,6 +17,7 @@ import { sessionAtom } from '@/store/auth';
 import { useSetAtom } from 'jotai';
 import ConfirmDialog from '@/components/ConfirmDialog';
 import LoginModal from '@/components/LoginModal';
+import TreesPage from './pages/TreesPage';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: '/scan',
     element: <ScanPage />,
+  },
+  {
+    path: '/trees',
+    element: <TreesPage />,
   },
   {
     path: '/auth/callback',

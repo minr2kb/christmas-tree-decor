@@ -8,6 +8,7 @@ import useSession from '@/hooks/useSession';
 import { Button, Container, Heading, Icon, Separator, Text, VStack } from '@chakra-ui/react';
 import { IoMdAdd } from 'react-icons/io';
 import { LuLogIn } from 'react-icons/lu';
+import { MdFormatListBulleted } from 'react-icons/md';
 import { RiQrScan2Line } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 
@@ -36,6 +37,10 @@ const HomePage = () => {
 
   const handleLogin = () => {
     handleOpenLoginDialog();
+  };
+
+  const handleTrees = () => {
+    navigate('/trees');
   };
 
   const handleLogout = async () => {
@@ -89,6 +94,14 @@ const HomePage = () => {
           </Icon>
         </Button>
         <Separator />
+        {isAuthenticated && (
+          <Button variant={'subtle'} width="100%" onClick={handleTrees}>
+            내 트리 관리
+            <Icon boxSize={4}>
+              <MdFormatListBulleted />
+            </Icon>
+          </Button>
+        )}
         <Button variant={'subtle'} width="100%" onClick={isAuthenticated ? handleLogout : handleLogin}>
           {isAuthenticated ? '로그아웃' : '간편로그인'}
           <Icon boxSize={4}>

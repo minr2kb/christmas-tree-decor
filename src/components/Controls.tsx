@@ -3,9 +3,9 @@ import { memo, useMemo } from 'react';
 import { LuMenu } from 'react-icons/lu';
 import { MenuContent, MenuRoot, MenuItem, MenuTrigger, MenuItemCommand, MenuSeparator } from './ui/menu';
 import { toaster } from './ui/toaster';
-import useKeyPress from '@/hooks/useKeyPress';
+import useKeyPress from '@/hooks/util/useKeyPress';
 import QRCode from 'qrcode';
-import { useControls } from '@/hooks/useControls';
+import useControls from '@/hooks/logic/useControls';
 
 interface ControlsProps {
   toggleFullScreen: () => void;

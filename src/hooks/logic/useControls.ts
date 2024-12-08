@@ -15,11 +15,11 @@ import {
 import { createOrnament } from '@/utils/ornament';
 import { deleteTree } from '@/api/tree';
 import { toaster } from '@/components/ui/toaster';
-import useConfirmDialog from './useConfirmDialog';
-import useSession from './useSession';
-import useLoginModal from './useLoginModal';
+import useConfirmDialog from '../useConfirmDialog';
+import useSession from '../useSession';
+import useLoginModal from '../useLoginModal';
 
-export function useControls(treeId?: string) {
+function useControls(treeId?: string) {
   const setAnimationQueue = useSetAtom(animationQueueAtom);
   const setShowTriangle = useSetAtom(showTriangleAtom);
   const setShowCount = useSetAtom(showCountAtom);
@@ -96,3 +96,5 @@ export function useControls(treeId?: string) {
     handleOpenLoginDialog,
   };
 }
+
+export default useControls;

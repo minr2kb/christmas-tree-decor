@@ -1,14 +1,15 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import useSession from '@/hooks/useSession';
 import { toaster } from '@/components/ui/toaster';
 import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from './ui/menu';
 import { Avatar } from './ui/avatar';
 import { Button } from './ui/button';
 import { signOut } from '@/api/auth';
+import { useNavigate } from 'react-router-dom';
 
 const UserMenu = () => {
   const { user, isAuthenticated } = useSession();
-
+  const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       await signOut();
@@ -23,6 +24,10 @@ const UserMenu = () => {
     }
   };
 
+  const handleTrees = () => {
+    navigate('/trees');
+  };
+
   if (!isAuthenticated) {
     return null;
   }
@@ -33,10 +38,12 @@ const UserMenu = () => {
         <MenuTrigger asChild>
           <Button variant="ghost">
             <Avatar size="xs" name={user?.email} src={user?.user_metadata?.avatar_url} />
-            <Text fontSize="sm">{user?.email}</Text>
           </Button>
         </MenuTrigger>
         <MenuContent>
+          <MenuItem value="trees" onClick={handleTrees}>
+            내 트리 관리
+          </MenuItem>
           <MenuItem value="logout" onClick={handleLogout}>
             로그아웃
           </MenuItem>

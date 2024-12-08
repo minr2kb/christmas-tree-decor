@@ -1,0 +1,4 @@
+- 한국어로 대답해줘
+- 현재 프로젝트는 yarn 기반이고, 실시간 크리스마스 트리에 장식을 올리는 프로젝트야.
+- React 19, Chakra UI v3, React Router 6, Jotai 등을 사용중이야.
+- Chakra UI v3 기반으로 작성해줘. 특히 Icon 컴포넌트는 as prop이 아닌 children prop을 사용해줘.

@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { getTree } from '@/api/tree';
 import { useSetAtom } from 'jotai';
 import { treeAtom } from '@/store/atoms';
-import { parseTree } from '@/utils/tree';
 
 const useCheckTreeId = () => {
   const { treeId } = useParams();
@@ -22,7 +21,7 @@ const useCheckTreeId = () => {
           throw new Error(`Tree not found with ID: ${treeId}`);
         }
 
-        setTree(parseTree(tree));
+        setTree(tree);
         setIsValidTreeId(true);
       } catch (err) {
         console.error(err);

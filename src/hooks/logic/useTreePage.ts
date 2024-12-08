@@ -9,12 +9,12 @@ import {
   showStarAtom,
   showTitleAtom,
 } from '@/store/atoms';
-import useFullScreen from './useFullScreen';
+import useFullScreen from '@/hooks/util/useFullScreen';
 import { TREE_HEIGHT_RATIO, INTERVAL_TIME } from '@/constants/consts';
 import { useAtom, useAtomValue } from 'jotai';
-import useInterval from './useInterval';
+import useInterval from '@/hooks/util/useInterval';
 import { toaster } from '@/components/ui/toaster';
-import useCheckTreeId from './useCheckTreeId';
+import useCheckTreeId from '@/hooks/util/useCheckTreeId';
 import { loadOrnaments, subscribeToOrnaments } from '@/api/ornaments';
 import { getInitialPosition, parseOrnament } from '@/utils/ornament';
 import { debounce } from '@/utils/debounce';

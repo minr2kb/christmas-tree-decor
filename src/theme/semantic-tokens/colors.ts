@@ -10,8 +10,8 @@ export const colors = defineSemanticTokens.colors({
     },
     subtle: {
       value: {
-        _light: '{colors.slate.300}',
-        _dark: '{colors.slate.900}',
+        _light: '{colors.gray.50}',
+        _dark: '{colors.gray.950}',
       },
     },
     muted: {
@@ -34,8 +34,8 @@ export const colors = defineSemanticTokens.colors({
     },
     panel: {
       value: {
-        _light: '{colors.slate.100}',
-        _dark: '{colors.slate.700}',
+        _light: '{colors.gray.50}',
+        _dark: '{colors.gray.950}',
       },
     },
     error: {
@@ -608,14 +608,5 @@ export const colors = defineSemanticTokens.colors({
         _dark: '{colors.cyan.600}',
       },
     },
-  },
-  primary: {
-    solid: { value: '{colors.slate.700}' },
-    contrast: { value: '{colors.slate.100}' },
-    fg: { value: '{colors.slate.700}' },
-    muted: { value: '{colors.slate.100}' },
-    subtle: { value: '{colors.soft.600}' },
-    emphasized: { value: '{colors.slate.300}' },
-    focusRing: { value: '{colors.slate.500}' },
   },
 });
