@@ -1,20 +1,26 @@
 import { Box, Text } from '@chakra-ui/react';
 import useSession from '@/hooks/useSession';
-import useAuth from '@/hooks/useAuth';
 import { toaster } from '@/components/ui/toaster';
 import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from './ui/menu';
 import { Avatar } from './ui/avatar';
 import { Button } from './ui/button';
+import { signOut } from '@/api/auth';
 
 const UserMenu = () => {
   const { user, isAuthenticated } = useSession();
-  const { signOut } = useAuth();
 
   const handleLogout = async () => {
-    await signOut();
-    toaster.success({
-      title: '로그아웃 성공',
-    });
+    try {
+      await signOut();
+      toaster.success({
+        title: '로그아웃 성공',
+      });
+    } catch (error) {
+      toaster.error({
+        title: '로그아웃 실패',
+        description: error instanceof Error ? error.message : '알 수 없는 오류가 발생했어요',
+      });
+    }
   };
 
   if (!isAuthenticated) {

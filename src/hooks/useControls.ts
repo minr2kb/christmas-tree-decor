@@ -17,6 +17,7 @@ import { deleteTree } from '@/api/tree';
 import { toaster } from '@/components/ui/toaster';
 import useConfirmDialog from './useConfirmDialog';
 import useSession from './useSession';
+import useLoginModal from './useLoginModal';
 
 export function useControls(treeId?: string) {
   const setAnimationQueue = useSetAtom(animationQueueAtom);
@@ -27,6 +28,7 @@ export function useControls(treeId?: string) {
   const setShowTitle = useSetAtom(showTitleAtom);
   const navigate = useNavigate();
 
+  const { handleOpenLoginDialog } = useLoginModal();
   const { confirm } = useConfirmDialog();
   const { isAuthenticated, user } = useSession();
   const tree = useAtomValue(treeAtom);
@@ -91,5 +93,6 @@ export function useControls(treeId?: string) {
     addTest50,
     onClickRemoveTree,
     isOwner,
+    handleOpenLoginDialog,
   };
 }

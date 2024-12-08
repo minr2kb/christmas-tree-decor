@@ -42,3 +42,8 @@ export const treeAtom = atom<TreeType | null>(null);
  * 컨펌 다이얼로그 활성화용
  */
 export const confirmDialogAtom = atom<ConfirmDialogType | null>(null);
+
+/**
+ * 로그인 다이얼로그 활성화용
+ */
+export const openLoginDialogAtom = atom(false);

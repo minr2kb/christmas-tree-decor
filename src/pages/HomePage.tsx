@@ -1,8 +1,9 @@
+import { signOut } from '@/api/auth';
 import { toaster } from '@/components/ui/toaster';
 import { Tooltip } from '@/components/ui/tooltip';
 import UserMenu from '@/components/UserMenu';
-import useAuth from '@/hooks/useAuth';
 import useConfirmDialog from '@/hooks/useConfirmDialog';
+import useLoginModal from '@/hooks/useLoginModal';
 import useSession from '@/hooks/useSession';
 import { Button, Container, Heading, Icon, Separator, Text, VStack } from '@chakra-ui/react';
 import { IoMdAdd } from 'react-icons/io';
@@ -13,15 +14,15 @@ import { useNavigate } from 'react-router-dom';
 const HomePage = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useSession();
-  const { signOut } = useAuth();
   const { confirm } = useConfirmDialog();
+  const { handleOpenLoginDialog } = useLoginModal();
 
   const handleCreateTree = () => {
     if (!isAuthenticated) {
       confirm({
         title: '로그인 후 이용 가능해요!',
         body: '로그인 후 트리를 만들어보세요',
-        onConfirm: () => navigate('/login'),
+        onConfirm: handleOpenLoginDialog,
         confirmText: '로그인',
       });
       return;
@@ -34,14 +35,21 @@ const HomePage = () => {
   };
 
   const handleLogin = () => {
-    navigate('/login');
+    handleOpenLoginDialog();
   };
 
   const handleLogout = async () => {
-    await signOut();
-    toaster.success({
-      title: '로그아웃 성공',
-    });
+    try {
+      await signOut();
+      toaster.success({
+        title: '로그아웃 성공',
+      });
+    } catch (error) {
+      toaster.error({
+        title: '로그아웃 실패',
+        description: error instanceof Error ? error.message : '알 수 없는 오류가 발생했어요',
+      });
+    }
   };
 
   return (

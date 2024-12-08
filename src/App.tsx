@@ -5,18 +5,18 @@ import HomePage from '@/pages/HomePage';
 import ScanPage from '@/pages/ScanPage';
 import LoadingPage from '@/pages/LoadingPage';
 import ErrorPage from '@/pages/ErrorPage';
-import LoginPage from '@/pages/LoginPage';
 import CreatePage from '@/pages/CreatePage';
 import Fonts from '@/theme/Fonts';
 import { Toaster } from '@/components/ui/toaster';
 import { Provider as ChakraProvider } from '@/components/ui/provider';
 import { ErrorBoundary } from 'react-error-boundary';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import AuthCallbackPage from './pages/AuthCallbackPage';
-import supabase from './supabase/client';
-import { sessionAtom } from './store/auth';
+import AuthCallbackPage from '@/pages/AuthCallbackPage';
+import supabase from '@/supabase/client';
+import { sessionAtom } from '@/store/auth';
 import { useSetAtom } from 'jotai';
-import ConfirmDialog from './components/ConfirmDialog';
+import ConfirmDialog from '@/components/ConfirmDialog';
+import LoginModal from '@/components/LoginModal';
 
 const router = createBrowserRouter([
   {
@@ -30,10 +30,6 @@ const router = createBrowserRouter([
   {
     path: '/scan',
     element: <ScanPage />,
-  },
-  {
-    path: '/login',
-    element: <LoginPage />,
   },
   {
     path: '/auth/callback',
@@ -71,21 +67,22 @@ function App() {
   }, []);
 
   return (
-    <ErrorBoundary fallbackRender={({ error }) => <ErrorPage error={error} />}>
-      <Suspense fallback={<LoadingPage />}>
-        <ChakraProvider defaultTheme="dark">
+    <ChakraProvider defaultTheme="dark">
+      <ErrorBoundary fallbackRender={({ error }) => <ErrorPage error={error} />}>
+        <Suspense fallback={<LoadingPage />}>
           <Toaster />
           <ConfirmDialog />
-          <Fonts />
+          <LoginModal />
           <RouterProvider
             router={router}
             future={{
               v7_startTransition: true,
             }}
           />
-        </ChakraProvider>
-      </Suspense>
-    </ErrorBoundary>
+          <Fonts />
+        </Suspense>
+      </ErrorBoundary>
+    </ChakraProvider>
   );
 }
 

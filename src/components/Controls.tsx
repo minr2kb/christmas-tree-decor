@@ -6,7 +6,6 @@ import { toaster } from './ui/toaster';
 import useKeyPress from '@/hooks/useKeyPress';
 import QRCode from 'qrcode';
 import { useControls } from '@/hooks/useControls';
-import { useNavigate } from 'react-router-dom';
 
 interface ControlsProps {
   toggleFullScreen: () => void;
@@ -14,8 +13,9 @@ interface ControlsProps {
 }
 
 const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
-  const { menuHandlers, addTestOrnament, addTest50, onClickRemoveTree, isOwner } = useControls(treeId);
-  const navigate = useNavigate();
+  const { menuHandlers, addTestOrnament, addTest50, onClickRemoveTree, isOwner, handleOpenLoginDialog } =
+    useControls(treeId);
+
   const { generateQR, copySendLink } = useQRActions(treeId);
 
   const keyHandlers = useMemo(
@@ -83,7 +83,7 @@ const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
             트리 삭제
           </MenuItem>
         ) : (
-          <MenuItem value="login" onClick={() => navigate('/login', { state: { from: window.location.pathname } })}>
+          <MenuItem value="login" onClick={handleOpenLoginDialog}>
             로그인
           </MenuItem>
         )}
