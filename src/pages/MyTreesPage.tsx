@@ -1,4 +1,4 @@
-import { Heading, Text, VStack, Container, Spinner, Center } from '@chakra-ui/react';
+import { Heading, VStack, Container, Spinner, Center } from '@chakra-ui/react';
 import UserMenu from '@/components/UserMenu';
 import { useEffect, useState } from 'react';
 import TreeAPI from '@/api/tree';
@@ -9,6 +9,8 @@ import useConfirmDialog from '@/hooks/useConfirmDialog';
 import { toaster } from '@/components/ui/toaster';
 import BackButton from '@/components/BackButton';
 import OrnamentAPI from '@/api/ornaments';
+import { EmptyState } from '@/components/ui/empty-state';
+import { RiBracketsLine } from 'react-icons/ri';
 
 const MyTreesPage = () => {
   const { user } = useSession();
@@ -89,10 +91,7 @@ const MyTreesPage = () => {
       p={4}
       bgColor="bg"
     >
-      <Heading fontSize="2xl">내 트리 관리</Heading>
-      <Text fontSize="md" color="gray.200">
-        내가 꾸며 온 트리들을 확인해보세요!
-      </Text>
+      <Heading fontSize="xl">내 트리 관리</Heading>
 
       <VStack gap={4} mt={5} width="100%" flex={1} overflowY="auto">
         {isLoading ? (
@@ -101,7 +100,11 @@ const MyTreesPage = () => {
           </Center>
         ) : trees.length === 0 ? (
           <Center flex={1}>
-            <Text color="gray.500">아직 만든 트리가 없어요</Text>
+            <EmptyState
+              icon={<RiBracketsLine />}
+              title="아직 만든 트리가 없어요"
+              description="트리를 만들어 장식을 꾸며보세요!"
+            />
           </Center>
         ) : (
           trees.map((tree) => <TreeCard key={tree.id} tree={tree} onDelete={handleDelete} onEdit={handleEdit} />)
