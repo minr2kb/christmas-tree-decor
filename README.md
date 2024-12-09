@@ -1,5 +1,6 @@
-# 🎄 크리스마스 트리 실시간 꾸미기
+# 🎄 실시간 크리스마스 트리 꾸미기
 
+![christmas-tree-decor](https://github.com/user-attachments/assets/74b27618-8d01-4b9f-968b-3366483816ea)
 실시간으로 스크린에 나타난 트리를 함께 꾸미는 프로젝트입니다.
 
 ## 🌟 주요 기능
@@ -52,6 +53,10 @@
 - 공유 링크 복사
 - 더미 UI 삽입 기능
 - 전체화면, 별, 눈, 카운트 등의 UI 조작 기능 단축키 지원
+
+## 🪄 애니메이션 로직
+![Christmas Tree 로직](https://github.com/user-attachments/assets/27c8423f-6c77-4618-ac84-60fde2630416)
+
 
 ## 📁 프로젝트 구조
 
