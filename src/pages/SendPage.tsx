@@ -1,14 +1,13 @@
-import { Box, Container, Flex, Image, Input, Text } from '@chakra-ui/react';
+import { Box, Flex, Image, Input, Text } from '@chakra-ui/react';
 import { ORNAMENT_TYPE_COUNT, SEND_ANIMATION_DURATION } from '@/constants/ui';
 import { keyframes } from '@emotion/react';
 import { Button } from '@/components/ui/button';
 import { PiMonitorArrowUp } from 'react-icons/pi';
 import useSendPage from '@/hooks/logic/useSendPage';
-import ErrorPage from './ErrorPage';
-import LoadingPage from './LoadingPage';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import PageLayout from '@/components/PageLayout';
 
 const DropAndFlyAnimation = keyframes`
   0% { transform: translateY(0%); opacity: 1; }
@@ -32,26 +31,18 @@ const SendPage = () => {
     handleReset,
   } = useSendPage();
 
-  if (isLoading) {
-    return <LoadingPage />;
-  }
-
-  if (!isValidTreeId) {
-    return <ErrorPage error={new Error('트리를 찾을 수 없어요')} />;
-  }
-
   return (
-    <Container
-      maxW="sm"
-      h="100vh"
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      gap={8}
-      bgColor="bg"
+    <PageLayout
+      headerProps={{ title: '트리 장식하기' }}
+      center
+      containerProps={{ maxW: 'sm' }}
+      isLoading={isLoading}
+      isError={!isValidTreeId}
+      error={new Error('트리를 찾을 수 없어요')}
     >
-      <Text fontSize="xl">{statusText}</Text>
+      <Text fontSize="xl" textAlign="center">
+        {statusText}
+      </Text>
       <Box w="full" position="relative" h="20vh" p={4}>
         {!isSubmitting && !isSubmitted && (
           <Slider {...sliderSettings}>
@@ -109,7 +100,7 @@ const SendPage = () => {
           {isSubmitted ? '다시하기' : '트리에 달기'}
         </Button>
       </Flex>
-    </Container>
+    </PageLayout>
   );
 };
 

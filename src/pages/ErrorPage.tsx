@@ -1,4 +1,4 @@
-import { Container, Heading, Text } from '@chakra-ui/react';
+import { Center, Heading, Text } from '@chakra-ui/react';
 
 type ErrorPageProps = {
   error: Error;
@@ -6,21 +6,10 @@ type ErrorPageProps = {
 
 const ErrorPage = ({ error }: ErrorPageProps) => {
   return (
-    <Container
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      height="100vh"
-      bg="bg"
-      color="text"
-      p={4}
-      textAlign="center"
-      gap={4}
-    >
+    <Center h="100vh" bg="bg" color="text" p={4} textAlign="center" gap={4} flexDirection="column">
       <Heading fontSize="2xl">⚠️ Error</Heading>
       <Text fontSize="lg">{error.message}</Text>
-    </Container>
+    </Center>
   );
 };
 

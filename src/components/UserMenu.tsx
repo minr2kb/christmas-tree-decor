@@ -1,16 +1,28 @@
-import { Box } from '@chakra-ui/react';
+import { Box, BoxProps } from '@chakra-ui/react';
 import useSession from '@/hooks/useSession';
 import { toaster } from '@/components/ui/toaster';
 import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from './ui/menu';
 import { Avatar } from './ui/avatar';
-import { Button } from './ui/button';
+import { Button, ButtonProps } from './ui/button';
 import AuthAPI from '@/api/auth';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
+import useLoginModal from '@/hooks/useLoginModal';
 
-const UserMenu = () => {
+type UserMenuProps = {
+  containerProps?: BoxProps;
+  triggerProps?: ButtonProps;
+};
+
+const UserMenu = ({ containerProps, triggerProps }: UserMenuProps) => {
   const { user, isAuthenticated } = useSession();
   const navigate = useNavigate();
+  const { openLoginModal } = useLoginModal();
+
+  const handleLogin = () => {
+    openLoginModal();
+  };
+
   const handleLogout = async () => {
     try {
       await AuthAPI.signOut();
@@ -29,27 +41,29 @@ const UserMenu = () => {
     navigate(ROUTES.myTrees);
   };
 
-  if (!isAuthenticated) {
-    return null;
-  }
-
   return (
-    <Box position="fixed" top={4} right={4}>
-      <MenuRoot>
-        <MenuTrigger asChild>
-          <Button variant="ghost">
-            <Avatar size="xs" name={user?.email} src={user?.user_metadata?.avatar_url} />
-          </Button>
-        </MenuTrigger>
-        <MenuContent>
-          <MenuItem value="trees" onClick={handleTrees}>
-            내 트리 관리
-          </MenuItem>
-          <MenuItem value="logout" onClick={handleLogout}>
-            로그아웃
-          </MenuItem>
-        </MenuContent>
-      </MenuRoot>
+    <Box {...containerProps}>
+      {isAuthenticated ? (
+        <MenuRoot>
+          <MenuTrigger asChild>
+            <Button variant="ghost" p={0} {...triggerProps}>
+              <Avatar size="sm" name={user?.email} src={user?.user_metadata?.avatar_url} shape="rounded" />
+            </Button>
+          </MenuTrigger>
+          <MenuContent>
+            <MenuItem value="trees" onClick={handleTrees}>
+              내 트리 관리
+            </MenuItem>
+            <MenuItem value="logout" onClick={handleLogout}>
+              로그아웃
+            </MenuItem>
+          </MenuContent>
+        </MenuRoot>
+      ) : (
+        <Button variant="outline" {...triggerProps} onClick={handleLogin}>
+          로그인
+        </Button>
+      )}
     </Box>
   );
 };

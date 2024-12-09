@@ -1,11 +1,11 @@
 import AuthAPI from '@/api/auth';
 import { toaster } from '@/components/ui/toaster';
 import { Tooltip } from '@/components/ui/tooltip';
-import UserMenu from '@/components/UserMenu';
+
 import useConfirmDialog from '@/hooks/useConfirmDialog';
 import useLoginModal from '@/hooks/useLoginModal';
 import useSession from '@/hooks/useSession';
-import { Container, Heading, Icon, Separator, Text, VStack } from '@chakra-ui/react';
+import { Heading, Separator, Text, VStack } from '@chakra-ui/react';
 import { IoMdAdd } from 'react-icons/io';
 import { LuLogIn } from 'react-icons/lu';
 import { MdFormatListBulleted } from 'react-icons/md';
@@ -13,19 +13,20 @@ import { RiQrScan2Line } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
+import PageLayout from '@/components/PageLayout';
 
 const HomePage = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useSession();
   const { confirm } = useConfirmDialog();
-  const { handleOpenLoginDialog } = useLoginModal();
+  const { openLoginModal } = useLoginModal();
 
   const handleCreateTree = () => {
     if (!isAuthenticated) {
       confirm({
         title: '로그인 후 이용 가능해요!',
         body: '로그인 후 트리를 만들어보세요',
-        onConfirm: handleOpenLoginDialog,
+        onConfirm: openLoginModal,
         confirmText: '로그인',
       });
       return;
@@ -38,7 +39,7 @@ const HomePage = () => {
   };
 
   const handleLogin = () => {
-    handleOpenLoginDialog();
+    openLoginModal();
   };
 
   const handleTrees = () => {
@@ -60,17 +61,7 @@ const HomePage = () => {
   };
 
   return (
-    <Container
-      maxW="xs"
-      h="100vh"
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      gap={4}
-      p={4}
-      bgColor="bg"
-    >
+    <PageLayout center headerProps={{ showBackButton: false }}>
       <Heading fontSize="2xl">크리스마스 트리 꾸미기🎄</Heading>
       <Text fontSize="md" color="gray.200">
         실시간으로 함께 꾸미는 크리스마스 트리
@@ -82,37 +73,34 @@ const HomePage = () => {
           showArrow
           disabled={!!isAuthenticated}
         >
-          <Button width="100%" onClick={handleCreateTree}>
+          <Button width="100%" onClick={handleCreateTree} _icon={{ boxSize: 4 }}>
             새로운 트리 만들기
-            <Icon boxSize={4}>
-              <IoMdAdd />
-            </Icon>
+            <IoMdAdd />
           </Button>
         </Tooltip>
-        <Button width="100%" onClick={handleScanTree}>
+        <Button width="100%" onClick={handleScanTree} _icon={{ boxSize: 4 }}>
           기존 트리 꾸미기
-          <Icon boxSize={4}>
-            <RiQrScan2Line />
-          </Icon>
+          <RiQrScan2Line />
         </Button>
         <Separator />
         {isAuthenticated && (
-          <Button variant={'subtle'} width="100%" onClick={handleTrees}>
+          <Button variant={'subtle'} width="100%" onClick={handleTrees} _icon={{ boxSize: 4 }}>
             내 트리 관리
-            <Icon boxSize={4}>
-              <MdFormatListBulleted />
-            </Icon>
+            <MdFormatListBulleted />
           </Button>
         )}
-        <Button variant={'subtle'} width="100%" onClick={isAuthenticated ? handleLogout : handleLogin}>
+        <Button
+          variant={'subtle'}
+          width="100%"
+          onClick={isAuthenticated ? handleLogout : handleLogin}
+          _icon={{ boxSize: 4 }}
+        >
           {isAuthenticated ? '로그아웃' : '간편로그인'}
-          <Icon boxSize={4}>
-            <LuLogIn />
-          </Icon>
+          <LuLogIn />
         </Button>
       </VStack>
-      <UserMenu />
-    </Container>
+      {/* <Box css={{ height: '5000px', border: '1px solid red' }} /> */}
+    </PageLayout>
   );
 };
 

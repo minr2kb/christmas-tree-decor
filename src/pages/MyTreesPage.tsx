@@ -1,5 +1,4 @@
-import { Heading, VStack, Container, Spinner, Center } from '@chakra-ui/react';
-import UserMenu from '@/components/UserMenu';
+import { VStack, Center } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import TreeAPI from '@/api/tree';
 import useSession from '@/hooks/useSession';
@@ -7,13 +6,18 @@ import { TreeType } from '@/types/tree';
 import TreeCard from '@/components/TreeCard';
 import useConfirmDialog from '@/hooks/useConfirmDialog';
 import { toaster } from '@/components/ui/toaster';
-import BackButton from '@/components/BackButton';
 import OrnamentAPI from '@/api/ornaments';
 import { EmptyState } from '@/components/ui/empty-state';
 import { RiBracketsLine } from 'react-icons/ri';
+import { Button } from '@/components/ui/button';
+import { IoMdAdd } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
+import PageLayout from '@/components/PageLayout';
 
 const MyTreesPage = () => {
   const { user } = useSession();
+  const navigate = useNavigate();
   const [trees, setTrees] = useState<TreeType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { confirm } = useConfirmDialog();
@@ -80,39 +84,26 @@ const MyTreesPage = () => {
   };
 
   return (
-    <Container
-      maxW="sm"
-      h="100vh"
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      gap={4}
-      p={4}
-      bgColor="bg"
-    >
-      <Heading fontSize="xl">내 트리 관리</Heading>
-
-      <VStack gap={4} mt={5} width="100%" flex={1} overflowY="auto">
-        {isLoading ? (
-          <Center flex={1}>
-            <Spinner />
-          </Center>
-        ) : trees.length === 0 ? (
+    <PageLayout headerProps={{ title: '내 트리 관리' }} containerProps={{ maxW: 'sm' }} isLoading={isLoading}>
+      <VStack gap={4} width="100%" flex={1} overflowY="auto">
+        {trees.length === 0 ? (
           <Center flex={1}>
             <EmptyState
               icon={<RiBracketsLine />}
               title="아직 만든 트리가 없어요"
               description="트리를 만들어 장식을 꾸며보세요!"
-            />
+            >
+              <Button width="100%" onClick={() => navigate(ROUTES.create)} _icon={{ boxSize: 4 }}>
+                트리 만들기
+                <IoMdAdd />
+              </Button>
+            </EmptyState>
           </Center>
         ) : (
           trees.map((tree) => <TreeCard key={tree.id} tree={tree} onDelete={handleDelete} onEdit={handleEdit} />)
         )}
       </VStack>
-      <UserMenu />
-      <BackButton />
-    </Container>
+    </PageLayout>
   );
 };
 

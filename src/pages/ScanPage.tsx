@@ -1,4 +1,4 @@
-import BackButton from '@/components/BackButton';
+import Header from '@/components/Header';
 import QRScanner from '@/components/QRScanner';
 import { Box, Text } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
@@ -33,8 +33,9 @@ const ScanPage = () => {
 
   return (
     <Box w="100vw" h="100vh" position="relative">
+      <Header showUser={false} />
       <QRScanner onScan={handleScan} onError={handleError} />
-      <BackButton />
+
       <Box position="absolute" bottom={20} left={0} right={0}>
         <Text textAlign="center" bgColor={'blackAlpha.300'} fontWeight={'bold'} p={2}>
           스크린에 표시된 QR코드를 찍어주세요
