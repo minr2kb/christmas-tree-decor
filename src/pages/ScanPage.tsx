@@ -11,13 +11,13 @@ const ScanPage = () => {
     // 경로 패턴 검사를 위한 정규식
     const isTreePath = (path: string): boolean => {
       const baseUrl = window.location.origin;
-      const treePathRegex = new RegExp(`^${baseUrl}/tree/[^/]+$`);
+      const treePathRegex = new RegExp(`^${baseUrl}/send/[^/]+$`);
       return treePathRegex.test(path);
     };
 
     // 트리 ID 추출 함수
     const extractTreePath = (path: string): string => {
-      const match = path.match(/\/tree\/[^/]+$/);
+      const match = path.match(/\/send\/[^/]+$/);
       return match ? match[0] : '';
     };
 
