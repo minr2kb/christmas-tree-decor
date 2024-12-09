@@ -92,11 +92,7 @@ const SendPage = () => {
           disabled={isSubmitting || isSubmitted}
           bgColor="bg"
         />
-        <Button
-          size="lg"
-          disabled={!name.trim() || isSubmitting || isSubmitted}
-          onClick={isSubmitted ? handleReset : handleSend}
-        >
+        <Button size="lg" disabled={!name.trim() || isSubmitting} onClick={isSubmitted ? handleReset : handleSend}>
           {isSubmitted ? '다시하기' : '트리에 달기'}
         </Button>
       </Flex>
