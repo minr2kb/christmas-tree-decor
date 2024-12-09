@@ -14,7 +14,6 @@ const QRScanner = ({ onScan, onError }: QRScannerProps) => {
 
   useEffect(() => {
     if (!videoRef.current) return;
-    console.log('QRScanner.tsx');
 
     if (!QrScanner.hasCamera()) {
       setError('카메라를 찾을 수 없습니다.');

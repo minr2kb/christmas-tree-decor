@@ -17,6 +17,21 @@ const useRemotePage = () => {
   useEffect(() => {
     if (!treeId) return;
 
+    const initializeTreeState = async () => {
+      try {
+        const state = await TreeStatesAPI.getTreeState(treeId);
+        setTreeState(state);
+      } catch (error) {
+        console.error(error);
+        toaster.error({
+          title: '트리 상태를 불러오는데 실패했습니다',
+          description: '잠시 후 다시 시도해주세요',
+        });
+      }
+    };
+
+    initializeTreeState();
+
     const channel = TreeStatesAPI.subscribeToTreeState(treeId, (newState) => {
       setTreeState(newState);
     });
