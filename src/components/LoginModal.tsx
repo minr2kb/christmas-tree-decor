@@ -19,15 +19,20 @@ import { toaster } from './ui/toaster';
 
 const LoginModal = () => {
   const [loginModal, setLoginModal] = useAtom(loginModalAtom);
-  const from = window.location.pathname;
 
-  const { title = '로그인', body, providers = ['google', 'kakao'], onCancel } = loginModal || {};
+  const {
+    title = '로그인',
+    body,
+    providers = ['google', 'kakao'],
+    onCancel,
+    redirectUrl = window.location.pathname,
+  } = loginModal || {};
   const hasKakao = providers.includes('kakao');
   const hasGoogle = providers.includes('google');
 
   const handleLogin = async (provider: Provider) => {
     try {
-      await AuthAPI.signInWithProvider(provider, from);
+      await AuthAPI.signInWithProvider(provider, redirectUrl);
     } catch (error) {
       toaster.error({
         title: '로그인 실패',

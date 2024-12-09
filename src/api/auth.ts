@@ -2,11 +2,11 @@ import supabase from '@/supabase/client';
 import { Provider } from '@/types/auth';
 
 class AuthAPI {
-  static signInWithProvider = async (provider: Provider, from?: string) => {
+  static signInWithProvider = async (provider: Provider, redirectUrl?: string) => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${window.location.origin}/auth/callback?from=${from}`,
+        redirectTo: `${window.location.origin}/auth/callback?redirectUrl=${redirectUrl}`,
       },
     });
 

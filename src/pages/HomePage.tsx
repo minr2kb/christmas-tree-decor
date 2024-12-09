@@ -26,7 +26,7 @@ const HomePage = () => {
       confirm({
         title: '로그인 후 이용 가능해요!',
         body: '로그인 후 트리를 만들어보세요',
-        onConfirm: openLoginModal,
+        onConfirm: () => openLoginModal({ redirectUrl: ROUTES.create }),
         confirmText: '로그인',
       });
       return;

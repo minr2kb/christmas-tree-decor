@@ -15,4 +15,5 @@ export type LoginModalType = {
   body?: string;
   providers?: Provider[];
   onCancel?: () => void;
+  redirectUrl?: string;
 };
