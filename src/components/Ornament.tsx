@@ -69,35 +69,31 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
     if (initialPosition && !isLoaded) {
       return {
         position: 'absolute',
-        left: `${realInitPosition.x}px`,
-        top: `${realInitPosition.y}px`,
         width: `${ORNAMENT_SIZE}vh`,
-        transform: `scale(0.1)`,
+        transform: `translate3d(${realInitPosition.x}px, ${realInitPosition.y}px, 0) scale(0.1)`,
         transition: 'all 1s ease',
+        willChange: 'transform, opacity',
       };
     }
 
     if (initialPosition && !isAnimationComplete) {
       return {
         position: 'absolute',
-        left: `${realInitPosition.x}px`,
-        top: `${realInitPosition.y}px`,
         width: `${ORNAMENT_SIZE}vh`,
-        transform: `translate(-50%, -50%) rotate(${rotation}deg) scale(${TEMP_SCALE})`,
+        transform: `translate3d(${realInitPosition.x}px, ${realInitPosition.y}px, 0) translate(-50%, -50%) rotate(${rotation}deg) scale(${TEMP_SCALE})`,
         filter: 'drop-shadow(0 0 3px #fff)',
         transition: 'all 1s ease',
+        willChange: 'transform, opacity',
       };
     }
 
     return {
       position: 'absolute',
-      left: `${realPosition.x}px`,
-      top: `${realPosition.y}px`,
       width: `${ORNAMENT_SIZE}vh`,
-      transform: `translate(-50%, -50%) rotate(${rotation}deg) scale(${scale})`,
+      transform: `translate3d(${realPosition.x}px, ${realPosition.y}px, 0) translate(-50%, -50%) rotate(${rotation}deg) scale(${scale})`,
       transition: 'all 1s ease',
     };
-  }, [initialPosition, isLoaded, isAnimationComplete, realPosition.x, realPosition.y, rotation, scale]);
+  }, [initialPosition, isLoaded, isAnimationComplete, realPosition, rotation, scale]);
 
   return (
     <>
@@ -115,9 +111,7 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
         <Text
           css={{
             position: 'absolute',
-            left: `${realInitPosition.x}px`,
-            transform: `translate(-50%, 150%)`,
-            top: `${realInitPosition.y}px`,
+            transform: `translate(${realInitPosition.x}px, ${realInitPosition.y}px) translate(-50%, 150%)`,
             color: 'white',
             fontSize: `${ORNAMENT_SIZE * 0.6}rem`,
             fontWeight: 'bold',
