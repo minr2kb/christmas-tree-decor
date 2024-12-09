@@ -1,12 +1,10 @@
-import { Suspense, useEffect } from 'react';
-import TreePage from '@/pages/TreePage';
-import SendPage from '@/pages/SendPage';
-import MyTreesPage from '@/pages/MyTreesPage';
+import { lazy, Suspense, useEffect } from 'react';
 import HomePage from '@/pages/HomePage';
 import ScanPage from '@/pages/ScanPage';
 import LoadingPage from '@/pages/LoadingPage';
 import ErrorPage from '@/pages/ErrorPage';
 import CreatePage from '@/pages/CreatePage';
+import RemotePage from '@/pages/RemotePage';
 import Fonts from '@/theme/Fonts';
 import { Toaster } from '@/components/ui/toaster';
 import { Provider as ChakraProvider } from '@/components/ui/provider';
@@ -20,7 +18,10 @@ import ConfirmDialog from '@/components/ConfirmDialog';
 import LoginModal from '@/components/LoginModal';
 import { ROUTES } from './constants/routes';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
-import RemotePage from './pages/RemotePage';
+
+const TreePage = lazy(() => import('@/pages/TreePage'));
+const SendPage = lazy(() => import('@/pages/SendPage'));
+const MyTreesPage = lazy(() => import('@/pages/MyTreesPage'));
 
 const router = createBrowserRouter([
   {
