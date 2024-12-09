@@ -11,15 +11,23 @@ const AuthCallbackPage = () => {
   const from = searchParams.get('from');
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event) => {
       if (event === 'SIGNED_IN') {
         toaster.success({
           title: '로그인 성공',
         });
-        navigate(from || ROUTES.home);
+      } else {
+        console.log('NOT_SIGNED_IN');
       }
+      navigate(from || ROUTES.home);
     });
-  }, [navigate]);
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
 
   return <LoadingPage />;
 };
