@@ -30,9 +30,7 @@ const ProtectedRoute = ({
   const { isAuthenticated, isLoading } = useSession();
   const { openLoginModal } = useLoginModal();
 
-  // 로그인 모달 열기
   useEffect(() => {
-    console.log('isLoading', isLoading);
     if (isLoading) return;
     if (requireAuth && !isAuthenticated && showLoginModal) {
       openLoginModal({ onCancel: () => navigate(redirectTo) });

@@ -61,12 +61,12 @@ const HomePage = () => {
   };
 
   return (
-    <PageLayout center headerProps={{ showBackButton: false }}>
+    <PageLayout center headerProps={{ showBackButton: false, showLogo: true }}>
       <Heading fontSize="2xl">크리스마스 트리 꾸미기🎄</Heading>
       <Text fontSize="md" color="gray.200">
         실시간으로 함께 꾸미는 크리스마스 트리
       </Text>
-      <VStack gap={4} mt={5} w="full">
+      <VStack gap={4} mt={7} w="full">
         <Tooltip
           content="로그인 후 이용 가능해요!"
           positioning={{ placement: 'top' }}

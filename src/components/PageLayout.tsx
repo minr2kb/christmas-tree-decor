@@ -3,9 +3,17 @@ import Header, { HeaderProps } from './Header';
 import LoadingPage from '@/pages/LoadingPage';
 import ErrorPage from '@/pages/ErrorPage';
 import Footer from './Footer';
+import { Snowfall } from 'react-snowfall';
+import Background from './Background';
 
 type PageLayoutProps = {
   children: React.ReactNode;
+  maxWidth?: ContainerProps['maxW'];
+  disableSnowfall?: boolean;
+  disableBackground?: boolean;
+  disableHeader?: boolean;
+  disableFooter?: boolean;
+  disablePadding?: boolean;
   headerProps?: HeaderProps;
   containerProps?: ContainerProps;
   center?: boolean;
@@ -17,6 +25,12 @@ type PageLayoutProps = {
 
 const PageLayout = ({
   children,
+  maxWidth = 'xs',
+  disableSnowfall = false,
+  disableBackground = false,
+  disableHeader = false,
+  disableFooter = false,
+  disablePadding = false,
   center = false,
   headerProps,
   containerProps,
@@ -35,8 +49,21 @@ const PageLayout = ({
 
   return (
     <Box bgColor={bgColor} position="relative" minH="100vh" display="flex" flexDirection="column">
-      <Header {...headerProps} />
-      <Container as="main" maxW="xs" p={4} mx="auto" flex={1} display="flex" flexDirection="column" {...containerProps}>
+      {!disableBackground && <Background />}
+      {!disableSnowfall && <Snowfall speed={[0.5, 0.7]} wind={[-0.1, 0.1]} snowflakeCount={100} radius={[0.5, 1]} />}
+      {!disableHeader && <Header {...headerProps} />}
+
+      <Container
+        position="relative"
+        as="main"
+        maxW={maxWidth}
+        p={disablePadding ? 0 : 4}
+        mx="auto"
+        flex={1}
+        display="flex"
+        flexDirection="column"
+        {...containerProps}
+      >
         {center ? (
           <Center flex={1} flexDirection="column">
             {children}
@@ -45,7 +72,8 @@ const PageLayout = ({
           children
         )}
       </Container>
-      <Footer />
+
+      {!disableFooter && <Footer />}
     </Box>
   );
 };

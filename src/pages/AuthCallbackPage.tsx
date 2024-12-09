@@ -18,8 +18,6 @@ const AuthCallbackPage = () => {
         toaster.success({
           title: '로그인 성공',
         });
-      } else {
-        console.log('NOT_SIGNED_IN');
       }
       navigate(from || ROUTES.home);
     });

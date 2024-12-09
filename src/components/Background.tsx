@@ -23,6 +23,7 @@ const Background = memo(({ showCount = false, showStars = true }: BackgroundProp
             top: 0,
             left: 0,
             width: '100%',
+            objectFit: 'cover',
           }}
         />
       )}
