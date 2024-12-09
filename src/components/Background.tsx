@@ -16,7 +16,7 @@ const Background = memo(({ showCount = false, showStars = true }: BackgroundProp
       {showStars && (
         <Image
           id="stars"
-          src="/assets/stars.png"
+          src="/assets/images/stars.png"
           alt="stars"
           css={{
             position: 'absolute',
@@ -37,7 +37,6 @@ const Background = memo(({ showCount = false, showStars = true }: BackgroundProp
           transform={'translate(-50%, -50%)'}
           pointerEvents={'none'}
           fontWeight={'black'}
-          fontFamily={'Pretendard'}
         >
           {ornamentsCount}
         </Text>
@@ -45,7 +44,7 @@ const Background = memo(({ showCount = false, showStars = true }: BackgroundProp
 
       <Image
         id="snow-bottom"
-        src="/assets/snow.png"
+        src="/assets/images/snow.png"
         alt="snow-bottom"
         css={{
           position: 'absolute',

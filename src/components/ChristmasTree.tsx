@@ -14,7 +14,7 @@ const ChristmasTree = memo(({ showTriangle, showStar, treeHeight, treeWidth }: C
     <>
       <Image
         id="tree"
-        src="/assets/tree.png"
+        src="/assets/images/tree.png"
         alt="tree"
         css={{
           position: 'absolute',
@@ -27,7 +27,7 @@ const ChristmasTree = memo(({ showTriangle, showStar, treeHeight, treeWidth }: C
 
       <Image
         id="star"
-        src="/assets/star.png"
+        src="/assets/images/star.png"
         alt="star"
         css={{
           position: 'absolute',

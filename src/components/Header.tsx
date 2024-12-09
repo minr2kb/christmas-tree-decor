@@ -32,9 +32,9 @@ const Header = ({ title, onBack, showUser = true, showBackButton = true, showLog
 
         {showLogo && (
           <Link to={ROUTES.home}>
-            <Heading textAlign="center" fontSize="lg" whiteSpace="nowrap" fontFamily={'HSSanTokki20'}>
+            <Heading textAlign="center" fontSize="lg" whiteSpace="nowrap" fontFamily={'SanTokki'}>
               트리꾸미기
-              <Image src="/assets/logo.png" alt="logo" boxSize={6} display="inline-block" />
+              <Image src="/assets/images/logo.png" alt="logo" boxSize={6} display="inline-block" />
             </Heading>
           </Link>
         )}

@@ -11,8 +11,8 @@ const fontFaces = css`
 
   /* 산토끼 */
   @font-face {
-    font-family: 'HSSanTokki20';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405@1.0/HSSanTokki20-Regular.woff2') format('woff2');
+    font-family: 'SanTokki';
+    src: url('/assets/fonts/HSSanTokki2-Regular.woff2') format('woff2');
     font-weight: 500;
     font-style: normal;
   }
@@ -20,8 +20,64 @@ const fontFaces = css`
   /* 페이퍼로지 */
   @font-face {
     font-family: 'Paperlogy';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2') format('woff2');
+    src: url('/assets/fonts/Paperlogy/Paperlogy-1Thin.ttf') format('ttf');
+    font-weight: 100;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Paperlogy';
+    src: url('/assets/fonts/Paperlogy/Paperlogy-2ExtraLight.ttf') format('ttf');
+    font-weight: 200;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Paperlogy';
+    src: url('/assets/fonts/Paperlogy/Paperlogy-3Light.ttf') format('ttf');
+    font-weight: 300;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Paperlogy';
+    src: url('/assets/fonts/Paperlogy/Paperlogy-4Regular.ttf') format('ttf');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Paperlogy';
+    src: url('/assets/fonts/Paperlogy/Paperlogy-5Medium.ttf') format('ttf');
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Paperlogy';
+    src: url('/assets/fonts/Paperlogy/Paperlogy-6SemiBold.ttf') format('ttf');
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Paperlogy';
+    src: url('/assets/fonts/Paperlogy/Paperlogy-7Bold.ttf') format('ttf');
     font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Paperlogy';
+    src: url('/assets/fonts/Paperlogy/Paperlogy-8ExtraBold.ttf') format('ttf');
+    font-weight: 800;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Paperlogy';
+    src: url('/assets/fonts/Paperlogy/Paperlogy-9Black.ttf') format('ttf');
+    font-weight: 900;
     font-style: normal;
   }
 `;
