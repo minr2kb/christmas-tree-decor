@@ -1,5 +1,6 @@
 import { ornamentsCountAtom } from '@/store/atoms';
 import { Image, Text } from '@chakra-ui/react';
+import { keyframes } from '@emotion/react';
 import { useAtomValue } from 'jotai';
 import { memo } from 'react';
 
@@ -7,6 +8,15 @@ type BackgroundProps = {
   showCount?: boolean;
   showStars?: boolean;
 };
+
+const starsAnimation = keyframes`
+  from {
+    filter: brightness(50%);
+  }
+  to {
+    filter: brightness(100%);
+  }
+`;
 
 const Background = memo(({ showCount = false, showStars = true }: BackgroundProps) => {
   const ornamentsCount = useAtomValue(ornamentsCountAtom);
@@ -24,6 +34,7 @@ const Background = memo(({ showCount = false, showStars = true }: BackgroundProp
             left: 0,
             width: '100%',
             objectFit: 'cover',
+            animation: `${starsAnimation} 1.5s infinite alternate`,
           }}
         />
       )}

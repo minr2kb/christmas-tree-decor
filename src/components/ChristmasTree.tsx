@@ -1,6 +1,7 @@
 import { Box, Image } from '@chakra-ui/react';
 import { TREE_HEIGHT_RATIO } from '@/constants/ui';
 import { memo } from 'react';
+import { keyframes } from '@emotion/react';
 
 interface ChristmasTreeProps {
   showTriangle: boolean;
@@ -8,6 +9,24 @@ interface ChristmasTreeProps {
   treeWidth: number;
   showStar: boolean;
 }
+
+const contrastAnimation = keyframes`
+  from {
+    filter: contrast(100%);
+  }
+  to {
+    filter: contrast(120%);
+  }
+`;
+
+const brightnessAnimation = keyframes`
+  from {
+    filter: brightness(100%);
+  }
+  to {
+    filter: brightness(110%);
+  }
+`;
 
 const ChristmasTree = memo(({ showTriangle, showStar, treeHeight, treeWidth }: ChristmasTreeProps) => {
   return (
@@ -22,6 +41,7 @@ const ChristmasTree = memo(({ showTriangle, showStar, treeHeight, treeWidth }: C
           top: '50%',
           transform: 'translate(-50%, -50%)',
           height: '100%',
+          animation: `${contrastAnimation} 2s infinite alternate`,
         }}
       />
 
@@ -34,8 +54,10 @@ const ChristmasTree = memo(({ showTriangle, showStar, treeHeight, treeWidth }: C
           left: '50%',
           top: '2%',
           transform: `translateX(-50%) scale(${showStar ? 1 : 0})`,
+          opacity: showStar ? 1 : 0,
           height: '13%',
-          transition: 'transform 0.2s ease',
+          transition: 'opacity 1s ease, transform 1s ease',
+          animation: `${brightnessAnimation} 1s infinite alternate`,
         }}
       />
 

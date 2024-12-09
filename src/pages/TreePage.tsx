@@ -8,6 +8,7 @@ import useTreePage from '@/hooks/logic/useTreePage';
 import ErrorPage from './ErrorPage';
 import Loading from './LoadingPage';
 import BackdropTitle from '@/components/BackdropTitle';
+import Fade from '@/components/Fade';
 
 const TreePage = () => {
   const {
@@ -56,7 +57,9 @@ const TreePage = () => {
 
       <Controls toggleFullScreen={toggleFullScreen} treeId={treeId} />
       <BackdropTitle />
-      {showSnow && <Snowfall speed={[0.5, 0.7]} wind={[-0.1, 0.1]} snowflakeCount={200} />}
+      <Fade in={showSnow} duration={1000}>
+        <Snowfall speed={[0.5, 0.7]} wind={[-0.1, 0.1]} snowflakeCount={200} />
+      </Fade>
     </Container>
   );
 };
