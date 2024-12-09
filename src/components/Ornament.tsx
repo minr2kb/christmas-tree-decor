@@ -101,7 +101,7 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
         <Image
           key={id}
           data-id={id}
-          src={`/assets/images/ornaments/orn2-${type}.png`}
+          src={`/assets/images/ornaments/orn${type}.png`}
           alt="ornament"
           css={imageStyle}
           onLoad={handleImageLoad}

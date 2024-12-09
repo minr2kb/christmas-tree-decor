@@ -132,3 +132,7 @@ VITE_SUPABASE_KEY=your_supabase_anon_key
 
 - 배포 주소: [https://christmas-tree-decor.web.app/](https://christmas-tree-decor.web.app/)
 - 이슈 트래커: [GitHub Issues](https://github.com/minr2kb/christmas-tree-decor/issues)
+
+## TO-DO
+
+- 거리계산으로 서로 최대한 겹치지 않게 배치

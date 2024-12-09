@@ -49,7 +49,7 @@ const SendPage = () => {
             {Array.from({ length: ORNAMENT_TYPE_COUNT }).map((_, index) => (
               <Image
                 key={index + 1}
-                src={`/assets/images/ornaments/orn2-${index + 1}.png`}
+                src={`/assets/images/ornaments/orn${index + 1}.png`}
                 alt={`ornament-${index + 1}`}
                 h="20vh"
                 objectFit="contain"
@@ -61,7 +61,7 @@ const SendPage = () => {
         {isSubmitting && !isSubmitted && (
           <Box h="full" w="full">
             <Image
-              src={`/assets/images/ornaments/orn2-${selectedType}.png`}
+              src={`/assets/images/ornaments/orn${selectedType}.png`}
               alt={`ornament-${selectedType}`}
               h="20vh"
               css={{
