@@ -14,6 +14,7 @@ const QRScanner = ({ onScan, onError }: QRScannerProps) => {
 
   useEffect(() => {
     if (!videoRef.current) return;
+    console.log('QRScanner.tsx');
 
     if (!QrScanner.hasCamera()) {
       setError('카메라를 찾을 수 없습니다.');
@@ -54,34 +55,32 @@ const QRScanner = ({ onScan, onError }: QRScannerProps) => {
 
   return (
     <Box css={{ position: 'relative', w: 'full', h: 'full' }}>
+      <video
+        ref={videoRef}
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          opacity: isLoading ? 0 : 1,
+          transition: 'opacity 0.3s',
+        }}
+      />
       {isLoading ? (
         <Box position="absolute" top="50%" left="50%" transform="translate(-50%, -50%)" zIndex={1} textAlign="center">
           <Spinner size="xl" color="blue.500" mb={4} />
           <Text>카메라 초기화 중...</Text>
         </Box>
       ) : (
-        <>
-          <video
-            ref={videoRef}
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              opacity: isLoading ? 0 : 1,
-              transition: 'opacity 0.3s',
-            }}
-          />
-          <Box
-            position="absolute"
-            top={'50%'}
-            left={'50%'}
-            transform="translate(-50%, -50%)"
-            w={'80%'}
-            maxW={200}
-            aspectRatio={1}
-            border="1px solid yellow"
-          />
-        </>
+        <Box
+          position="absolute"
+          top={'50%'}
+          left={'50%'}
+          transform="translate(-50%, -50%)"
+          w={'80%'}
+          maxW={200}
+          aspectRatio={1}
+          border="1px solid yellow"
+        />
       )}
       {error && (
         <Text
