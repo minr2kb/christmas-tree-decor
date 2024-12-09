@@ -8,7 +8,7 @@ import { ROUTES } from '@/constants/routes';
 const AuthCallbackPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const from = searchParams.get('from');
+  const redirectUrl = searchParams.get('redirectUrl');
 
   useEffect(() => {
     const {
@@ -19,7 +19,7 @@ const AuthCallbackPage = () => {
           title: '로그인 성공',
         });
       }
-      navigate(from || ROUTES.home);
+      navigate(redirectUrl || ROUTES.home);
     });
 
     return () => {
