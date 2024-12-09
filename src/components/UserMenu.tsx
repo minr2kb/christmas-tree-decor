@@ -51,7 +51,7 @@ const UserMenu = ({ containerProps, triggerProps }: UserMenuProps) => {
         <MenuRoot>
           <MenuTrigger asChild>
             <Button variant="ghost" p={0} {...triggerProps}>
-              <Avatar size="sm" name={user?.email} src={user?.user_metadata?.avatar_url} shape="rounded" />
+              <Avatar size="xs" name={user?.email} src={user?.user_metadata?.avatar_url} shape="rounded" />
             </Button>
           </MenuTrigger>
           <MenuContent>
