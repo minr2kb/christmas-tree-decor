@@ -5,6 +5,7 @@ import { FormEventHandler } from 'react';
 import useSession from '../useSession';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
+import TreeStatesAPI from '@/api/treeStates';
 
 const useCreatePage = () => {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ const useCreatePage = () => {
       setIsSubmitting(true);
       const data = await TreeAPI.createTree(treeName, description, user.id);
       if (data) {
+        await TreeStatesAPI.createTreeState(data.id);
         navigate(ROUTES.tree(data.id));
       }
     } catch (error) {

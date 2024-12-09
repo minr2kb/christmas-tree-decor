@@ -14,13 +14,14 @@ import {
 import { TreeType } from '@/types/tree';
 import { Tooltip } from './ui/tooltip';
 import { LuSettings } from 'react-icons/lu';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { formatDate } from '@/utils/date';
 import { ROUTES } from '@/constants/routes';
-import { RiExternalLinkLine } from 'react-icons/ri';
+import { RiExternalLinkLine, RiRemoteControlLine } from 'react-icons/ri';
 import { MenuContent, MenuItem, MenuRoot } from './ui/menu';
 import { useState } from 'react';
 import { Button } from './ui/button';
+import useShareOptions from '@/hooks/util/useShareOptions';
 
 interface TreeCardProps {
   tree: TreeType;
@@ -29,16 +30,12 @@ interface TreeCardProps {
 }
 
 const TreeCard = ({ tree, onDelete, onEdit }: TreeCardProps) => {
-  const navigate = useNavigate();
+  const { generateQR, copySendLink } = useShareOptions(tree.id);
   const [isEditing, setIsEditing] = useState(false);
   const [form, setForm] = useState<Pick<TreeType, 'name' | 'description'>>({
     name: tree.name,
     description: tree.description || '',
   });
-
-  const handleClick = () => {
-    navigate(ROUTES.tree(tree.id));
-  };
 
   const handleCancel = () => {
     setForm({
@@ -62,10 +59,19 @@ const TreeCard = ({ tree, onDelete, onEdit }: TreeCardProps) => {
             <HStack justify="space-between" w="full">
               <Text fontWeight="bold">{tree.name}</Text>
               <HStack gap={0}>
+                <Tooltip content="트리 원격 조작">
+                  <Link to={ROUTES.remote(tree.id)}>
+                    <IconButton aria-label="트리 원격 조작" size="sm" variant="ghost">
+                      <RiRemoteControlLine />
+                    </IconButton>
+                  </Link>
+                </Tooltip>
                 <Tooltip content="트리로 이동">
-                  <IconButton aria-label="트리로 이동" size="sm" variant="ghost" onClick={handleClick}>
-                    <RiExternalLinkLine />
-                  </IconButton>
+                  <Link to={ROUTES.tree(tree.id)}>
+                    <IconButton aria-label="트리로 이동" size="sm" variant="ghost">
+                      <RiExternalLinkLine />
+                    </IconButton>
+                  </Link>
                 </Tooltip>
                 <MenuRoot>
                   <MenuTrigger asChild>
@@ -74,6 +80,12 @@ const TreeCard = ({ tree, onDelete, onEdit }: TreeCardProps) => {
                     </IconButton>
                   </MenuTrigger>
                   <MenuContent>
+                    <MenuItem value="qr" onClick={generateQR}>
+                      QR 다운로드
+                    </MenuItem>
+                    <MenuItem value="link" onClick={copySendLink}>
+                      공유 링크 복사
+                    </MenuItem>
                     <MenuItem value="edit" onClick={() => setIsEditing(true)}>
                       수정
                     </MenuItem>

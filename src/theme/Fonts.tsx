@@ -20,18 +20,6 @@ const fontFaces = css`
   /* 페이퍼로지 */
   @font-face {
     font-family: 'Paperlogy';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-5Regular.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: 'Paperlogy';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6Medium.woff2') format('woff2');
-    font-weight: 600;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: 'Paperlogy';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;

@@ -5,3 +5,13 @@ export type TreeType = {
   createdAt: Date;
   userId: string;
 };
+
+export type TreeState = {
+  id: string;
+  treeId: string;
+  showCount: boolean;
+  showSnow: boolean;
+  showStar: boolean;
+  showTitle: boolean;
+  updatedAt: Date;
+};

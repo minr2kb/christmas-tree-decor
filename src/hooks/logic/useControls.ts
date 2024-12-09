@@ -3,15 +3,7 @@ import { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { ORNAMENT_TYPE_COUNT } from '@/constants/ui';
-import {
-  animationQueueAtom,
-  showCountAtom,
-  showSnowAtom,
-  showStarAtom,
-  showTitleAtom,
-  showTriangleAtom,
-  treeAtom,
-} from '@/store/atoms';
+import { animationQueueAtom, showTriangleAtom, treeAtom } from '@/store/atoms';
 import { createOrnament } from '@/utils/ornament';
 import TreeAPI from '@/api/tree';
 import { toaster } from '@/components/ui/toaster';
@@ -20,13 +12,10 @@ import useSession from '../useSession';
 import useLoginModal from '../useLoginModal';
 import { ROUTES } from '@/constants/routes';
 
+import useTreeStates from '../useTreeStates';
+
 const useControls = (treeId?: string) => {
   const setAnimationQueue = useSetAtom(animationQueueAtom);
-  const setShowTriangle = useSetAtom(showTriangleAtom);
-  const setShowCount = useSetAtom(showCountAtom);
-  const setShowSnow = useSetAtom(showSnowAtom);
-  const setShowStar = useSetAtom(showStarAtom);
-  const setShowTitle = useSetAtom(showTitleAtom);
   const navigate = useNavigate();
 
   const { openLoginModal } = useLoginModal();
@@ -35,14 +24,17 @@ const useControls = (treeId?: string) => {
   const tree = useAtomValue(treeAtom);
   const isOwner = tree?.userId === user?.id;
 
+  const { treeState, updateTreeState } = useTreeStates(treeId);
+  const setShowTriangle = useSetAtom(showTriangleAtom);
+
   const menuHandlers = useMemo(
     () => ({
       toggleTriangle: () => setShowTriangle((prev) => !prev),
-      toggleCount: () => setShowCount((prev) => !prev),
-      toggleSnow: () => setShowSnow((prev) => !prev),
-      toggleStar: () => setShowStar((prev) => !prev),
+      toggleCount: () => updateTreeState({ showCount: !treeState?.showCount }),
+      toggleSnow: () => updateTreeState({ showSnow: !treeState?.showSnow }),
+      toggleStar: () => updateTreeState({ showStar: !treeState?.showStar }),
       removeTree: () => onClickRemoveTree(),
-      toggleTitle: () => setShowTitle((prev) => !prev),
+      toggleTitle: () => updateTreeState({ showTitle: !treeState?.showTitle }),
     }),
     [],
   );

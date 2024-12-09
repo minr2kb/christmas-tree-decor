@@ -13,16 +13,16 @@ const TreePage = () => {
   const {
     toggleFullScreen,
     ornaments,
+    treeState,
     showTriangle,
-    showCount,
-    showSnow,
-    showStar,
     treeHeight,
     treeWidth,
     isValidTreeId,
     isLoading,
     treeId,
   } = useTreePage();
+
+  const { showCount = false, showSnow = false, showStar = false } = treeState ?? {};
 
   if (isLoading) {
     return <Loading />;

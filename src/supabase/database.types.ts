@@ -50,6 +50,44 @@ export type Database = {
           },
         ]
       }
+      tree_states: {
+        Row: {
+          id: string
+          show_count: boolean | null
+          show_snow: boolean | null
+          show_star: boolean | null
+          show_title: boolean | null
+          tree_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          show_count?: boolean | null
+          show_snow?: boolean | null
+          show_star?: boolean | null
+          show_title?: boolean | null
+          tree_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          show_count?: boolean | null
+          show_snow?: boolean | null
+          show_star?: boolean | null
+          show_title?: boolean | null
+          tree_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tree_states_tree_id_fkey"
+            columns: ["tree_id"]
+            isOneToOne: false
+            referencedRelation: "trees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       trees: {
         Row: {
           created_at: string

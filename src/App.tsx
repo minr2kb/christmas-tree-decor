@@ -20,6 +20,7 @@ import ConfirmDialog from '@/components/ConfirmDialog';
 import LoginModal from '@/components/LoginModal';
 import { ROUTES } from './constants/routes';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import RemotePage from './pages/RemotePage';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
         path: ROUTES.myTrees,
         element: <MyTreesPage />,
       },
+      {
+        path: ROUTES.remote(),
+        element: <RemotePage />,
+      },
     ],
   },
   {
@@ -51,6 +56,7 @@ const router = createBrowserRouter([
     path: ROUTES.send(),
     element: <SendPage />,
   },
+
   {
     path: ROUTES.authCallback,
     element: <AuthCallbackPage />,

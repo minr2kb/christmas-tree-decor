@@ -1,14 +1,14 @@
-import { showTitleAtom, treeAtom } from '@/store/atoms';
-import { useAtom, useAtomValue } from 'jotai';
+import { treeStateAtom, treeAtom } from '@/store/atoms';
+import { useAtomValue } from 'jotai';
 import { Backdrop } from './ui/backdrop';
 import { Text } from '@chakra-ui/react';
 
 const BackdropTitle = () => {
-  const [showTitle, setShowTitle] = useAtom(showTitleAtom);
+  const treeState = useAtomValue(treeStateAtom);
   const tree = useAtomValue(treeAtom);
   if (!tree) return null;
   return (
-    <Backdrop show={showTitle} transitionDuration="1s" onClose={() => setShowTitle(false)}>
+    <Backdrop show={treeState?.showTitle ?? false} transitionDuration="1s">
       <Text
         fontSize="9xl"
         fontWeight="bold"

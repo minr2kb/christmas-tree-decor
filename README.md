@@ -33,6 +33,7 @@
 - Supabase Realtime을 활용한 실시간 데이터 동기화
 - 내부 animationQueue를 활용한 자연스러운 조건부 애니메이션 구현
 - WebRTC 기반 QR 코드 스캔
+- 원격 조작을 통한 트리 제어기능 구현
 
 ### 보안
 
@@ -55,8 +56,8 @@
 - 전체화면, 별, 눈, 카운트 등의 UI 조작 기능 단축키 지원
 
 ## 🪄 애니메이션 로직
-![Christmas Tree 로직](https://github.com/user-attachments/assets/27c8423f-6c77-4618-ac84-60fde2630416)
 
+![Christmas Tree 로직](https://github.com/user-attachments/assets/27c8423f-6c77-4618-ac84-60fde2630416)
 
 ## 📁 프로젝트 구조
 
@@ -120,6 +121,7 @@ VITE_SUPABASE_KEY=your_supabase_anon_key
 2. 내부 메뉴에서 QR생성 / url 복사를 하여 링크를 참가자들에게 공유합니다
 3. 참여자는 QR코드를 스캔하여 접속합니다 (`/send/:treeId`)
 4. 원하는 장식을 선택하여 트리에 추가합니다
+5. 필요시, `내 트리 관리` > `트리 원격 조작` 에서 원격 옵션 조작이 가능합니다 (`/remote/:treeID`)
 
 ## 👨‍💻 개발자
 

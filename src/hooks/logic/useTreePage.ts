@@ -1,13 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
-import {
-  ornamentsAtom,
-  showCountAtom,
-  showTriangleAtom,
-  showSnowAtom,
-  showStarAtom,
-  showTitleAtom,
-} from '@/store/atoms';
+import { ornamentsAtom, showTriangleAtom, treeStateAtom } from '@/store/atoms';
 import { TREE_HEIGHT_RATIO, TREE_ASPECT_RATIO } from '@/constants/ui';
 import OrnamentAPI from '@/api/ornaments';
 import { parseOrnament } from '@/utils/ornament';
@@ -16,6 +9,7 @@ import { toaster } from '@/components/ui/toaster';
 import useFullScreen from '@/hooks/util/useFullScreen';
 import useCheckTreeId from '@/hooks/useCheckTreeId';
 import { useAnimationQueue } from '../useAnimationQueue';
+import TreeStatesAPI from '@/api/treeStates';
 
 const calculateTreeDimensions = () => ({
   treeHeight: window.innerHeight * TREE_HEIGHT_RATIO,
@@ -28,13 +22,13 @@ const useTreePage = () => {
   const [dimensions, setDimensions] = useState(calculateTreeDimensions);
 
   const [ornaments, setOrnaments] = useAtom(ornamentsAtom);
-  const showTitle = useAtomValue(showTitleAtom);
+  const [treeState, setTreeState] = useAtom(treeStateAtom);
   const showTriangle = useAtomValue(showTriangleAtom);
-  const showCount = useAtomValue(showCountAtom);
-  const showSnow = useAtomValue(showSnowAtom);
-  const showStar = useAtomValue(showStarAtom);
 
-  const { addToQueue } = useAnimationQueue((ornament) => setOrnaments((prev) => [...prev, ornament]), !showTitle);
+  const { addToQueue } = useAnimationQueue(
+    (ornament) => setOrnaments((prev) => [...prev, ornament]),
+    !treeState?.showTitle,
+  );
 
   const initializeOrnaments = async () => {
     if (!treeId) return;
@@ -77,17 +71,27 @@ const useTreePage = () => {
     };
   }, [isValidTreeId, treeId]);
 
+  useEffect(() => {
+    if (!treeId) return;
+
+    const channel = TreeStatesAPI.subscribeToTreeState(treeId, (newState) => {
+      setTreeState(newState);
+    });
+
+    return () => {
+      channel.unsubscribe();
+    };
+  }, [treeId]);
+
   return {
     ...dimensions,
     toggleFullScreen,
     ornaments,
-    showTriangle,
-    showCount,
-    showSnow,
-    showStar,
     isValidTreeId,
     isLoading,
     treeId,
+    treeState,
+    showTriangle,
   };
 };
 

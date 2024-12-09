@@ -2,10 +2,10 @@ import { Flex, IconButton } from '@chakra-ui/react';
 import { memo, useMemo } from 'react';
 import { LuMenu } from 'react-icons/lu';
 import { MenuContent, MenuRoot, MenuItem, MenuTrigger, MenuItemCommand, MenuSeparator } from './ui/menu';
-import { toaster } from './ui/toaster';
 import useKeyPress from '@/hooks/util/useKeyPress';
-import QRCode from 'qrcode';
+
 import useControls from '@/hooks/logic/useControls';
+import useShareOptions from '@/hooks/util/useShareOptions';
 
 interface ControlsProps {
   toggleFullScreen: () => void;
@@ -15,7 +15,7 @@ interface ControlsProps {
 const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
   const { menuHandlers, addTestOrnament, addTest50, onClickRemoveTree, isOwner, openLoginModal } = useControls(treeId);
 
-  const { generateQR, copySendLink } = useQRActions(treeId);
+  const { generateQR, copySendLink } = useShareOptions(treeId);
 
   const keyHandlers = useMemo(
     () => ({
@@ -114,33 +114,5 @@ const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
     </Flex>
   );
 });
-
-function useQRActions(treeId?: string) {
-  return useMemo(
-    () => ({
-      generateQR: () => {
-        if (!treeId) return;
-        QRCode.toDataURL(`${window.location.origin}/send/${treeId}`, {
-          width: 256,
-          margin: 1,
-        }).then((dataUrl) => {
-          const link = document.createElement('a');
-          link.download = `tree-${treeId}-qr.png`;
-          link.href = dataUrl;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          toaster.success({ title: 'QR코드가 다운로드되었습니다' });
-        });
-      },
-      copySendLink: () => {
-        if (!treeId) return;
-        navigator.clipboard.writeText(`${window.location.origin}/send/${treeId}`);
-        toaster.success({ title: '클립보드에 복사되었습니다' });
-      },
-    }),
-    [treeId],
-  );
-}
 
 export default Controls;

@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 import { OrnamentType, OrnamentWithInitialPositionType } from '@/types/ornament';
-import { TreeType } from '@/types/tree';
+import { TreeState, TreeType } from '@/types/tree';
 import { ConfirmDialogType, LoginModalType } from '@/types/dialog';
 
 /**
@@ -14,30 +14,15 @@ export const ornamentsCountAtom = atom((get) => get(ornamentsAtom).length);
 export const animationQueueAtom = atom<OrnamentType[]>([]);
 
 /**
- * 삼각형(트리 영역) 표시 여부
- */
-export const showTriangleAtom = atom(false);
-/**
- * 카운트 표시 여부
- */
-export const showSnowAtom = atom(true);
-/**
- * 별 표시 여부
- */
-export const showStarAtom = atom(false);
-/**
- * 카운트 표시 여부
- */
-export const showCountAtom = atom(false);
-/**
- * 중앙 타이틀 표시 여부
- */
-export const showTitleAtom = atom(false);
-
-/**
- * 트리 아이디
+ * 트리 정보
  */
 export const treeAtom = atom<TreeType | null>(null);
+
+/**
+ * 트리 상태
+ */
+export const treeStateAtom = atom<TreeState | null>(null);
+export const showTriangleAtom = atom(false);
 
 /**
  * 컨펌 다이얼로그 활성화용

@@ -22,6 +22,7 @@ const MyTreesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { confirm } = useConfirmDialog();
 
+
   useEffect(() => {
     const loadTrees = async () => {
       if (!user) return;
