@@ -37,6 +37,7 @@ const Background = memo(({ showCount = false, showStars = true }: BackgroundProp
           transform={'translate(-50%, -50%)'}
           pointerEvents={'none'}
           fontWeight={'black'}
+          fontFamily={'Pretendard'}
         >
           {ornamentsCount}
         </Text>

@@ -120,8 +120,9 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
             top: `${realInitPosition.y}px`,
             color: 'white',
             fontSize: `${ORNAMENT_SIZE * 0.6}rem`,
+            fontWeight: 'bold',
             textShadow: '0 0 3px blackAlpha.50',
-            fontFamily: 'HSSanTokki20',
+            whiteSpace: 'nowrap',
             opacity: showName ? 1 : 0,
             transition: 'opacity 1s ease',
           }}

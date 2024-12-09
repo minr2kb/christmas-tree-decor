@@ -12,7 +12,7 @@ const BackdropTitle = () => {
       <Text
         fontSize="9xl"
         fontWeight="bold"
-        fontFamily={'SF_HambakSnow'}
+        fontFamily={'Paperlogy'}
         textAlign={'center'}
         css={{ filter: 'drop-shadow(0 0 3px #fff)' }}
       >
@@ -21,7 +21,7 @@ const BackdropTitle = () => {
       <Text
         fontSize="5xl"
         fontWeight="medium"
-        fontFamily={'SF_HambakSnow'}
+        fontFamily={'Paperlogy'}
         textAlign={'center'}
         css={{ filter: 'drop-shadow(0 0 3px #fff)' }}
       >
