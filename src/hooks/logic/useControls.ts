@@ -36,7 +36,7 @@ const useControls = (treeId?: string) => {
       removeTree: () => onClickRemoveTree(),
       toggleTitle: () => updateTreeState({ showTitle: !treeState?.showTitle }),
     }),
-    [],
+    [treeState],
   );
 
   const addTestOrnament = useCallback(() => {

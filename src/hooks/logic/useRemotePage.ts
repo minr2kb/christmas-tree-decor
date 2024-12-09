@@ -1,52 +1,26 @@
-import { useCallback, useEffect, useMemo } from 'react';
-import { useAtom, useAtomValue } from 'jotai';
-import { treeStateAtom, treeAtom } from '@/store/atoms';
+import { useCallback, useMemo } from 'react';
+import { useAtomValue } from 'jotai';
+import { treeAtom } from '@/store/atoms';
 import useCheckTreeId from '@/hooks/useCheckTreeId';
 import useSession from '@/hooks/useSession';
-import TreeStatesAPI from '@/api/treeStates';
 import { TreeState } from '@/types/tree';
 import { toaster } from '@/components/ui/toaster';
+import useTreeStates from '../useTreeStates';
 
 const useRemotePage = () => {
   const { treeId, isValidTreeId, isLoading } = useCheckTreeId();
   const { isAuthenticated, user } = useSession();
   const tree = useAtomValue(treeAtom);
-  const [treeState, setTreeState] = useAtom(treeStateAtom);
+
+  const { updateTreeState, treeState } = useTreeStates(treeId);
   const isOwner = tree?.userId === user?.id;
-
-  useEffect(() => {
-    if (!treeId) return;
-
-    const initializeTreeState = async () => {
-      try {
-        const state = await TreeStatesAPI.getTreeState(treeId);
-        setTreeState(state);
-      } catch (error) {
-        console.error(error);
-        toaster.error({
-          title: '트리 상태를 불러오는데 실패했습니다',
-          description: '잠시 후 다시 시도해주세요',
-        });
-      }
-    };
-
-    initializeTreeState();
-
-    const channel = TreeStatesAPI.subscribeToTreeState(treeId, (newState) => {
-      setTreeState(newState);
-    });
-
-    return () => {
-      channel.unsubscribe();
-    };
-  }, [treeId]);
 
   const handleToggleState = useCallback(
     async (key: keyof TreeState) => {
       if (!treeId || !isOwner) return;
 
       try {
-        await TreeStatesAPI.updateTreeState(treeId, {
+        await updateTreeState({
           [key]: !treeState?.[key],
         });
       } catch (error) {
@@ -57,7 +31,7 @@ const useRemotePage = () => {
         });
       }
     },
-    [treeId, isOwner],
+    [treeId, isOwner, updateTreeState, treeState],
   );
 
   const errorMessage = useMemo(() => {
