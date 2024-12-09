@@ -48,7 +48,7 @@ const PageLayout = ({
   }
 
   return (
-    <Box bgColor={bgColor} position="relative" minH="100vh" display="flex" flexDirection="column">
+    <Box bgColor={bgColor} position="relative" minH="100dvh" display="flex" flexDirection="column">
       {!disableBackground && <Background />}
       {!disableSnowfall && <Snowfall speed={[0.5, 0.7]} wind={[-0.1, 0.1]} snowflakeCount={100} radius={[0.5, 1]} />}
       {!disableHeader && <Header {...headerProps} />}

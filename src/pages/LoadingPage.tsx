@@ -3,7 +3,7 @@ import { BarLoader } from 'react-spinners';
 
 const LoadingPage = () => {
   return (
-    <Center h="100vh" bg="bg">
+    <Center h="100dvh" bg="bg">
       <BarLoader color="#FFF" />
     </Center>
   );
