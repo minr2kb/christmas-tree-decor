@@ -5,7 +5,7 @@ import { Tooltip } from '@/components/ui/tooltip';
 import useConfirmDialog from '@/hooks/useConfirmDialog';
 import useLoginModal from '@/hooks/useLoginModal';
 import useSession from '@/hooks/useSession';
-import { Heading, Separator, Text, VStack } from '@chakra-ui/react';
+import { Heading, Link, Separator, Text, VStack } from '@chakra-ui/react';
 import { IoMdAdd } from 'react-icons/io';
 import { LuLogIn } from 'react-icons/lu';
 import { MdFormatListBulleted } from 'react-icons/md';
@@ -66,40 +66,43 @@ const HomePage = () => {
       <Text fontSize="md" color="gray.200">
         실시간으로 함께 꾸미는 크리스마스 트리
       </Text>
-      <VStack gap={4} mt={5} width="100%">
+      <VStack gap={4} mt={5} w="full">
         <Tooltip
           content="로그인 후 이용 가능해요!"
           positioning={{ placement: 'top' }}
           showArrow
           disabled={!!isAuthenticated}
         >
-          <Button width="100%" onClick={handleCreateTree} _icon={{ boxSize: 4 }}>
+          <Button w="full" onClick={handleCreateTree} _icon={{ boxSize: 4 }}>
             새로운 트리 만들기
             <IoMdAdd />
           </Button>
         </Tooltip>
-        <Button width="100%" onClick={handleScanTree} _icon={{ boxSize: 4 }}>
+        <Button w="full" onClick={handleScanTree} _icon={{ boxSize: 4 }}>
           기존 트리 꾸미기
           <RiQrScan2Line />
         </Button>
         <Separator />
         {isAuthenticated && (
-          <Button variant={'subtle'} width="100%" onClick={handleTrees} _icon={{ boxSize: 4 }}>
+          <Button variant={'subtle'} w="full" onClick={handleTrees} _icon={{ boxSize: 4 }}>
             내 트리 관리
             <MdFormatListBulleted />
           </Button>
         )}
         <Button
           variant={'subtle'}
-          width="100%"
+          w="full"
           onClick={isAuthenticated ? handleLogout : handleLogin}
           _icon={{ boxSize: 4 }}
         >
           {isAuthenticated ? '로그아웃' : '간편로그인'}
           <LuLogIn />
         </Button>
+
+        <Link variant={'underline'} fontSize="xs" mt={3} href="mailto:kbmin1129@gmail.com">
+          피드백 보내기
+        </Link>
       </VStack>
-      {/* <Box css={{ height: '5000px', border: '1px solid red' }} /> */}
     </PageLayout>
   );
 };
