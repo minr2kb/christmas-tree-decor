@@ -19,6 +19,7 @@ import { useSetAtom } from 'jotai';
 import ConfirmDialog from '@/components/ConfirmDialog';
 import LoginModal from '@/components/LoginModal';
 import { ROUTES } from './constants/routes';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
 
 const router = createBrowserRouter([
   {
@@ -26,20 +27,21 @@ const router = createBrowserRouter([
     element: <HomePage />,
   },
   {
-    path: ROUTES.create,
-    element: <CreatePage />,
+    element: <ProtectedRoute requireAuth showLoginModal />,
+    children: [
+      {
+        path: ROUTES.create,
+        element: <CreatePage />,
+      },
+      {
+        path: ROUTES.myTrees,
+        element: <MyTreesPage />,
+      },
+    ],
   },
   {
     path: ROUTES.scan,
     element: <ScanPage />,
-  },
-  {
-    path: ROUTES.myTrees,
-    element: <MyTreesPage />,
-  },
-  {
-    path: ROUTES.authCallback,
-    element: <AuthCallbackPage />,
   },
   {
     path: ROUTES.tree(),
@@ -48,6 +50,10 @@ const router = createBrowserRouter([
   {
     path: ROUTES.send(),
     element: <SendPage />,
+  },
+  {
+    path: ROUTES.authCallback,
+    element: <AuthCallbackPage />,
   },
   {
     path: ROUTES.other,
