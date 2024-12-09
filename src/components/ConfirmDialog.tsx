@@ -5,27 +5,34 @@ import { Button } from './ui/button';
 import { Text } from '@chakra-ui/react';
 import { confirmDialogAtom } from '@/store/atoms';
 import { useAtom } from 'jotai';
+import { memo, useCallback } from 'react';
 
-const ConfirmDialog = () => {
+const ConfirmDialog = memo(() => {
   const [confirmDialog, setConfirmDialog] = useAtom(confirmDialogAtom);
 
   const { title, body, onConfirm, onCancel, confirmText, cancelText, isDestructive } = confirmDialog || {};
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
+  const handleCancel = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      setConfirmDialog(null);
+      onCancel?.();
+    },
+    [onCancel, setConfirmDialog],
+  );
+
+  const handleConfirm = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      onConfirm?.();
+    },
+    [onConfirm],
+  );
+
+  const onClose = useCallback(() => {
     setConfirmDialog(null);
     onCancel?.();
-  };
-
-  const handleConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    onConfirm?.();
-  };
-
-  const onClose = () => {
-    setConfirmDialog(null);
-    onCancel?.();
-  };
+  }, [onCancel, setConfirmDialog]);
 
   return (
     <DialogRoot
@@ -60,6 +67,6 @@ const ConfirmDialog = () => {
       </DialogContent>
     </DialogRoot>
   );
-};
+});
 
 export default ConfirmDialog;

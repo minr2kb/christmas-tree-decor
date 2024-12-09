@@ -18,17 +18,19 @@ const useSendPage = () => {
 
   useDevTools({ treeId });
 
-  const sliderSettings = {
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    centerMode: true,
-    centerPadding: '0px',
-    afterChange: (current: number) => {
-      setSelectedType(current + 1);
-    },
-  };
+  const sliderSettings = useMemo(() => {
+    return {
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      centerMode: true,
+      centerPadding: '0px',
+      afterChange: (current: number) => {
+        setSelectedType(current + 1);
+      },
+    };
+  }, []);
 
   const handleOpen = useCallback(() => {
     if (!name.trim()) return;

@@ -15,7 +15,7 @@ const RemotePage = () => {
     handleToggleSnow,
     handleToggleStar,
     handleToggleTitle,
-    getErrorMessage,
+    errorMessage,
   } = useRemotePage();
 
   return (
@@ -24,7 +24,7 @@ const RemotePage = () => {
       headerProps={{ title: '원격 트리 조작' }}
       isLoading={isLoading}
       isError={!isValidTreeId || !isOwner}
-      error={new Error(getErrorMessage())}
+      error={new Error(errorMessage)}
     >
       <DataListRoot orientation="horizontal">
         <DataListItem label="트리 이름" value={tree?.name} />

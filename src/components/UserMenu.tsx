@@ -8,13 +8,14 @@ import AuthAPI from '@/api/auth';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 import useLoginModal from '@/hooks/useLoginModal';
+import { memo, useCallback } from 'react';
 
 type UserMenuProps = {
   containerProps?: BoxProps;
   triggerProps?: ButtonProps;
 };
 
-const UserMenu = ({ containerProps, triggerProps }: UserMenuProps) => {
+const UserMenu = memo(({ containerProps, triggerProps }: UserMenuProps) => {
   const { user, isAuthenticated } = useSession();
   const navigate = useNavigate();
   const { openLoginModal } = useLoginModal();
@@ -23,7 +24,7 @@ const UserMenu = ({ containerProps, triggerProps }: UserMenuProps) => {
     openLoginModal();
   };
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     try {
       await AuthAPI.signOut();
       toaster.success({
@@ -35,15 +36,15 @@ const UserMenu = ({ containerProps, triggerProps }: UserMenuProps) => {
         description: error instanceof Error ? error.message : '알 수 없는 오류가 발생했어요',
       });
     }
-  };
+  }, []);
 
-  const handleTrees = () => {
+  const handleTrees = useCallback(() => {
     navigate(ROUTES.myTrees);
-  };
+  }, [navigate]);
 
-  const handleFeedback = () => {
+  const handleFeedback = useCallback(() => {
     window.open('mailto:kbmin1129@gmail.com', '_blank');
-  };
+  }, []);
 
   return (
     <Box {...containerProps}>
@@ -79,6 +80,6 @@ const UserMenu = ({ containerProps, triggerProps }: UserMenuProps) => {
       )}
     </Box>
   );
-};
+});
 
 export default UserMenu;

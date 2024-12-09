@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
 import { ornamentsAtom, showTriangleAtom, treeStateAtom } from '@/store/atoms';
 import { TREE_HEIGHT_RATIO, TREE_ASPECT_RATIO } from '@/constants/ui';
@@ -30,7 +30,7 @@ const useTreePage = () => {
     !treeState?.showTitle,
   );
 
-  const initializeOrnaments = async () => {
+  const initializeOrnaments = useCallback(async () => {
     if (!treeId) return;
 
     try {
@@ -43,7 +43,7 @@ const useTreePage = () => {
       });
       console.error('Error loading ornaments:', error);
     }
-  };
+  }, [treeId]);
 
   useEffect(() => {
     const handleResize = debounce(() => {

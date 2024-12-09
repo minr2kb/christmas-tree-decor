@@ -4,6 +4,7 @@ import BackButton from './BackButton';
 import UserMenu from './UserMenu';
 import { ROUTES } from '@/constants/routes';
 import { Link } from 'react-router-dom';
+import { memo } from 'react';
 
 export type HeaderProps = {
   title?: string;
@@ -13,7 +14,7 @@ export type HeaderProps = {
   showLogo?: boolean;
 };
 
-const Header = ({ title, onBack, showUser = true, showBackButton = true, showLogo = false }: HeaderProps) => {
+const Header = memo(({ title, onBack, showUser = true, showBackButton = true, showLogo = false }: HeaderProps) => {
   return (
     <Box
       position="sticky"
@@ -47,6 +48,6 @@ const Header = ({ title, onBack, showUser = true, showBackButton = true, showLog
       </Flex>
     </Box>
   );
-};
+});
 
 export default Header;
