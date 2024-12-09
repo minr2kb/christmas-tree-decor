@@ -22,7 +22,6 @@ const MyTreesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { confirm } = useConfirmDialog();
 
-
   useEffect(() => {
     const loadTrees = async () => {
       if (!user) return;
@@ -86,23 +85,25 @@ const MyTreesPage = () => {
 
   return (
     <PageLayout headerProps={{ title: '내 트리 관리' }} containerProps={{ maxW: 'sm' }} isLoading={isLoading}>
-      <VStack gap={4} width="100%" flex={1} overflowY="auto">
-        {trees.length === 0 ? (
+      <VStack gap={4} w="full" flex={1}>
+        {trees.length === 0 && (
           <Center flex={1}>
             <EmptyState
               icon={<RiBracketsLine />}
               title="아직 만든 트리가 없어요"
               description="트리를 만들어 장식을 꾸며보세요!"
             >
-              <Button width="100%" onClick={() => navigate(ROUTES.create)} _icon={{ boxSize: 4 }}>
+              <Button w="full" onClick={() => navigate(ROUTES.create)} _icon={{ boxSize: 4 }}>
                 트리 만들기
                 <IoMdAdd />
               </Button>
             </EmptyState>
           </Center>
-        ) : (
-          trees.map((tree) => <TreeCard key={tree.id} tree={tree} onDelete={handleDelete} onEdit={handleEdit} />)
         )}
+
+        {trees.map((tree) => (
+          <TreeCard key={tree.id} tree={tree} onDelete={handleDelete} onEdit={handleEdit} />
+        ))}
       </VStack>
     </PageLayout>
   );

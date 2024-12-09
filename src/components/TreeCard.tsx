@@ -52,7 +52,7 @@ const TreeCard = ({ tree, onDelete, onEdit }: TreeCardProps) => {
   };
 
   return (
-    <CardRoot variant="subtle" transition="all 0.2s" w="100%">
+    <CardRoot variant="subtle" transition="all 0.2s" w="full">
       <CardBody>
         {!isEditing && (
           <VStack gap={2} align="flex-start" w="full">

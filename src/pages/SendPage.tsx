@@ -59,7 +59,7 @@ const SendPage = () => {
           </Slider>
         )}
         {isSubmitting && !isSubmitted && (
-          <Box height="100%" width="100%">
+          <Box h="full" w="full">
             <Image
               src={`/assets/images/ornaments/orn2-${selectedType}.png`}
               alt={`ornament-${selectedType}`}
@@ -76,13 +76,13 @@ const SendPage = () => {
           </Box>
         )}
         {isSubmitted && (
-          <Flex justifyContent="center" alignItems="center" height="100%">
+          <Flex justifyContent="center" alignItems="center" h="full">
             <PiMonitorArrowUp size={120} style={{ opacity: 0.7 }} />
           </Flex>
         )}
       </Box>
 
-      <Flex direction="column" gap={4} width="100%" mt={8}>
+      <Flex direction="column" gap={4} w="full" mt={8}>
         <Input
           placeholder="이름을 입력해주세요"
           value={name}
