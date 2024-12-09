@@ -2,6 +2,7 @@ import { Box, Center, Container, ContainerProps } from '@chakra-ui/react';
 import Header, { HeaderProps } from './Header';
 import LoadingPage from '@/pages/LoadingPage';
 import ErrorPage from '@/pages/ErrorPage';
+import Footer from './Footer';
 
 type PageLayoutProps = {
   children: React.ReactNode;
@@ -44,6 +45,7 @@ const PageLayout = ({
           children
         )}
       </Container>
+      <Footer />
     </Box>
   );
 };
