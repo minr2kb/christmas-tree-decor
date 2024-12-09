@@ -1,15 +1,19 @@
 import { useCallback } from 'react';
-import { openLoginDialogAtom } from '@/store/atoms';
+import { loginModalAtom } from '@/store/atoms';
 import { useSetAtom } from 'jotai';
+import { LoginModalType } from '@/types/dialog';
 
 const useLoginModal = () => {
-  const setOpenLoginDialog = useSetAtom(openLoginDialogAtom);
+  const setLoginModal = useSetAtom(loginModalAtom);
 
-  const handleOpenLoginDialog = useCallback(() => {
-    setOpenLoginDialog(true);
-  }, [setOpenLoginDialog]);
+  const openLoginModal = useCallback(
+    (loginModal: LoginModalType = { providers: ['google', 'kakao'], title: '로그인' }) => {
+      setLoginModal(loginModal);
+    },
+    [setLoginModal],
+  );
 
-  return { handleOpenLoginDialog };
+  return { openLoginModal };
 };
 
 export default useLoginModal;

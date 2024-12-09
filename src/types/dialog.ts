@@ -1,3 +1,5 @@
+import { Provider } from './auth';
+
 export type ConfirmDialogType = {
   title: string;
   body: string;
@@ -6,4 +8,11 @@ export type ConfirmDialogType = {
   confirmText?: string;
   cancelText?: string;
   isDestructive?: boolean;
+};
+
+export type LoginModalType = {
+  title?: string;
+  body?: string;
+  providers?: Provider[];
+  onCancel?: () => void;
 };

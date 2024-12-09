@@ -1,7 +1,7 @@
 import { atom } from 'jotai';
 import { OrnamentType, OrnamentWithInitialPositionType } from '@/types/ornament';
 import { TreeType } from '@/types/tree';
-import { ConfirmDialogType } from '@/types/dialog';
+import { ConfirmDialogType, LoginModalType } from '@/types/dialog';
 
 /**
  * 실제 화면에 렌더되는 ornament 목록
@@ -47,4 +47,4 @@ export const confirmDialogAtom = atom<ConfirmDialogType | null>(null);
 /**
  * 로그인 다이얼로그 활성화용
  */
-export const openLoginDialogAtom = atom(false);
+export const loginModalAtom = atom<LoginModalType | null>(null);

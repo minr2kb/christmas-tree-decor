@@ -13,8 +13,7 @@ interface ControlsProps {
 }
 
 const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
-  const { menuHandlers, addTestOrnament, addTest50, onClickRemoveTree, isOwner, handleOpenLoginDialog } =
-    useControls(treeId);
+  const { menuHandlers, addTestOrnament, addTest50, onClickRemoveTree, isOwner, openLoginModal } = useControls(treeId);
 
   const { generateQR, copySendLink } = useQRActions(treeId);
 
@@ -83,13 +82,14 @@ const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
             트리 삭제
           </MenuItem>
         ) : (
-          <MenuItem value="login" onClick={handleOpenLoginDialog}>
+          <MenuItem value="login" onClick={() => openLoginModal()}>
             로그인
           </MenuItem>
         )}
       </MenuContent>
     ),
-    [menuHandlers, isOwner],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [menuHandlers, isOwner, openLoginModal],
   );
 
   return (

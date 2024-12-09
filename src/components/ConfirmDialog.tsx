@@ -11,6 +11,22 @@ const ConfirmDialog = () => {
 
   const { title, body, onConfirm, onCancel, confirmText, cancelText, isDestructive } = confirmDialog || {};
 
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setConfirmDialog(null);
+    onCancel?.();
+  };
+
+  const handleConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    onConfirm?.();
+  };
+
+  const onClose = () => {
+    setConfirmDialog(null);
+    onCancel?.();
+  };
+
   return (
     <DialogRoot
       key={'confirm-modal'}
@@ -19,7 +35,8 @@ const ConfirmDialog = () => {
       size={'xs'}
       lazyMount
       open={!!confirmDialog}
-      onOpenChange={(e) => setConfirmDialog(e.open ? confirmDialog : null)}
+      onOpenChange={(e) => !e.open && onClose()}
+      closeOnInteractOutside={false}
     >
       <DialogContent>
         <DialogHeader>
@@ -30,12 +47,12 @@ const ConfirmDialog = () => {
         </DialogBody>
         <DialogFooter>
           <DialogActionTrigger asChild>
-            <Button variant="outline" onClick={onCancel}>
+            <Button variant="outline" onClick={handleCancel}>
               {cancelText || '취소'}
             </Button>
           </DialogActionTrigger>
           <DialogActionTrigger asChild>
-            <Button colorPalette={isDestructive ? 'red' : 'fg'} onClick={onConfirm}>
+            <Button colorPalette={isDestructive ? 'red' : 'fg'} onClick={handleConfirm}>
               {confirmText || '확인'}
             </Button>
           </DialogActionTrigger>

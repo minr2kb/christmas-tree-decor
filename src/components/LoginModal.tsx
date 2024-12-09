@@ -8,18 +8,22 @@ import {
   DialogActionTrigger,
 } from './ui/dialog';
 import { Button } from './ui/button';
-import { openLoginDialogAtom } from '@/store/atoms';
+import { loginModalAtom } from '@/store/atoms';
 import { useAtom } from 'jotai';
 import { Provider } from '@/types/auth';
 import AuthAPI from '@/api/auth';
 import { FcGoogle } from 'react-icons/fc';
-import { Icon, Stack } from '@chakra-ui/react';
+import { Icon, Stack, Text } from '@chakra-ui/react';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { toaster } from './ui/toaster';
 
 const LoginModal = () => {
-  const [openLoginDialog, setOpenLoginDialog] = useAtom(openLoginDialogAtom);
+  const [loginModal, setLoginModal] = useAtom(loginModalAtom);
   const from = window.location.pathname;
+
+  const { title = '로그인', body, providers = ['google', 'kakao'], onCancel } = loginModal || {};
+  const hasKakao = providers.includes('kakao');
+  const hasGoogle = providers.includes('google');
 
   const handleLogin = async (provider: Provider) => {
     try {
@@ -32,6 +36,11 @@ const LoginModal = () => {
     }
   };
 
+  const onClose = () => {
+    setLoginModal(null);
+    onCancel?.();
+  };
+
   return (
     <DialogRoot
       key={'login-modal'}
@@ -39,44 +48,58 @@ const LoginModal = () => {
       motionPreset="slide-in-bottom"
       size={'xs'}
       lazyMount
-      open={!!openLoginDialog}
-      onOpenChange={(e) => setOpenLoginDialog(e.open ? openLoginDialog : false)}
+      open={!!loginModal}
+      onOpenChange={(e) => !e.open && onClose()}
+      closeOnInteractOutside={false}
     >
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>로그인</DialogTitle>
+          <Stack gap={2}>
+            <DialogTitle>{title}</DialogTitle>
+            <Text>{body}</Text>
+          </Stack>
           <DialogCloseTrigger />
         </DialogHeader>
         <DialogBody>
           <Stack gap={2}>
-            <DialogActionTrigger asChild>
-              <Button
-                w="full"
-                bgColor="white"
-                _hover={{ bgColor: 'whiteAlpha.700' }}
-                onClick={() => handleLogin('google')}
-              >
-                Google로 계속하기
-                <Icon>
-                  <FcGoogle />
-                </Icon>
-              </Button>
-            </DialogActionTrigger>
+            {hasGoogle && (
+              <DialogActionTrigger asChild>
+                <Button
+                  w="full"
+                  bgColor="white"
+                  _hover={{ bgColor: 'whiteAlpha.700' }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLogin('google');
+                  }}
+                >
+                  Google로 계속하기
+                  <Icon>
+                    <FcGoogle />
+                  </Icon>
+                </Button>
+              </DialogActionTrigger>
+            )}
 
-            <DialogActionTrigger asChild>
-              <Button
-                w="full"
-                bgColor="#FEE500"
-                color="black"
-                _hover={{ bgColor: '#FEE500' }}
-                onClick={() => handleLogin('kakao')}
-              >
-                카카오로 계속하기
-                <Icon>
-                  <RiKakaoTalkFill />
-                </Icon>
-              </Button>
-            </DialogActionTrigger>
+            {hasKakao && (
+              <DialogActionTrigger asChild>
+                <Button
+                  w="full"
+                  bgColor="#FEE500"
+                  color="black"
+                  _hover={{ bgColor: '#FEE500' }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLogin('kakao');
+                  }}
+                >
+                  카카오로 계속하기
+                  <Icon>
+                    <RiKakaoTalkFill />
+                  </Icon>
+                </Button>
+              </DialogActionTrigger>
+            )}
           </Stack>
         </DialogBody>
       </DialogContent>

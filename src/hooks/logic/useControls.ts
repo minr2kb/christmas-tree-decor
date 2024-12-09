@@ -29,7 +29,7 @@ const useControls = (treeId?: string) => {
   const setShowTitle = useSetAtom(showTitleAtom);
   const navigate = useNavigate();
 
-  const { handleOpenLoginDialog } = useLoginModal();
+  const { openLoginModal } = useLoginModal();
   const { confirm } = useConfirmDialog();
   const { isAuthenticated, user } = useSession();
   const tree = useAtomValue(treeAtom);
@@ -94,7 +94,7 @@ const useControls = (treeId?: string) => {
     addTest50,
     onClickRemoveTree,
     isOwner,
-    handleOpenLoginDialog,
+    openLoginModal,
   };
 };
 
