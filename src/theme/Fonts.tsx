@@ -20,63 +20,63 @@ const fontFaces = css`
   /* 페이퍼로지 */
   @font-face {
     font-family: 'Paperlogy';
-    src: url('/assets/fonts/Paperlogy/Paperlogy-1Thin.ttf') format('ttf');
+    src: url('/assets/fonts/Paperlogy/Paperlogy-1Thin.woff2') format('woff2');
     font-weight: 100;
     font-style: normal;
   }
 
   @font-face {
     font-family: 'Paperlogy';
-    src: url('/assets/fonts/Paperlogy/Paperlogy-2ExtraLight.ttf') format('ttf');
+    src: url('/assets/fonts/Paperlogy/Paperlogy-2ExtraLight.woff2') format('woff2');
     font-weight: 200;
     font-style: normal;
   }
 
   @font-face {
     font-family: 'Paperlogy';
-    src: url('/assets/fonts/Paperlogy/Paperlogy-3Light.ttf') format('ttf');
+    src: url('/assets/fonts/Paperlogy/Paperlogy-3Light.woff2') format('woff2');
     font-weight: 300;
     font-style: normal;
   }
 
   @font-face {
     font-family: 'Paperlogy';
-    src: url('/assets/fonts/Paperlogy/Paperlogy-4Regular.ttf') format('ttf');
+    src: url('/assets/fonts/Paperlogy/Paperlogy-4Regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
   }
 
   @font-face {
     font-family: 'Paperlogy';
-    src: url('/assets/fonts/Paperlogy/Paperlogy-5Medium.ttf') format('ttf');
+    src: url('/assets/fonts/Paperlogy/Paperlogy-5Medium.woff2') format('woff2');
     font-weight: 500;
     font-style: normal;
   }
 
   @font-face {
     font-family: 'Paperlogy';
-    src: url('/assets/fonts/Paperlogy/Paperlogy-6SemiBold.ttf') format('ttf');
+    src: url('/assets/fonts/Paperlogy/Paperlogy-6SemiBold.woff2') format('woff2');
     font-weight: 600;
     font-style: normal;
   }
 
   @font-face {
     font-family: 'Paperlogy';
-    src: url('/assets/fonts/Paperlogy/Paperlogy-7Bold.ttf') format('ttf');
+    src: url('/assets/fonts/Paperlogy/Paperlogy-7Bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
   }
 
   @font-face {
     font-family: 'Paperlogy';
-    src: url('/assets/fonts/Paperlogy/Paperlogy-8ExtraBold.ttf') format('ttf');
+    src: url('/assets/fonts/Paperlogy/Paperlogy-8ExtraBold.woff2') format('woff2');
     font-weight: 800;
     font-style: normal;
   }
 
   @font-face {
     font-family: 'Paperlogy';
-    src: url('/assets/fonts/Paperlogy/Paperlogy-9Black.ttf') format('ttf');
+    src: url('/assets/fonts/Paperlogy/Paperlogy-9Black.woff2') format('woff2');
     font-weight: 900;
     font-style: normal;
   }
