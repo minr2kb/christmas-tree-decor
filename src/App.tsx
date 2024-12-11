@@ -19,6 +19,8 @@ import LoginModal from '@/components/LoginModal';
 import { ROUTES } from './constants/routes';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { logger, setUser } from './utils/logger';
+import Layout from '@/components/Layout';
+import { HelmetProvider } from 'react-helmet-async';
 
 const TreePage = lazy(() => import('@/pages/TreePage'));
 const SendPage = lazy(() => import('@/pages/SendPage'));
@@ -26,46 +28,51 @@ const MyTreesPage = lazy(() => import('@/pages/MyTreesPage'));
 
 const router = createBrowserRouter([
   {
-    path: ROUTES.home,
-    element: <HomePage />,
-  },
-  {
-    element: <ProtectedRoute requireAuth showLoginModal />,
+    element: <Layout />,
     children: [
+      {
+        path: ROUTES.home,
+        element: <HomePage />,
+      },
+      {
+        path: ROUTES.scan,
+        element: <ScanPage />,
+      },
       {
         path: ROUTES.create,
         element: <CreatePage />,
       },
       {
-        path: ROUTES.myTrees,
-        element: <MyTreesPage />,
+        element: <ProtectedRoute requireAuth showLoginModal />,
+        children: [
+          {
+            path: ROUTES.myTrees,
+            element: <MyTreesPage />,
+          },
+          {
+            path: ROUTES.remote(),
+            element: <RemotePage />,
+          },
+        ],
       },
       {
-        path: ROUTES.remote(),
-        element: <RemotePage />,
+        path: ROUTES.tree(),
+        element: <TreePage />,
+      },
+      {
+        path: ROUTES.send(),
+        element: <SendPage />,
+      },
+
+      {
+        path: ROUTES.authCallback,
+        element: <AuthCallbackPage />,
+      },
+      {
+        path: ROUTES.other,
+        element: <ErrorPage error={new Error('Page Not Found')} />,
       },
     ],
-  },
-  {
-    path: ROUTES.scan,
-    element: <ScanPage />,
-  },
-  {
-    path: ROUTES.tree(),
-    element: <TreePage />,
-  },
-  {
-    path: ROUTES.send(),
-    element: <SendPage />,
-  },
-
-  {
-    path: ROUTES.authCallback,
-    element: <AuthCallbackPage />,
-  },
-  {
-    path: ROUTES.other,
-    element: <ErrorPage error={new Error('Page Not Found')} />,
   },
 ]);
 
@@ -101,22 +108,24 @@ function App() {
   }, []);
 
   return (
-    <ChakraProvider defaultTheme="dark">
-      <ErrorBoundary fallbackRender={({ error }) => <ErrorPage error={error} />} onError={handleError}>
-        <Suspense fallback={<LoadingPage />}>
-          <Toaster />
-          <ConfirmDialog />
-          <LoginModal />
-          <RouterProvider
-            router={router}
-            future={{
-              v7_startTransition: true,
-            }}
-          />
-          <Fonts />
-        </Suspense>
-      </ErrorBoundary>
-    </ChakraProvider>
+    <HelmetProvider>
+      <ChakraProvider defaultTheme="dark">
+        <ErrorBoundary fallbackRender={({ error }) => <ErrorPage error={error} />} onError={handleError}>
+          <Suspense fallback={<LoadingPage />}>
+            <Toaster />
+            <ConfirmDialog />
+            <LoginModal />
+            <RouterProvider
+              router={router}
+              future={{
+                v7_startTransition: true,
+              }}
+            />
+            <Fonts />
+          </Suspense>
+        </ErrorBoundary>
+      </ChakraProvider>
+    </HelmetProvider>
   );
 }
 

@@ -9,3 +9,13 @@ export const ROUTES = {
   authCallback: '/auth/callback',
   other: '*',
 } as const;
+
+export const pageTitleMap: Record<string, string> = {
+  '/': 'home',
+  '/create': 'create',
+  '/scan': 'scan',
+  '/my-trees': 'my-trees',
+  '/tree': 'tree',
+  '/send': 'send',
+  '/remote': 'remote',
+};
