@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import PageLayout from '@/components/PageLayout';
+import { logger } from '@/utils/logger';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -46,9 +47,14 @@ const HomePage = () => {
     navigate(ROUTES.myTrees);
   };
 
+  const handleFeedback = () => {
+    logger.info('Feedback clicked');
+  };
+
   const handleLogout = async () => {
     try {
       await AuthAPI.signOut();
+      logger.info('Logged out');
       toaster.success({
         title: '로그아웃 성공',
       });
@@ -99,7 +105,7 @@ const HomePage = () => {
           <LuLogIn />
         </Button>
 
-        <Link variant={'underline'} fontSize="xs" mt={3} href="mailto:kbmin1129@gmail.com">
+        <Link variant={'underline'} fontSize="xs" mt={3} href="mailto:kbmin1129@gmail.com" onClick={handleFeedback}>
           피드백 보내기
         </Link>
       </VStack>

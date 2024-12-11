@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { TreeType } from '@/types/tree';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
+import { logger } from '@/utils/logger';
 
 const useMyTreesPage = () => {
   const { user } = useSession();
@@ -22,8 +23,7 @@ const useMyTreesPage = () => {
       try {
         const data = await TreeAPI.getTreesByUserId(user.id);
         setTrees(data);
-      } catch (error) {
-        console.error(error);
+      } catch {
         toaster.error({
           title: '트리 목록을 불러오는데 실패했습니다',
           description: '잠시 후 다시 시도해주세요',
@@ -49,8 +49,7 @@ const useMyTreesPage = () => {
             toaster.success({
               title: '트리를 삭제했습니다',
             });
-          } catch (error) {
-            console.error(error);
+          } catch {
             toaster.error({
               title: '트리 삭제에 실패했습니다',
               description: '잠시 후 다시 시도해주세요',
@@ -72,8 +71,7 @@ const useMyTreesPage = () => {
         toaster.success({
           title: '트리를 수정했습니다',
         });
-      } catch (error) {
-        console.error(error);
+      } catch {
         toaster.error({
           title: '트리 수정에 실패했습니다',
           description: '잠시 후 다시 시도해주세요',
@@ -84,6 +82,7 @@ const useMyTreesPage = () => {
   );
 
   const handleClickAdd = () => {
+    logger.info('Clicked add tree in my trees page');
     navigate(ROUTES.create);
   };
 

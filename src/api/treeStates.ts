@@ -1,18 +1,29 @@
 import supabase from '@/supabase/client';
 import { Database } from '@/supabase/database.types';
 import { TreeState } from '@/types/tree';
+import { logger } from '@/utils/logger';
 import { parseTreeState } from '@/utils/tree';
 
 class TreeStatesAPI {
   static getTreeState = async (treeId: string) => {
     const { data, error } = await supabase.from('tree_states').select().eq('tree_id', treeId).single();
-    if (error) throw error;
+    if (error) {
+      logger.error('Error fetching tree state', error, {
+        treeId,
+      });
+      throw error;
+    }
     return parseTreeState(data);
   };
 
   static createTreeState = async (treeId: string) => {
     const { error } = await supabase.from('tree_states').insert([{ tree_id: treeId }]);
-    if (error) throw error;
+    if (error) {
+      logger.error('Error creating tree state', error, {
+        treeId,
+      });
+      throw error;
+    }
   };
 
   static subscribeToTreeState = (treeId: string, onChange: (state: TreeState) => void) => {
@@ -54,7 +65,13 @@ class TreeStatesAPI {
       })
       .eq('tree_id', treeId);
 
-    if (error) throw error;
+    if (error) {
+      logger.error('Error updating tree state', error, {
+        treeId,
+        updates,
+      });
+      throw error;
+    }
   };
 }
 

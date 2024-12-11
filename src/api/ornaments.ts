@@ -1,5 +1,6 @@
 import supabase from '@/supabase/client';
 import { Database } from '@/supabase/database.types';
+import { logger } from '@/utils/logger';
 import { createOrnament, parseOrnament } from '@/utils/ornament';
 
 class OrnamentAPI {
@@ -11,6 +12,9 @@ class OrnamentAPI {
       .order('created_at', { ascending: true });
 
     if (error) {
+      logger.error('Error fetching ornaments', error, {
+        treeId,
+      });
       throw error;
     }
 
@@ -54,19 +58,33 @@ class OrnamentAPI {
     ]);
 
     if (error) {
-      console.error('Error inserting ornament:', error);
+      logger.error('Error inserting ornament', error, {
+        treeId,
+        name,
+        selectedType,
+      });
       throw error;
     }
   };
 
   static deleteOrnament = async (ornamentId: string) => {
     const { error } = await supabase.from('ornaments').delete().eq('id', ornamentId);
-    if (error) throw error;
+    if (error) {
+      logger.error('Error deleting ornament', error, {
+        ornamentId,
+      });
+      throw error;
+    }
   };
 
   static deleteOrnamentsByTreeId = async (treeId: string) => {
     const { error } = await supabase.from('ornaments').delete().eq('tree_id', treeId);
-    if (error) throw error;
+    if (error) {
+      logger.error('Error deleting ornaments', error, {
+        treeId,
+      });
+      throw error;
+    }
   };
 }
 

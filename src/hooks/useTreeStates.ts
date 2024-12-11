@@ -4,6 +4,7 @@ import TreeStatesAPI from '@/api/treeStates';
 import { useAtom } from 'jotai';
 import { toaster } from '@/components/ui/toaster';
 import { useEffect } from 'react';
+import { logger } from '@/utils/logger';
 
 const useTreeStates = (treeId?: string) => {
   const [treeState, setTreeState] = useAtom(treeStateAtom);
@@ -13,8 +14,11 @@ const useTreeStates = (treeId?: string) => {
     try {
       await TreeStatesAPI.updateTreeState(treeId, update);
       setTreeState((prev) => (prev ? { ...prev, ...update } : null));
-    } catch (error) {
-      console.error(error);
+      logger.info('Tree state updated', {
+        treeId,
+        update,
+      });
+    } catch {
       toaster.error({
         title: '트리 상태를 업데이트하는데 실패했습니다',
         description: '잠시 후 다시 시도해주세요',
@@ -30,8 +34,7 @@ const useTreeStates = (treeId?: string) => {
       try {
         const state = await TreeStatesAPI.getTreeState(treeId);
         setTreeState(state);
-      } catch (error) {
-        console.error(error);
+      } catch {
         toaster.error({
           title: '트리 상태를 불러오는데 실패했습니다',
           description: '잠시 후 다시 시도해주세요',
@@ -43,6 +46,10 @@ const useTreeStates = (treeId?: string) => {
 
     const channel = TreeStatesAPI.subscribeToTreeState(treeId, (newState) => {
       setTreeState(newState);
+      logger.info('Tree state update received', {
+        treeId,
+        newState,
+      });
     });
 
     return () => {

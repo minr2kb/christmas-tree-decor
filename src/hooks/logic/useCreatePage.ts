@@ -37,8 +37,7 @@ const useCreatePage = () => {
           await TreeStatesAPI.createTreeState(data.id);
           navigate(ROUTES.tree(data.id));
         }
-      } catch (error) {
-        console.error(error);
+      } catch {
         toaster.error({
           title: '트리 생성 실패',
           description: '잠시 후 다시 시도해주세요',

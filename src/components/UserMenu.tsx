@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 import useLoginModal from '@/hooks/useLoginModal';
 import { memo, useCallback } from 'react';
+import { logger } from '@/utils/logger';
 
 type UserMenuProps = {
   containerProps?: BoxProps;
@@ -27,6 +28,7 @@ const UserMenu = memo(({ containerProps, triggerProps }: UserMenuProps) => {
   const handleLogout = useCallback(async () => {
     try {
       await AuthAPI.signOut();
+      logger.info('Logged out');
       toaster.success({
         title: '로그아웃 성공',
       });
@@ -39,10 +41,12 @@ const UserMenu = memo(({ containerProps, triggerProps }: UserMenuProps) => {
   }, []);
 
   const handleTrees = useCallback(() => {
+    logger.info('Clicked trees in user menu');
     navigate(ROUTES.myTrees);
   }, [navigate]);
 
   const handleFeedback = useCallback(() => {
+    logger.info('Clicked feedback in user menu');
     window.open('mailto:kbmin1129@gmail.com', '_blank');
   }, []);
 

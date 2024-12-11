@@ -40,7 +40,6 @@ const useTreePage = () => {
         title: '불러오는 중에 문제가 발생했어요',
         description: error instanceof Error ? error.message : '알 수 없는 오류',
       });
-      console.error('Error loading ornaments:', error);
     }
   }, [treeId]);
 

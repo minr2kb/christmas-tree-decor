@@ -60,8 +60,7 @@ const useControls = (treeId?: string) => {
         title: '트리를 성공적으로 삭제했습니다',
       });
       navigate(ROUTES.home);
-    } catch (error) {
-      console.error(error);
+    } catch {
       toaster.error({
         title: '트리 삭제 실패',
         description: '잠시 후 다시 시도해주세요',

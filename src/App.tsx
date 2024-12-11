@@ -18,6 +18,7 @@ import ConfirmDialog from '@/components/ConfirmDialog';
 import LoginModal from '@/components/LoginModal';
 import { ROUTES } from './constants/routes';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import { logger, setUser } from './utils/logger';
 
 const TreePage = lazy(() => import('@/pages/TreePage'));
 const SendPage = lazy(() => import('@/pages/SendPage'));
@@ -71,9 +72,23 @@ const router = createBrowserRouter([
 function App() {
   const setSession = useSetAtom(sessionAtom);
 
+  const handleError = (error: Error) => {
+    logger.error('Error in App', error, {
+      error,
+    });
+  };
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
+
+      if (session?.user) {
+        setUser(session?.user.id, {
+          id: session?.user.id,
+          email: session?.user.email,
+          created_at: session?.user.created_at,
+        });
+      }
     });
 
     const {
@@ -87,7 +102,7 @@ function App() {
 
   return (
     <ChakraProvider defaultTheme="dark">
-      <ErrorBoundary fallbackRender={({ error }) => <ErrorPage error={error} />}>
+      <ErrorBoundary fallbackRender={({ error }) => <ErrorPage error={error} />} onError={handleError}>
         <Suspense fallback={<LoadingPage />}>
           <Toaster />
           <ConfirmDialog />

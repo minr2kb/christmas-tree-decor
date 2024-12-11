@@ -23,8 +23,7 @@ const useRemotePage = () => {
         await updateTreeState({
           [key]: !treeState?.[key],
         });
-      } catch (error) {
-        console.error(error);
+      } catch {
         toaster.error({
           title: '상태 업데이트 실패',
           description: '잠시 후 다시 시도해주세요',

@@ -16,6 +16,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { Icon, Stack, Text } from '@chakra-ui/react';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { toaster } from './ui/toaster';
+import { logger } from '@/utils/logger';
 
 const LoginModal = () => {
   const [loginModal, setLoginModal] = useAtom(loginModalAtom);
@@ -33,6 +34,10 @@ const LoginModal = () => {
   const handleLogin = async (provider: Provider) => {
     try {
       await AuthAPI.signInWithProvider(provider, redirectUrl);
+      logger.info('Logged in', {
+        provider,
+        redirectUrl,
+      });
     } catch (error) {
       toaster.error({
         title: '로그인 실패',

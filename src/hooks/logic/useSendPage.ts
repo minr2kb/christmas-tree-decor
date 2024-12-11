@@ -7,6 +7,7 @@ import { filterBadWords } from '@/utils/badwords';
 import useDevTools from '../util/useDevTools';
 import useConfirmDialog from '../useConfirmDialog';
 import { SubmitStatus } from '@/types/form';
+import { logger } from '@/utils/logger';
 
 const useSendPage = () => {
   const { treeId, isValidTreeId, isLoading } = useCheckTreeId();
@@ -49,6 +50,11 @@ const useSendPage = () => {
         const sanitizedName = filterBadWords(name);
         await OrnamentAPI.addOrnamentToTree(sanitizedName, selectedType, treeId);
         setStatus(SubmitStatus.SUBMITTED);
+        logger.info('Ornament sent to tree', {
+          treeId,
+          name: sanitizedName,
+          type: selectedType,
+        });
       } catch (error) {
         setStatus(SubmitStatus.IDLE);
         toaster.error({

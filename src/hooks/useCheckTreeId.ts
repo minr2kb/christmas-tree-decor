@@ -23,8 +23,8 @@ const useCheckTreeId = () => {
 
         setTree(tree);
         setIsValidTreeId(true);
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        console.error(error);
         setIsValidTreeId(false);
       } finally {
         setIsLoading(false);

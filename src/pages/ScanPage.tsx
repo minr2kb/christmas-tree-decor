@@ -1,5 +1,6 @@
 import PageLayout from '@/components/PageLayout';
 import QRScanner from '@/components/QRScanner';
+import { logger } from '@/utils/logger';
 import { Box, Text } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,6 +9,9 @@ const ScanPage = () => {
   const navigate = useNavigate();
 
   const handleScan = (result: string) => {
+    logger.info('Scanned QR code', {
+      result,
+    });
     // 경로 패턴 검사를 위한 정규식
     const isTreePath = (path: string): boolean => {
       const baseUrl = window.location.origin;
@@ -28,7 +32,9 @@ const ScanPage = () => {
   };
 
   const handleError = (error: Error) => {
-    console.error('스캔 에러:', error);
+    logger.error('Error scanning QR code', error, {
+      error,
+    });
   };
 
   return (

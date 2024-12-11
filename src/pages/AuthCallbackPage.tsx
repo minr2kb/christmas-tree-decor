@@ -19,7 +19,7 @@ const AuthCallbackPage = () => {
           title: '로그인 성공',
         });
       }
-      navigate(redirectUrl || ROUTES.home);
+      navigate(redirectUrl || ROUTES.home, { replace: true });
     });
 
     return () => {
