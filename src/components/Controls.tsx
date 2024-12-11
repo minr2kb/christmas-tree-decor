@@ -13,7 +13,8 @@ interface ControlsProps {
 }
 
 const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
-  const { menuHandlers, addTestOrnament, addTest50, onClickRemoveTree, isOwner, openLoginModal } = useControls(treeId);
+  const { menuHandlers, addTest1, addTest50, onClickRemoveTree, isOwner, openLoginModal, onClickHome } =
+    useControls(treeId);
 
   const { generateQR, copySendLink } = useShareOptions(treeId);
 
@@ -25,12 +26,12 @@ const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
       x: menuHandlers.toggleStar,
       z: menuHandlers.toggleTitle,
       f: toggleFullScreen,
-      a: addTestOrnament,
+      a: addTest1,
       d: addTest50,
       q: generateQR,
       l: copySendLink,
     }),
-    [menuHandlers, toggleFullScreen, addTestOrnament, addTest50, generateQR, copySendLink],
+    [menuHandlers, toggleFullScreen, addTest1, addTest50, generateQR, copySendLink],
   );
 
   useKeyPress(keyHandlers);
@@ -58,7 +59,7 @@ const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
           중앙 타이틀 토글
           <MenuItemCommand>T</MenuItemCommand>
         </MenuItem>
-        <MenuItem value="add-1" onClick={addTestOrnament}>
+        <MenuItem value="add-1" onClick={addTest1}>
           1개 추가 <MenuItemCommand>A</MenuItemCommand>
         </MenuItem>
         <MenuItem value="add-50" onClick={addTest50}>
@@ -76,6 +77,9 @@ const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
           꾸미기 링크 복사 <MenuItemCommand>L</MenuItemCommand>
         </MenuItem>
         <MenuSeparator />
+        <MenuItem value="home" onClick={onClickHome}>
+          홈으로
+        </MenuItem>
 
         {isOwner ? (
           <MenuItem value="delete-tree" onClick={onClickRemoveTree} color="fg.error">

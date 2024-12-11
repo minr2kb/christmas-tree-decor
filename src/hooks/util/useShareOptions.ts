@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { toaster } from '@/components/ui/toaster';
 import QRCode from 'qrcode';
+import { logger } from '@/utils/logger';
 
 export default function useShareOptions(treeId?: string) {
   return useMemo(
@@ -18,12 +19,14 @@ export default function useShareOptions(treeId?: string) {
           link.click();
           document.body.removeChild(link);
           toaster.success({ title: 'QR코드가 다운로드되었습니다' });
+          logger.info('QR code generated', { treeId });
         });
       },
       copySendLink: () => {
         if (!treeId) return;
         navigator.clipboard.writeText(`${window.location.origin}/send/${treeId}`);
         toaster.success({ title: '클립보드에 복사되었습니다' });
+        logger.info('Send link copied', { treeId });
       },
     }),
     [treeId],

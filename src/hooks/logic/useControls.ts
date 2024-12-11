@@ -13,6 +13,7 @@ import useLoginModal from '../useLoginModal';
 import { ROUTES } from '@/constants/routes';
 
 import useTreeStates from '../useTreeStates';
+import { logger } from '@/utils/logger';
 
 const useControls = (treeId?: string) => {
   const setAnimationQueue = useSetAtom(animationQueueAtom);
@@ -45,7 +46,13 @@ const useControls = (treeId?: string) => {
     setAnimationQueue((prev) => [...prev, { id: uuidv4(), ...ornament }]);
   }, []);
 
+  const addTest1 = useCallback(() => {
+    logger.info('Adding 1 test ornament');
+    addTestOrnament();
+  }, [addTestOrnament]);
+
   const addTest50 = useCallback(() => {
+    logger.info('Adding 50 test ornaments');
     for (let i = 0; i < 50; i++) {
       addTestOrnament();
     }
@@ -79,13 +86,18 @@ const useControls = (treeId?: string) => {
     });
   }, [isAuthenticated, confirm, removeTree]);
 
+  const onClickHome = useCallback(() => {
+    navigate(ROUTES.home);
+  }, [navigate]);
+
   return {
     menuHandlers,
-    addTestOrnament,
+    addTest1,
     addTest50,
     onClickRemoveTree,
     isOwner,
     openLoginModal,
+    onClickHome,
   };
 };
 
