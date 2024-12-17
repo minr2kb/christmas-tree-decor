@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- 메인 페이지 -->
+  <url>
+    <loc>https://christmas-tree-decor.web.app/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- 스캔 페이지 -->
+  <url>
+    <loc>https://christmas-tree-decor.web.app/scan</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- 트리 생성 페이지 -->
+  <url>
+    <loc>https://christmas-tree-decor.web.app/create</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 내 트리 관리 페이지 -->
+  <url>
+    <loc>https://christmas-tree-decor.web.app/my-trees</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- 동적 라우트 예시 -->
+  <url>
+    <loc>https://christmas-tree-decor.web.app/tree/example-tree-1</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://christmas-tree-decor.web.app/send/example-tree-1</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://christmas-tree-decor.web.app/remote/example-tree-1</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- 트리 페이지는 동적 라우트이므로 실제 트리 ID로 대체 필요 -->
+  <!-- 트리 원격 조작 페이지는 동적 라우트이므로 실제 트리 ID로 대체 필요 -->
+  <!-- 트리 보내기 페이지는 동적 라우트이므로 실제 트리 ID로 대체 필요 -->
+</urlset>

@@ -1,0 +1,6 @@
+User-Agent: *
+Allow: /
+Disallow: /auth/*
+Disallow: /my-trees
+Disallow: /remote/*
+Sitemap: https://christmas-tree-decor.web.app/sitemap.xml
