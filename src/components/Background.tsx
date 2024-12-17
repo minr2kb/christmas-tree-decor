@@ -8,9 +8,26 @@ type BackgroundProps = {
   showStars?: boolean;
 };
 
-const Background = memo(({ showCount = false, showStars = true }: BackgroundProps) => {
+const CountText = memo(() => {
   const ornamentsCount = useAtomValue(ornamentsCountAtom);
+  return (
+    <Text
+      fontSize={'80vh'}
+      color={'rgba(255, 255, 255, 0.1)'}
+      position={'absolute'}
+      top={'50%'}
+      left={'50%'}
+      transform={'translate(-50%, -50%)'}
+      pointerEvents={'none'}
+      fontWeight={'black'}
+      lineHeight={1}
+    >
+      {ornamentsCount}
+    </Text>
+  );
+});
 
+const Background = memo(({ showCount = false, showStars = true }: BackgroundProps) => {
   return (
     <>
       {showStars && (
@@ -23,26 +40,12 @@ const Background = memo(({ showCount = false, showStars = true }: BackgroundProp
             top: 0,
             left: 0,
             width: '100%',
-            objectFit: 'cover',
+            height: '100%',
+            objectFit: 'fill',
           }}
         />
       )}
-      {showCount && (
-        <Text
-          fontSize={'80vh'}
-          color={'rgba(255, 255, 255, 0.1)'}
-          position={'absolute'}
-          top={'50%'}
-          left={'50%'}
-          transform={'translate(-50%, -50%)'}
-          pointerEvents={'none'}
-          fontWeight={'black'}
-          lineHeight={1}
-        >
-          {ornamentsCount}
-        </Text>
-      )}
-
+      {showCount && <CountText />}
       <Image
         id="snow-bottom"
         src="/assets/images/snow.png"

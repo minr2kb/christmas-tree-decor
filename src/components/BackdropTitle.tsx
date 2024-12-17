@@ -2,8 +2,9 @@ import { treeStateAtom, treeAtom } from '@/store/atoms';
 import { useAtomValue } from 'jotai';
 import { Backdrop } from './ui/backdrop';
 import { Text } from '@chakra-ui/react';
+import { memo } from 'react';
 
-const BackdropTitle = () => {
+const BackdropTitle = memo(() => {
   const treeState = useAtomValue(treeStateAtom);
   const tree = useAtomValue(treeAtom);
   if (!tree) return null;
@@ -29,6 +30,6 @@ const BackdropTitle = () => {
       </Text>
     </Backdrop>
   );
-};
+});
 
 export default BackdropTitle;
