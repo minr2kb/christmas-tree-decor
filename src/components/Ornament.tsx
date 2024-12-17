@@ -89,16 +89,8 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
       transform: `translate3d(${realPosition.x}px, ${realPosition.y}px, 0) translate(-50%, -50%) scale(${scale})`,
       transition: 'all 1s ease',
     };
-  }, [
-    initialPosition,
-    isLoaded,
-    isAnimationComplete,
-    realPosition.x,
-    realPosition.y,
-    scale,
-    realInitPosition.x,
-    realInitPosition.y,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialPosition, isLoaded, isAnimationComplete, scale]);
 
   return (
     <Box css={boxStyle}>
@@ -108,7 +100,7 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
         closeDelay={0}
         positioning={{ placement: 'bottom' }}
         showArrow
-        disabled={!isAnimationComplete}
+        disabled={!!initialPosition && !isAnimationComplete}
       >
         <Image
           key={id}

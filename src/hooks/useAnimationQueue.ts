@@ -1,12 +1,13 @@
-import { useAtom } from 'jotai';
-import { animationQueueAtom } from '@/store/atoms';
-import { INTERVAL_TIME } from '@/constants/ui';
+import { useAtom, useAtomValue } from 'jotai';
+import { animationQueueAtom, ornamentsCountAtom } from '@/store/atoms';
+import { POP_INTERVAL_TIME } from '@/constants/ui';
 import { OrnamentType, OrnamentWithInitialPositionType } from '@/types/ornament';
 import { getInitialPosition } from '@/utils/ornament';
 import useInterval from './util/useInterval';
 import { useCallback } from 'react';
 
 export function useAnimationQueue(onProcess: (next: OrnamentWithInitialPositionType) => void, enable = true) {
+  const ornamentsCount = useAtomValue(ornamentsCountAtom);
   const [animationQueue, setAnimationQueue] = useAtom(animationQueueAtom);
 
   const addToQueue = useCallback((ornament: OrnamentType) => {
@@ -17,14 +18,14 @@ export function useAnimationQueue(onProcess: (next: OrnamentWithInitialPositionT
     setAnimationQueue((queue) => {
       if (queue.length === 0) return queue;
       const [next, ...rest] = queue;
-      const initialPosition = getInitialPosition();
+      const initialPosition = getInitialPosition(ornamentsCount);
 
       onProcess({ ...next, initialPosition });
       return rest;
     });
-  }, []);
+  }, [ornamentsCount]);
 
-  useInterval(processQueue, animationQueue.length > 0 && enable ? INTERVAL_TIME : null);
+  useInterval(processQueue, animationQueue.length > 0 && enable ? POP_INTERVAL_TIME : null);
 
   return {
     pendingCount: animationQueue.length,

@@ -1,4 +1,12 @@
-import { GRID_SIZE, MIN_SCALE, MAX_SCALE, MAX_ROTATION, MIN_ROTATION } from '@/constants/ui';
+import {
+  GRID_SIZE,
+  MIN_SCALE,
+  MAX_SCALE,
+  MAX_ROTATION,
+  MIN_ROTATION,
+  ORNAMENT_ANIMATION_DURATION,
+  POP_INTERVAL_TIME,
+} from '@/constants/ui';
 import { Database } from '@/supabase/database.types';
 import { OrnamentType, PositionType } from '@/types/ornament';
 
@@ -32,20 +40,21 @@ export const createOrnament = (name: string, type: number): Omit<OrnamentType, '
   return ornament;
 };
 
-export const getInitialPosition = (): PositionType => {
-  // 삼각형 영역을 피하기 위한 initialX, initialY 계산
-  let initialX: number;
-  const initialY = 0.6 * Math.random() + 0.2;
-  const triangleWidth = initialY; // y 위치에 따른 삼각형의 너비
+export const getInitialPosition = (index: number): PositionType => {
+  // concurrentIndex를 기반으로 좌우 지그재그 패턴 생성
+  const concurrentCount = Math.ceil((ORNAMENT_ANIMATION_DURATION * 1000) / POP_INTERVAL_TIME);
+  const concurrentIndex = index % concurrentCount;
 
-  // 50% 확률로 왼쪽 또는 오른쪽에 배치
-  if (Math.random() < 0.5) {
-    // 왼쪽 영역
-    initialX = Math.random() * (0.5 - triangleWidth / 2) + 0.1;
-  } else {
-    // 오른쪽 영역
-    initialX = Math.random() * (0.5 - triangleWidth / 2) + (0.9 - (0.5 - triangleWidth / 2));
-  }
+  // Y 위치 계산
+  const verticalSpacing = 0.75 / concurrentCount;
+  const initialY = 0.15 + verticalSpacing * concurrentIndex;
+
+  // X 위치 계산
+  const isLeft = concurrentIndex % 2 === 0;
+  const horizontalOffset = (Math.random() - 0.5) * 0.4;
+  const initialX = isLeft
+    ? 0.25 + horizontalOffset // 왼쪽
+    : 0.75 + horizontalOffset; // 오른쪽
 
   return { x: initialX, y: initialY };
 };

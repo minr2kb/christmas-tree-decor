@@ -54,4 +54,4 @@ export const TEMP_SCALE = 5;
 /**
  * 애니메이션 큐 갱신 주기
  */
-export const INTERVAL_TIME = 800;
+export const POP_INTERVAL_TIME = 800;
