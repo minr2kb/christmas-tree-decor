@@ -1,11 +1,10 @@
 import { OrnamentWithInitialPositionType } from '@/types/ornament';
-import { Image, Text } from '@chakra-ui/react';
-import { ORNAMENT_SIZE, TEMP_SCALE } from '@/constants/ui';
+import { Box, Image, Text } from '@chakra-ui/react';
+import { ORNAMENT_ANIMATION_DURATION, ORNAMENT_SIZE, TEMP_SCALE } from '@/constants/ui';
 import { useMemo, useCallback, memo, useState, useEffect } from 'react';
 import { debounce } from '@/utils/debounce';
 import { Tooltip } from '@/components/ui/tooltip';
-
-const ANIMATION_DURATION = 5;
+import Fade from './Fade';
 
 interface OrnamentProps {
   ornament: OrnamentWithInitialPositionType;
@@ -14,7 +13,6 @@ interface OrnamentProps {
 }
 
 const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
-  const [showName, setShowName] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
   const { id, name, type, position, initialPosition, scale, rotation } = ornament;
@@ -50,7 +48,6 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
   }, [calculateRealPosition, calculateInitialPosition]);
 
   const handleImageLoad = useCallback(() => {
-    setShowName(true);
     setIsLoaded(true);
   }, []);
 
@@ -59,13 +56,12 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
 
     const timer = setTimeout(() => {
       setIsAnimationComplete(true);
-      setShowName(false);
-    }, ANIMATION_DURATION * 1000);
+    }, ORNAMENT_ANIMATION_DURATION * 1000);
 
     return () => clearTimeout(timer);
   }, [isLoaded]);
 
-  const imageStyle = useMemo(() => {
+  const boxStyle = useMemo(() => {
     if (initialPosition && !isLoaded) {
       return {
         position: 'absolute',
@@ -80,7 +76,7 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
       return {
         position: 'absolute',
         width: `${ORNAMENT_SIZE}vh`,
-        transform: `translate3d(${realInitPosition.x}px, ${realInitPosition.y}px, 0) translate(-50%, -50%) rotate(${rotation}deg) scale(${TEMP_SCALE})`,
+        transform: `translate3d(${realInitPosition.x}px, ${realInitPosition.y}px, 0) translate(-50%, -50%) scale(${TEMP_SCALE})`,
         filter: 'drop-shadow(0 0 3px #fff)',
         transition: 'all 1s ease',
         willChange: 'transform, opacity',
@@ -90,41 +86,59 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
     return {
       position: 'absolute',
       width: `${ORNAMENT_SIZE}vh`,
-      transform: `translate3d(${realPosition.x}px, ${realPosition.y}px, 0) translate(-50%, -50%) rotate(${rotation}deg) scale(${scale})`,
+      transform: `translate3d(${realPosition.x}px, ${realPosition.y}px, 0) translate(-50%, -50%) scale(${scale})`,
       transition: 'all 1s ease',
     };
-  }, [initialPosition, isLoaded, isAnimationComplete, realPosition, rotation, scale]);
+  }, [
+    initialPosition,
+    isLoaded,
+    isAnimationComplete,
+    realPosition.x,
+    realPosition.y,
+    scale,
+    realInitPosition.x,
+    realInitPosition.y,
+  ]);
 
   return (
-    <>
-      <Tooltip content={name} openDelay={0} closeDelay={0} positioning={{ placement: 'bottom' }} showArrow>
+    <Box css={boxStyle}>
+      <Tooltip
+        content={name}
+        openDelay={0}
+        closeDelay={0}
+        positioning={{ placement: 'bottom' }}
+        showArrow
+        disabled={!isAnimationComplete}
+      >
         <Image
           key={id}
           data-id={id}
           src={`/assets/images/ornaments/orn${type}.png`}
           alt="ornament"
-          css={imageStyle}
           onLoad={handleImageLoad}
+          css={{ transform: `rotate(${rotation}deg)` }}
         />
       </Tooltip>
-      {initialPosition && !isAnimationComplete && (
-        <Text
-          css={{
-            position: 'absolute',
-            transform: `translate(${realInitPosition.x}px, ${realInitPosition.y}px) translate(-50%, 150%)`,
-            color: 'white',
-            fontSize: `${ORNAMENT_SIZE * 0.6}rem`,
-            fontWeight: 'bold',
-            textShadow: '0 0 3px blackAlpha.50',
-            whiteSpace: 'nowrap',
-            opacity: showName ? 1 : 0,
-            transition: 'opacity 1s ease',
-          }}
-        >
-          {name}
-        </Text>
-      )}
-    </>
+
+      <Fade in={!!initialPosition && !isAnimationComplete}>
+        <Box position="relative">
+          <Text
+            css={{
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              color: 'white',
+              fontSize: `${ORNAMENT_SIZE * 0.1}rem`,
+              fontWeight: 'bold',
+              textShadow: '0 0 3px blackAlpha.50',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {name}
+          </Text>
+        </Box>
+      </Fade>
+    </Box>
   );
 });
 

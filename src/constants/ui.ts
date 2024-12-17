@@ -42,6 +42,11 @@ export const ORNAMENT_TYPE_COUNT = 9;
 export const SEND_ANIMATION_DURATION = 3;
 
 /**
+ * 오너먼트 애니메이션 지속 시간
+ */
+export const ORNAMENT_ANIMATION_DURATION = 5;
+
+/**
  * 달기 직전 보여주는 스케일
  */
 export const TEMP_SCALE = 5;
