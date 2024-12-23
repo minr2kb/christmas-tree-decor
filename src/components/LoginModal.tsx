@@ -17,9 +17,12 @@ import { Icon, Stack, Text } from '@chakra-ui/react';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { toaster } from './ui/toaster';
 import { logger } from '@/utils/logger';
+import { isInAppBrowser } from '@/utils/browser';
 
 const LoginModal = () => {
   const [loginModal, setLoginModal] = useAtom(loginModalAtom);
+
+  const disableLogin = isInAppBrowser();
 
   const {
     title = '로그인',
@@ -27,7 +30,10 @@ const LoginModal = () => {
     providers = ['google', 'kakao'],
     onCancel,
     redirectUrl = window.location.pathname,
-  } = loginModal || {};
+  } = disableLogin
+    ? { title: '앱에서는 로그인을 지원하지 않아요', body: '외부 브라우저로 이동해주세요', onCancel: () => {} }
+    : loginModal || {};
+
   const hasKakao = providers.includes('kakao');
   const hasGoogle = providers.includes('google');
 

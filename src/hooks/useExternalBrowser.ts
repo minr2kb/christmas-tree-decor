@@ -27,7 +27,6 @@ const useExternalBrowser = () => {
         description: 'URL이 복사되었습니다. Safari가 열리면 주소창을 길게 눌러 "붙여넣기 및 이동"을 선택해주세요.',
         duration: 5000,
       });
-      window.location.href = 'x-web-search://?';
     } else {
       // 안드로이드의 경우 Chrome으로 열기
       window.location.href = `intent://${window.location.host}${window.location.pathname}${window.location.search}#Intent;scheme=https;package=com.android.chrome;end`;
