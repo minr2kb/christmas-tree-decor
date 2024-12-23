@@ -21,6 +21,7 @@ import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { logger, setUser } from './utils/logger';
 import Layout from '@/components/Layout';
 import { HelmetProvider } from 'react-helmet-async';
+import useExternalBrowser from '@/hooks/useExternalBrowser';
 
 const TreePage = lazy(() => import('@/pages/TreePage'));
 const SendPage = lazy(() => import('@/pages/SendPage'));
@@ -106,6 +107,8 @@ function App() {
 
     return () => subscription.unsubscribe();
   }, []);
+
+  useExternalBrowser();
 
   return (
     <HelmetProvider>
