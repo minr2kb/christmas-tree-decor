@@ -20,18 +20,20 @@ const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
 
   const keyHandlers = useMemo(
     () => ({
-      t: menuHandlers.toggleTriangle,
-      c: menuHandlers.toggleCount,
-      s: menuHandlers.toggleSnow,
-      x: menuHandlers.toggleStar,
-      z: menuHandlers.toggleTitle,
+      ...(isOwner && {
+        t: menuHandlers.toggleTriangle,
+        c: menuHandlers.toggleCount,
+        s: menuHandlers.toggleSnow,
+        x: menuHandlers.toggleStar,
+        z: menuHandlers.toggleTitle,
+        a: addTest1,
+        d: addTest50,
+      }),
       f: toggleFullScreen,
-      a: addTest1,
-      d: addTest50,
       q: generateQR,
       l: copySendLink,
     }),
-    [menuHandlers, toggleFullScreen, addTest1, addTest50, generateQR, copySendLink],
+    [menuHandlers, toggleFullScreen, addTest1, addTest50, generateQR, copySendLink, isOwner],
   );
 
   useKeyPress(keyHandlers);
@@ -67,14 +69,14 @@ const Controls = memo(({ toggleFullScreen, treeId }: ControlsProps) => {
             <MenuItem value="add-50" onClick={addTest50}>
               50개 추가 <MenuItemCommand>D</MenuItemCommand>
             </MenuItem>
-            <MenuItem value="toggle-fullscreen" onClick={toggleFullScreen}>
-              전체화면 토글 <MenuItemCommand>F</MenuItemCommand>
-            </MenuItem>
           </MenuItemGroup>
         )}
 
         {isOwner && <MenuSeparator />}
         <MenuItemGroup>
+          <MenuItem value="toggle-fullscreen" onClick={toggleFullScreen}>
+            전체화면 토글 <MenuItemCommand>F</MenuItemCommand>
+          </MenuItem>
           <MenuItem value="generate-qr" onClick={generateQR}>
             꾸미기 QR코드 생성 <MenuItemCommand>Q</MenuItemCommand>
           </MenuItem>
