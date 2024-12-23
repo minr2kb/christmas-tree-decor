@@ -15,12 +15,16 @@ import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import PageLayout from '@/components/PageLayout';
 import { logger } from '@/utils/logger';
+import { useSetAtom } from 'jotai';
+import { openInstuctionModal } from '@/store/atoms';
+import { BiInfoCircle } from 'react-icons/bi';
 
 const HomePage = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useSession();
   const { confirm } = useConfirmDialog();
   const { openLoginModal } = useLoginModal();
+  const setOpenInstructionModal = useSetAtom(openInstuctionModal);
 
   const handleCreateTree = () => {
     if (!isAuthenticated) {
@@ -45,10 +49,6 @@ const HomePage = () => {
 
   const handleTrees = () => {
     navigate(ROUTES.myTrees);
-  };
-
-  const handleFeedback = () => {
-    logger.info('Feedback clicked');
   };
 
   const handleLogout = async () => {
@@ -105,8 +105,8 @@ const HomePage = () => {
           <LuLogIn />
         </Button>
 
-        <Link variant={'underline'} fontSize="xs" mt={3} href="mailto:kbmin1129@gmail.com" onClick={handleFeedback}>
-          피드백 보내기
+        <Link variant={'underline'} fontSize="xs" mt={3} onClick={() => setOpenInstructionModal(true)}>
+          <BiInfoCircle /> 사용방법
         </Link>
       </VStack>
     </PageLayout>

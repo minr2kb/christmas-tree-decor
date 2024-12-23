@@ -33,3 +33,8 @@ export const confirmDialogAtom = atom<ConfirmDialogType | null>(null);
  * 로그인 다이얼로그 활성화용
  */
 export const loginModalAtom = atom<LoginModalType | null>(null);
+
+/**
+ * 사용법 다이얼로그 활성화용
+ */
+export const openInstuctionModal = atom<boolean>(false);
