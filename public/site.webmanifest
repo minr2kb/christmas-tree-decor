@@ -1,6 +1,8 @@
 {
-  "name": "Christmas Tree 꾸미기",
-  "short_name": "Christmas Tree 꾸미기",
+  "name": "트리꾸미기🎄",
+  "description": "실시간으로 함께하는 크리스마스 트리 꾸미기",
+  "start_url": "/",
+  "short_name": "트리꾸미기🎄",
   "icons": [
     { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
