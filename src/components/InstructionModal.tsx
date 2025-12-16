@@ -58,7 +58,7 @@ const InstructionModal = memo(() => {
               <List.Root gap={2} as="ol" listStyle="decimal" ml={4}>
                 <List.Item>[기존 트리 꾸미기]를 선택하거나 공유받은 QR/링크로 접속해주세요</List.Item>
                 <List.Item>원하는 장식을 선택하고 이름을 입력해주세요</List.Item>
-                <List.Item>전송이 완료되면 트리를 확인해주세요</List.Item>
+                <List.Item>전송이 완료되면 화면에 실시간으로 장식이 나타날거에요</List.Item>
               </List.Root>
             </Stack>
             <Separator />
