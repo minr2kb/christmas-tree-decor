@@ -48,7 +48,9 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
   }, [calculateRealPosition, calculateInitialPosition]);
 
   const handleImageLoad = useCallback(() => {
-    setIsLoaded(true);
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
   }, []);
 
   useEffect(() => {
@@ -66,7 +68,7 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
       return {
         position: 'absolute',
         width: `${ORNAMENT_SIZE}vh`,
-        transform: `translate3d(${realInitPosition.x}px, ${realInitPosition.y}px, 0) scale(0.1)`,
+        transform: `translate3d(${realInitPosition.x}px, ${realInitPosition.y}px, 0) translate(-50%, -50%) scale(0.1)`,
         transition: 'all 1s ease',
         willChange: 'transform, opacity',
       };
