@@ -10,10 +10,10 @@ type PageLayoutProps = {
   children: React.ReactNode;
   maxWidth?: ContainerProps['maxW'];
   disableSnowfall?: boolean;
-  disableBackground?: boolean;
   disableHeader?: boolean;
   disableFooter?: boolean;
   disablePadding?: boolean;
+  showBackground?: boolean;
   headerProps?: HeaderProps;
   containerProps?: ContainerProps;
   center?: boolean;
@@ -27,10 +27,10 @@ const PageLayout = ({
   children,
   maxWidth = 'xs',
   disableSnowfall = false,
-  disableBackground = false,
   disableHeader = false,
   disableFooter = false,
   disablePadding = false,
+  showBackground = false,
   center = false,
   headerProps,
   containerProps,
@@ -49,7 +49,7 @@ const PageLayout = ({
 
   return (
     <Box bgColor={bgColor} position="relative" minH="100dvh" display="flex" flexDirection="column">
-      {!disableBackground && <Background />}
+      {showBackground && <Background />}
       {!disableSnowfall && <Snowfall speed={[0.5, 0.7]} wind={[-0.1, 0.1]} snowflakeCount={100} radius={[0.5, 1]} />}
       {!disableHeader && <Header {...headerProps} />}
 

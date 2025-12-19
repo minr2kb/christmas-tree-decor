@@ -77,8 +77,8 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
         position: 'absolute',
         width: `${ORNAMENT_SIZE}vh`,
         transform: `translate3d(${realInitPosition.x}px, ${realInitPosition.y}px, 0) translate(-50%, -50%) scale(${TEMP_SCALE})`,
-        filter: 'drop-shadow(0 0 3px #fff)',
-        transition: 'all 1s ease',
+        filter: 'drop-shadow(0 0 5px #fff)',
+        transition: 'all 1s cubic-bezier(.75,0,.3,1.26)',
         willChange: 'transform, opacity',
       };
     }
@@ -87,7 +87,7 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
       position: 'absolute',
       width: `${ORNAMENT_SIZE}vh`,
       transform: `translate3d(${realPosition.x}px, ${realPosition.y}px, 0) translate(-50%, -50%) scale(${scale})`,
-      transition: 'all 1s ease',
+      transition: 'all 1s cubic-bezier(.74,-0.38,.28,.99)',
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialPosition, isLoaded, isAnimationComplete, scale]);
@@ -122,8 +122,9 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
               color: 'white',
               fontSize: `${ORNAMENT_SIZE * 0.1}rem`,
               fontWeight: 'bold',
-              textShadow: '0 0 3px blackAlpha.50',
+              textShadow: '0 0 2px #000',
               whiteSpace: 'nowrap',
+              //   filter: 'drop-shadow(0 0 5px #fff)',
             }}
           >
             {name}

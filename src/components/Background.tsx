@@ -5,7 +5,6 @@ import { memo } from 'react';
 
 type BackgroundProps = {
   showCount?: boolean;
-  showStars?: boolean;
 };
 
 const CountText = memo(() => {
@@ -13,7 +12,7 @@ const CountText = memo(() => {
   return (
     <Text
       fontSize={'80vh'}
-      color={'rgba(255, 255, 255, 0.1)'}
+      color={'rgba(255, 255, 255, 0.2)'}
       position={'absolute'}
       top={'50%'}
       left={'50%'}
@@ -27,36 +26,23 @@ const CountText = memo(() => {
   );
 });
 
-const Background = memo(({ showCount = false, showStars = true }: BackgroundProps) => {
+const Background = memo(({ showCount = false }: BackgroundProps) => {
   return (
     <>
-      {showStars && (
-        <Image
-          id="stars"
-          src="/assets/images/stars.png"
-          alt="stars"
-          css={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'fill',
-          }}
-        />
-      )}
-      {showCount && <CountText />}
       <Image
-        id="snow-bottom"
-        src="/assets/images/snow.png"
-        alt="snow-bottom"
+        id="bg"
+        src="/assets/images/christmas_bg.png"
+        alt="christmas-bg"
         css={{
           position: 'absolute',
           bottom: 0,
           left: 0,
           width: '100%',
+          height: '100%',
+          objectFit: 'fill',
         }}
       />
+      {showCount && <CountText />}
     </>
   );
 });
