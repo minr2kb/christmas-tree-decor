@@ -49,7 +49,7 @@ export const ORNAMENT_ANIMATION_DURATION = 7;
 /**
  * 달기 직전 보여주는 스케일
  */
-export const TEMP_SCALE = 3;
+export const TEMP_SCALE = 3.2;
 
 /**
  * 애니메이션 큐 갱신 주기

@@ -79,7 +79,7 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
         position: 'absolute',
         width: `${ORNAMENT_SIZE}vh`,
         transform: `translate3d(${realInitPosition.x}px, ${realInitPosition.y}px, 0) translate(-50%, -50%) scale(${TEMP_SCALE})`,
-        filter: 'drop-shadow(0 0 5px #fff)',
+        filter: 'drop-shadow(0 0 3px #fff)',
         transition: 'all 1s cubic-bezier(.75,0,.3,1.26)',
         willChange: 'transform, opacity',
       };
@@ -125,8 +125,8 @@ const Ornament = memo(({ ornament, treeWidth, treeHeight }: OrnamentProps) => {
               fontSize: `${ORNAMENT_SIZE * 0.1}rem`,
               fontWeight: 'bold',
               textShadow: '0 0 2px #000',
-              whiteSpace: 'nowrap',
-              //   filter: 'drop-shadow(0 0 5px #fff)',
+              maxW: ORNAMENT_SIZE * 15,
+              textAlign: 'center',
             }}
           >
             {name}
